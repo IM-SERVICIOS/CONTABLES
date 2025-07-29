@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cotización - IM Servicios Contables</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f5f1e7; padding: 30px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+    th { background: #eee7dd; }
+    input, select, textarea { width: 100%; padding: 6px; margin-top: 5px; box-sizing: border-box; }
+    .btn { background: #789F; color: #fff; padding: 10px 20px; border: none; cursor: pointer; border-radius: 4px; margin-top: 10px; }
+    .total-container { text-align: right; font-weight: bold; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Formulario de Cotización</h2>
+  <form id="cotizacionForm">
+    <label>Nombre del cliente:<input type="text" name="cliente" required></label><br>
+    <label>Correo electrónico:<input type="email" name="correo" required></label><br>
+    <label>Teléfono:<input type="tel" name="telefono" required></label><br>
+    <label>Tipo de cliente:</label>
+    <select name="tipo_cliente" required>
+      <option value="">--Selecciona--</option>
+      <option value="física">Persona Física</option>
+      <option value="moral">Persona Moral</option>
+    </select>
+
+    <table id="tablaServicios">
+      <thead>
+        <tr><th>Servicio</th><th>Cantidad</th><th>Precio</th><th>Total</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <select onchange="actualizarPrecio(this)">
+              <option value="">--Seleccionar--</option>
+              <option>Declaración mensual persona física</option>
+              <option>Declaración mensual persona moral</option>
+              <option>Contabilidad mensual (PF)</option>
+              <option>Contabilidad mensual (PM)</option>
+              <option>Factura electrónica adicional</option>
+              <option>Asesoría fiscal personalizada</option>
+              <option>Alta o baja ante el IMSS</option>
+              <option>CREACION DE SASHBOARD O PANEL ADMINISTRATIVO</option>
+              <option>Otro</option>
+            </select>
+            <textarea placeholder="Describe el servicio..." style="display:none;"></textarea>
+          </td>
+          <td><input type="number" value="1" min="1" onchange="calcularFila(this)"></td>
+          <td class="precio">$0.00</td>
+          <td class="total">$0.00</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button type="button" class="btn" onclick="agregarFila()"> ➕ Añadir servicio</button>
+    <div class="total-container">Total estimado: $<span id="sumaTotal">0.00</span></div>
+
+    <label>Comentarios adicionales:<textarea name="comentarios" rows="3"></textarea></label><br>
+    <button type="submit" class="btn">Enviar Cotización</button>
+  </form>
+
+  <script>
+    const precios = {
+      "Declaración mensual persona física": 800,
+      "Declaración mensual persona moral": 1800,
+      "Contabilidad mensual (PF)": 1500,
+      "Contabilidad mensual (PM)": 2500,
+      "Factura electrónica adicional": 100,
+      "Asesoría fiscal personalizada": 600,
+      "Alta o baja ante el IMSS": 250,
+      "CREACION DE SASHBOARD O PANEL ADMINISTRATIVO": "250 - 1400"
+    };
+
+    function actualizarPrecio(sel) {
+      const row = sel.closest("tr");
+      const precioTd = row.querySelector(".precio");
+      const totalTd = row.querySelector(".total");
+      const qty = parseInt(row.querySelector("input[type=number]").value) || 1;
+      const txt = row.querySelector("textarea");
+
+      if (sel.value === "Otro") {
+        txt.style.display = "block";
+        precioTd.innerText = "A cotizar";
+        totalTd.innerText = "-";
+      } else {
+        txt.style.display = "none";
+        const p = precios[sel.value];
+        if (typeof p === "number") {
+          precioTd.innerText = `$${p.toFixed(2)}`;
+          totalTd.innerText = `$${(p*qty).toFixed(2)}`;
+        } else {
+          precioTd.innerText = p;
+          totalTd.innerText = "Depende";
+        }
+      }
+      calcularTotalGeneral();
+    }
+
+    function calcularFila(inp) {
+      actualizarPrecio(inp.closest("tr").querySelector("select"));
+    }
+
+    function calcularTotalGeneral() {
+      let sum = 0;
+      document.querySelectorAll("#tablaServicios tbody tr").forEach(row => {
+        const sel = row.querySelector("select").value;
+        const p = precios[sel];
+        const q = parseInt(row.querySelector("input[type=number]").value) || 0;
+        if (typeof p === "number") sum += p * q;
+      });
+      document.getElementById("sumaTotal").innerText = sum.toFixed(2);
+    }
+
+    function agregarFila() {
+      const tbody = document.querySelector("#tablaServicios tbody");
+      const row = tbody.querySelector("tr");
+      const clone = row.cloneNode(true);
+      clone.querySelector("select").selectedIndex = 0;
+      clone.querySelector("textarea").value = "";
+      clone.querySelector("textarea").style.display = "none";
+      clone.querySelector("input[type=number]").value = 1;
+      clone.querySelector(".precio").innerText = "$0.00";
+      clone.querySelector(".total").innerText = "$0.00";
+      clone.querySelector("select").onchange = function() { actualizarPrecio(this); };
+      clone.querySelector("input[type=number]").onchange = function(){ calcularFila(this); };
+      tbody.appendChild(clone);
+    }
+  </script>
+</body>
+</html>

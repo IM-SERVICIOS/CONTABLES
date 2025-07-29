@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catalogo de servicios</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f9f9f9;
+      color: #333;
+    }
+    #flipbook-container {
+      display: flex;
+      max-width: 800px;
+      margin: auto;
+      gap: 20px;
+    }
+    #thumbnail-menu {
+      width: 120px;
+      overflow-y: auto;
+      max-height: 500px;
+      border: 1px solid #ccc;
+      padding: 5px;
+      background: white;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    #thumbnail-menu img {
+      width: 100%;
+      margin-bottom: 8px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      transition: border-color 0.3s ease;
+    }
+    #thumbnail-menu img.selected {
+      border: 2px solid #007BFF;
+    }
+    #main-content {
+      flex-grow: 1;
+      background: white;
+      padding: 10px;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #main-image {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+    }
+    #navigation {
+      margin-top: 10px;
+      text-align: center;
+      user-select: none;
+    }
+    #navigation button {
+      padding: 8px 16px;
+      margin: 0 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      border: 1px solid #007BFF;
+      background: white;
+      color: #007BFF;
+      border-radius: 4px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    #navigation button:disabled {
+      border-color: #ccc;
+      color: #ccc;
+      cursor: not-allowed;
+    }
+    #navigation button:hover:not(:disabled) {
+      background-color: #007BFF;
+      color: white;
+    }
+    #page-indicator {
+      font-weight: bold;
+      font-size: 1.1rem;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="flipbook-container">
+    <!-- Menú lateral con miniaturas -->
+    <div id="thumbnail-menu" aria-label="Índice de páginas del catálogo"></div>
+
+    <!-- Imagen principal y navegación -->
+    <div id="main-content">
+      <img id="main-image" src="images/catalog_pages/catalogopage_01.png" alt="Página 1" />
+      <div id="navigation" role="navigation" aria-label="Navegación entre páginas">
+        <button id="prev-btn" disabled>Anterior</button>
+        <span id="page-indicator">Página 1 de 6</span>
+        <button id="next-btn">Siguiente</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const totalPages = 6;
+    let currentPage = 1;
+
+    const thumbnailMenu = document.getElementById('thumbnail-menu');
+    const mainImage = document.getElementById('main-image');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const pageIndicator = document.getElementById('page-indicator');
+
+    // Crear miniaturas y añadir al menú lateral
+    for(let i = 1; i <= totalPages; i++) {
+      const thumb = document.createElement('img');
+      thumb.src = `images/catalog_pages/catalogopage_0${i}.png`;
+      thumb.alt = `Miniatura página ${i}`;
+      thumb.dataset.page = i;
+      if(i === 1) thumb.classList.add('selected');
+      thumb.addEventListener('click', () => {
+        goToPage(i);
+      });
+      thumbnailMenu.appendChild(thumb);
+    }
+
+    function updateNavigationButtons() {
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = currentPage === totalPages;
+    }
+
+    function updatePageIndicator() {
+      pageIndicator.textContent = `Página ${currentPage} de ${totalPages}`;
+    }
+
+    function highlightThumbnail(page) {
+      const thumbnails = thumbnailMenu.querySelectorAll('img');
+      thumbnails.forEach(img => {
+        img.classList.toggle('selected', Number(img.dataset.page) === page);
+      });
+    }
+
+    function goToPage(page) {
+      if(page < 1 || page > totalPages) return;
+      currentPage = page;
+      mainImage.src = `images/catalog_pages/catalogopage_0${page}.png`;
+      mainImage.alt = `Página ${page}`;
+      updateNavigationButtons();
+      updatePageIndicator();
+      highlightThumbnail(page);
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if(currentPage > 1){
+        goToPage(currentPage - 1);
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if(currentPage < totalPages){
+        goToPage(currentPage + 1);
+      }
+    });
+
+    // Inicializar vista
+    goToPage(1);
+  </script>
+
+</body>
+</html>
