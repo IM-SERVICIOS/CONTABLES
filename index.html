@@ -1,70 +1,86 @@
-<!-- Archivo: index.html -->
+<!-- Archivo principal de la página web: index.html -->
 <!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>IM Servicios Contables y Asociados</title>
+
+  <!-- Relación con hoja de estilos externa -->
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Descripción para SEO -->
   <meta name="description" content="Servicios contables, administrativos y asesoría financiera con soluciones tecnológicas.">
 </head>
 <body>
-  <!-- NAV -->
+  <!-- ====== MENÚ DE NAVEGACIÓN (NAV) ====== -->
+  <!-- Contiene enlaces internos que redirigen a secciones de esta misma página -->
   <nav class="nav">
     <div class="nav-inner">
+      <!-- Marca / logo de la empresa -->
       <a class="brand" href="#">IM <small>Servicios</small></a>
+
+      <!-- Botón hamburguesa para móviles -->
       <button class="nav-toggle" id="navToggle">☰</button>
+
+      <!-- Lista de enlaces de navegación -->
       <ul class="nav-links" id="navLinks">
+        <!-- Cada <a href="#..."> redirige a un ID dentro del mismo documento -->
         <li><a href="#inicio" class="nav-link">Inicio</a></li>
         <li><a href="#servicios" class="nav-link">Servicios</a></li>
         <li><a href="#sobre" class="nav-link">Sobre Nosotros</a></li>
         <li><a href="#catalogo" class="nav-link">Catálogo</a></li>
+        <!-- Este botón redirige al formulario de contacto -->
         <li><a href="#contacto" class="cta nav-link" id="cotizarBtn">Cotízate</a></li>
       </ul>
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- ====== HERO / PORTADA ====== -->
   <header id="inicio" class="hero">
     <div class="hero-left">
       <h1>La optimización de tu negocio<br><span>comienza aquí</span></h1>
       <p>IM Servicios Contables y Asociados — contabilidad, administración y asesoría financiera con innovación tecnológica.</p>
+
+      <!-- CTA (Call To Action) que lleva a la sección de contacto -->
       <div class="hero-ctas">
         <a class="btn primary" href="#contacto">Conoce más</a>
-        <p class="contact-note">
-          para que podamos contactarte y proporcionarte más información sobre tus productos y servicios,
-          así como para ofrecerte un trato más personalizado y ayudarte a elegir la solución adecuada para tus
-          necesidades financieras. Al generar un contacto directo, entendemos mejor tus requerimientos y construimos
-          una relación de confianza, fundamental para el éxito comercial.
-        </p>
+        <p class="contact-note">Texto explicativo sobre el contacto personalizado...</p>
       </div>
     </div>
+
+    <!-- Imagen asociada al hero (ubicada en /assets/hero.jpg) -->
     <div class="hero-right">
       <img src="assets/hero.jpg" alt="reunión financiera" class="hero-img"/>
     </div>
   </header>
 
-  <!-- Quiénes somos -->
+  <!-- ====== SECCIÓN: SOBRE NOSOTROS ====== -->
   <section id="sobre" class="panel about">
     <div class="container">
       <h2>Quiénes somos</h2>
-      <p class="lead">En IM Servicios Contables y Asociados trabajamos contigo para optimizar tu negocio de arriba a abajo...</p>
+      <p class="lead">Texto descriptivo de la empresa...</p>
+
+      <!-- Sub-secciones internas (Misión, Visión, Valores) -->
       <div class="grid-3 values">
-        <div><h4>Misión</h4><p>Brindar soluciones confiables, personalizadas y alineadas a cada cliente.</p></div>
-        <div><h4>Visión</h4><p>Ser la firma contable líder en innovación y compromiso.</p></div>
-        <div><h4>Valores</h4><p>Precisión, integridad, compromiso y claridad.</p></div>
+        <div><h4>Misión</h4><p>Brindar soluciones confiables...</p></div>
+        <div><h4>Visión</h4><p>Ser la firma contable líder...</p></div>
+        <div><h4>Valores</h4><p>Precisión, integridad...</p></div>
       </div>
     </div>
   </section>
 
-  <!-- Servicios -->
+  <!-- ====== SECCIÓN: SERVICIOS ====== -->
   <section id="servicios" class="panel services">
     <div class="container">
       <h2>Servicios</h2>
-      <p class="subtitle">Soluciones integrales, desde contabilidad hasta innovación tecnológica.</p>
+      <p class="subtitle">Descripción general...</p>
+
+      <!-- Carrusel de servicios con botones prev/next controlados por JS -->
       <div class="carousel-wrap">
         <button class="carousel-btn left" id="carouselPrev">◀</button>
         <div class="carousel" id="servicesCarousel">
+          <!-- Cada artículo representa un servicio -->
           <article class="card"><div class="card-icon">📊</div><h3>Contabilidad General</h3><p>Registro y análisis de operaciones contables.</p></article>
           <article class="card"><div class="card-icon">👥</div><h3>Nómina y RRHH</h3><p>Administración de nóminas y contratos.</p></article>
           <article class="card"><div class="card-icon">🧾</div><h3>Impuestos</h3><p>Planeación fiscal y obligaciones tributarias.</p></article>
@@ -75,23 +91,26 @@
     </div>
   </section>
 
-  <!-- Catálogo -->
+  <!-- ====== SECCIÓN: CATÁLOGO ====== -->
   <section id="catalogo" class="panel catalog">
     <div class="container">
       <h2>Catálogo</h2>
-      <p class="subtitle">Explora nuestras soluciones a detalle.</p>
+      <p class="subtitle">Explora nuestras soluciones...</p>
       <div class="catalog-cta">
-        <p>Accede a nuestro catálogo completo de productos y servicios.</p>
+        <p>Accede a nuestro catálogo completo.</p>
+        <!-- Redirección a otra página (catalogo.html) -->
         <a href="/catalogo.html" class="btn primary lg">Conoce nuestro catálogo</a>
       </div>
     </div>
   </section>
 
-  <!-- Contacto -->
+  <!-- ====== SECCIÓN: CONTACTO ====== -->
   <section id="contacto" class="panel contact">
     <div class="container">
       <h2>¡Permítenos ser tu aliado!</h2>
+      <!-- Formulario de contacto (procesado por JS como demo) -->
       <form id="contactForm" class="contact-form">
+        <!-- Campos básicos -->
         <input name="name" placeholder="Nombre" required>
         <input type="email" name="email" placeholder="Correo Electrónico" required>
         <select name="service">
@@ -101,6 +120,8 @@
           <option value="innovacion">Innovación / Tech</option>
         </select>
         <textarea name="message" placeholder="Mensaje"></textarea>
+
+        <!-- Botones de acción -->
         <div class="form-actions">
           <button class="btn primary" type="submit">Enviar</button>
           <button class="btn outline" type="button" id="resetForm">Limpiar</button>
@@ -109,31 +130,40 @@
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- ====== FOOTER ====== -->
   <footer class="footer">
     <div class="container">
       <small>© 2025 IM Servicios Contables. Todos los derechos reservados.</small>
     </div>
   </footer>
 
-  <!-- Scripts -->
+  <!-- ====== SCRIPTS JS ====== -->
   <script>
-  // Nav toggle
+  // --- NAV: Mostrar/ocultar menú en dispositivos móviles ---
   const navToggle = document.getElementById('navToggle')
   const navLinks = document.getElementById('navLinks')
-  navToggle?.addEventListener('click', ()=>{ navLinks.style.display = navLinks.style.display==='flex'?'none':'flex' })
+  navToggle?.addEventListener('click', ()=>{
+    navLinks.style.display = navLinks.style.display==='flex'?'none':'flex'
+  })
 
-  // Carousel
+  // --- CARRUSEL: Movimiento hacia izquierda/derecha ---
   const carousel=document.getElementById('servicesCarousel')
   const prevBtn=document.getElementById('carouselPrev')
   const nextBtn=document.getElementById('carouselNext')
-  function moveCarousel(d){const w=carousel.querySelector('.card').offsetWidth+18;carousel.scrollBy({left:d*w,behavior:'smooth'})}
+  function moveCarousel(d){
+    const w=carousel.querySelector('.card').offsetWidth+18
+    carousel.scrollBy({left:d*w,behavior:'smooth'})
+  }
   prevBtn?.addEventListener('click',()=>moveCarousel(-1))
   nextBtn?.addEventListener('click',()=>moveCarousel(1))
 
-  // Form
+  // --- FORMULARIO: Envío de datos (demo, no back-end real) ---
   const form=document.getElementById('contactForm')
-  form?.addEventListener('submit',(e)=>{e.preventDefault();alert('Gracias. Tu solicitud ha sido recibida (demo).');form.reset()})
+  form?.addEventListener('submit',(e)=>{
+    e.preventDefault()
+    alert('Gracias. Tu solicitud ha sido recibida (demo).')
+    form.reset()
+  })
   </script>
 </body>
 </html>
