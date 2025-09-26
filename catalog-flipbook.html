@@ -3,20 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Catalogo de servicios</title>
+  <title>Catálogo de servicios</title>
+
   <style>
+    /* ====== ESTILOS GENERALES ====== */
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
       background: #f9f9f9;
       color: #333;
     }
+
+    /* Contenedor principal del flipbook (miniaturas + contenido) */
     #flipbook-container {
       display: flex;
       max-width: 800px;
       margin: auto;
       gap: 20px;
     }
+
+    /* ====== MENÚ LATERAL CON MINIATURAS ====== */
     #thumbnail-menu {
       width: 120px;
       overflow-y: auto;
@@ -34,8 +40,10 @@
       transition: border-color 0.3s ease;
     }
     #thumbnail-menu img.selected {
-      border: 2px solid #007BFF;
+      border: 2px solid #007BFF; /* Resalta la página seleccionada */
     }
+
+    /* ====== CONTENIDO PRINCIPAL ====== */
     #main-content {
       flex-grow: 1;
       background: white;
@@ -51,6 +59,8 @@
       height: auto;
       border: 1px solid #ccc;
     }
+
+    /* ====== BOTONES DE NAVEGACIÓN ====== */
     #navigation {
       margin-top: 10px;
       text-align: center;
@@ -76,22 +86,43 @@
       background-color: #007BFF;
       color: white;
     }
+
+    /* Indicador de página actual */
     #page-indicator {
       font-weight: bold;
       font-size: 1.1rem;
       vertical-align: middle;
     }
+
+    /* ====== BOTÓN DE VOLVER AL INICIO ====== */
+    .back-home {
+      display: inline-block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background: #007BFF;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    .back-home:hover {
+      background: #0056b3;
+    }
   </style>
 </head>
 <body>
 
+  <!-- ====== CONTENEDOR PRINCIPAL DEL CATÁLOGO ====== -->
   <div id="flipbook-container">
     <!-- Menú lateral con miniaturas -->
     <div id="thumbnail-menu" aria-label="Índice de páginas del catálogo"></div>
 
-    <!-- Imagen principal y navegación -->
+    <!-- Imagen principal y botones de navegación -->
     <div id="main-content">
+      <!-- Aquí se carga la página seleccionada -->
       <img id="main-image" src="images/catalog_pages/catalogopage_01.png" alt="Página 1" />
+
+      <!-- Controles de navegación -->
       <div id="navigation" role="navigation" aria-label="Navegación entre páginas">
         <button id="prev-btn" disabled>Anterior</button>
         <span id="page-indicator">Página 1 de 6</span>
@@ -100,29 +131,47 @@
     </div>
   </div>
 
+  <!-- ====== BOTÓN DE VOLVER AL INICIO ====== -->
+  <div style="text-align:center;">
+    <!-- Este enlace lleva de vuelta a la página principal (index.html) -->
+    <a href="index.html" class="back-home">⬅ Volver al inicio</a>
+  </div>
+
   <script>
-    const totalPages = 6;
+    /* ====== CONFIGURACIÓN DEL FLIPBOOK ====== */
+
+    // Número total de páginas en el catálogo
+    const totalPages = 6;   // Cambia este número si agregas o quitas páginas
+
+    // Página actual (empieza en 1)
     let currentPage = 1;
 
+    // Referencias a los elementos del DOM
     const thumbnailMenu = document.getElementById('thumbnail-menu');
     const mainImage = document.getElementById('main-image');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const pageIndicator = document.getElementById('page-indicator');
 
-    // Crear miniaturas y añadir al menú lateral
+    // ====== CREAR MINIATURAS ======
     for(let i = 1; i <= totalPages; i++) {
       const thumb = document.createElement('img');
+      // Ojo: aquí se usan nombres tipo "catalogopage_01.png", "catalogopage_02.png"...
       thumb.src = `images/catalog_pages/catalogopage_0${i}.png`;
       thumb.alt = `Miniatura página ${i}`;
       thumb.dataset.page = i;
+
       if(i === 1) thumb.classList.add('selected');
+
+      // Al hacer clic en una miniatura → cambiar página
       thumb.addEventListener('click', () => {
         goToPage(i);
       });
+
       thumbnailMenu.appendChild(thumb);
     }
 
+    // ====== FUNCIONES DE NAVEGACIÓN ======
     function updateNavigationButtons() {
       prevBtn.disabled = currentPage === 1;
       nextBtn.disabled = currentPage === totalPages;
@@ -139,16 +188,22 @@
       });
     }
 
+    // Cambiar a una página específica
     function goToPage(page) {
       if(page < 1 || page > totalPages) return;
       currentPage = page;
+
+      // Cambiar la imagen principal
       mainImage.src = `images/catalog_pages/catalogopage_0${page}.png`;
       mainImage.alt = `Página ${page}`;
+
+      // Actualizar interfaz
       updateNavigationButtons();
       updatePageIndicator();
       highlightThumbnail(page);
     }
 
+    // Botones Anterior / Siguiente
     prevBtn.addEventListener('click', () => {
       if(currentPage > 1){
         goToPage(currentPage - 1);
@@ -161,7 +216,7 @@
       }
     });
 
-    // Inicializar vista
+    // ====== INICIALIZACIÓN ======
     goToPage(1);
   </script>
 
