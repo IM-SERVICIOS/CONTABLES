@@ -2,75 +2,99 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Solicitud de Plantillas - IM Servicios Contables</title>
+
+  <!-- 🔗 Reutiliza el diseño principal -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- 🔗 Y si tienes un estilo específico para el formulario -->
   <link rel="stylesheet" href="formulario.css">
 </head>
+
 <body>
 
-  <div class="form-container">
-    <h2>📄 Solicitud de Plantilla</h2>
-    <form id="solicitudForm">
-
-      <!-- Tipo de persona -->
-      <label for="tipoPersona">¿Eres persona física o moral?</label>
-      <select id="tipoPersona" name="tipoPersona" required>
-        <option value="">Seleccione...</option>
-        <option value="Fisica">Persona Física</option>
-        <option value="Moral">Persona Moral</option>
-        <option value="No sabe">No sé por el momento</option>
-      </select>
-
-      <!-- Uso -->
-      <label for="usoPlantilla">¿Cuál será el principal uso de la plantilla?</label>
-      <textarea id="usoPlantilla" name="usoPlantilla" placeholder="Describa brevemente" required></textarea>
-      <small class="nota">
-        ℹ️ Esta información nos ayuda a recomendarle la plantilla genérica que más se adapte a sus necesidades.
-      </small>
-
-      <!-- Apoyo -->
-      <label>¿Requiere apoyo para conocer la plantilla?</label>
-      <div class="radio-group">
-        <label><input type="radio" name="requiereApoyo" value="No" checked> No</label>
-        <label><input type="radio" name="requiereApoyo" value="Si"> Sí</label>
-      </div>
-
-      <div id="opcionApoyoDiv" style="display:none;">
-        <label for="opcionApoyo">Seleccione el tipo de apoyo:</label>
-        <select id="opcionApoyo" name="opcionApoyo">
-          <option value="Tutorial">Tutorial</option>
-          <option value="Meet">Sesión Meet</option>
-        </select>
-      </div>
-
-      <!-- Nombre -->
-      <label for="nombre">Nombre completo</label>
-      <input type="text" id="nombre" name="nombre" required>
-
-      <!-- Correo -->
-      <label for="correo">Correo electrónico</label>
-      <input type="email" id="correo" name="correo" required>
-
-      <!-- Comentarios -->
-      <label for="comentarios">Comentarios adicionales</label>
-      <textarea id="comentarios" name="comentarios" placeholder="Opcional"></textarea>
-
-      <!-- Botón -->
-      <button type="submit" class="btn">Solicitar</button>
-    </form>
-
-    <!-- Animación de éxito -->
-    <div id="mensajeExito" class="oculto">
-      <h3>✅ ¡Gracias por tu solicitud!</h3>
-      <p>Recibirás la plantilla en tu correo en un plazo de <strong>1 a 48 horas</strong>.</p>
-      <div class="social-icons">
-        <a href="https://instagram.com" target="_blank">📸</a>
-        <a href="https://facebook.com" target="_blank">📘</a>
-        <a href="https://tiktok.com" target="_blank">🎵</a>
-      </div>
+  <!-- 🔹 Barra de navegación reutilizada -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">IM <small>Servicios</small></a>
+      <ul class="nav-links">
+        <li><a href="index.html#inicio" class="nav-link">Inicio</a></li>
+        <li><a href="index.html#servicios" class="nav-link">Servicios</a></li>
+        <li><a href="index.html#catalogo" class="nav-link">Catálogo</a></li>
+        <li><a href="formulario.html" class="nav-link active">Plantillas</a></li>
+      </ul>
     </div>
-  </div>
+  </nav>
+
+  <!-- 🔹 Sección principal del formulario -->
+  <section class="panel contact">
+    <div class="container">
+      <div class="form-container">
+        <h2>📄 Solicitud de Plantilla</h2>
+        <form id="solicitudForm">
+
+          <!-- Tipo de persona -->
+          <label for="tipoPersona">¿Eres persona física o moral?</label>
+          <select id="tipoPersona" name="tipoPersona" required>
+            <option value="">Seleccione...</option>
+            <option value="Fisica">Persona Física</option>
+            <option value="Moral">Persona Moral</option>
+            <option value="No sabe">No sé por el momento</option>
+          </select>
+
+          <!-- Uso -->
+          <label for="usoPlantilla">¿Cuál será el principal uso de la plantilla?</label>
+          <textarea id="usoPlantilla" name="usoPlantilla" placeholder="Describa brevemente" required></textarea>
+          <small class="nota">
+            ℹ️ Esta información nos ayuda a recomendarle la plantilla genérica que más se adapte a sus necesidades.
+          </small>
+
+          <!-- Apoyo -->
+          <label>¿Requiere apoyo para conocer la plantilla?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="requiereApoyo" value="No" checked> No</label>
+            <label><input type="radio" name="requiereApoyo" value="Si"> Sí</label>
+          </div>
+
+          <div id="opcionApoyoDiv" style="display:none;">
+            <label for="opcionApoyo">Seleccione el tipo de apoyo:</label>
+            <select id="opcionApoyo" name="opcionApoyo">
+              <option value="Tutorial">Tutorial</option>
+              <option value="Meet">Sesión Meet</option>
+            </select>
+          </div>
+
+          <!-- Nombre -->
+          <label for="nombre">Nombre completo</label>
+          <input type="text" id="nombre" name="nombre" required>
+
+          <!-- Correo -->
+          <label for="correo">Correo electrónico</label>
+          <input type="email" id="correo" name="correo" required>
+
+          <!-- Comentarios -->
+          <label for="comentarios">Comentarios adicionales</label>
+          <textarea id="comentarios" name="comentarios" placeholder="Opcional"></textarea>
+
+          <!-- Botón -->
+          <button type="submit" class="btn">Solicitar</button>
+        </form>
+
+        <!-- Mensaje de éxito -->
+        <div id="mensajeExito" class="oculto">
+          <h3>✅ ¡Gracias por tu solicitud!</h3>
+          <p>Recibirás la plantilla en tu correo en un plazo de <strong>1 a 48 horas</strong>.</p>
+          <div class="social-icons">
+            <a href="https://instagram.com" target="_blank">📸</a>
+            <a href="https://facebook.com" target="_blank">📘</a>
+            <a href="https://tiktok.com" target="_blank">🎵</a>
+          </div>
+        </div>
+      </div> <!-- 🔸 cierra .form-container -->
+    </div> <!-- 🔸 cierra .container -->
+  </section> <!-- 🔸 cierra la sección principal -->
 
   <script src="formulario.js"></script>
 </body>
 </html>
-
