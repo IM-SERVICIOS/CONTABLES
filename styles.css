@@ -84,6 +84,66 @@ body{
 .catalog-cta p{margin:0;color:var(--muted);font-size:15px}
 .catalog-cta .btn{align-self:flex-start}
 
+
+// === FORMULARIO DE SOLICITUD DE PLANTILLA ===
+
+// --- 1️⃣ Mostrar u ocultar el tipo de apoyo ---
+const radioApoyo = document.querySelectorAll('input[name="requiereApoyo"]');
+const opcionApoyoDiv = document.getElementById('opcionApoyoDiv');
+
+radioApoyo.forEach(radio => {
+  radio.addEventListener('change', () => {
+    if (radio.value === 'Si') {
+      opcionApoyoDiv.style.display = 'block';
+    } else {
+      opcionApoyoDiv.style.display = 'none';
+    }
+  });
+});
+
+
+// --- 2️⃣ Manejo del envío del formulario ---
+const form = document.getElementById('solicitudForm');
+const mensajeExito = document.getElementById('mensajeExito');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  // ✅ Validación básica (puedes personalizarla si gustas)
+  const nombre = document.getElementById('nombre').value.trim();
+  const correo = document.getElementById('correo').value.trim();
+  const tipoPersona = document.getElementById('tipoPersona').value;
+
+  if (!nombre || !correo || !tipoPersona) {
+    alert('Por favor, complete todos los campos obligatorios.');
+    return;
+  }
+
+  // 🔄 Simula el envío (podrías conectar con un backend en el futuro)
+  form.style.display = 'none';
+  mensajeExito.classList.remove('oculto');
+
+  // 🕒 Regresa al formulario después de unos segundos (opcional)
+  setTimeout(() => {
+    form.reset();
+    mensajeExito.classList.add('oculto');
+    form.style.display = 'block';
+  }, 6000);
+});
+
+
+// --- 3️⃣ Animación suave al cargar la página ---
+window.addEventListener('DOMContentLoaded', () => {
+  const formContainer = document.querySelector('.form-container');
+  formContainer.style.opacity = 0;
+  formContainer.style.transform = 'translateY(20px)';
+  setTimeout(() => {
+    formContainer.style.transition = 'all 0.8s ease';
+    formContainer.style.opacity = 1;
+    formContainer.style.transform = 'translateY(0)';
+  }, 150);
+});
+
 /* CONTACTO */
 .contact-form{display:flex;flex-direction:column;gap:12px;max-width:540px}
 .contact-form input,
@@ -107,3 +167,4 @@ body{
   .catalog-cta{align-items:center;text-align:center}
   .catalog-cta .btn{align-self:center}
 }
+
