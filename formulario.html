@@ -2,131 +2,75 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Cotización - IM Servicios Contables</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #f5f1e7; padding: 30px; }
-    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
-    th { background: #eee7dd; }
-    input, select, textarea { width: 100%; padding: 6px; margin-top: 5px; box-sizing: border-box; }
-    .btn { background: #789F; color: #fff; padding: 10px 20px; border: none; cursor: pointer; border-radius: 4px; margin-top: 10px; }
-    .total-container { text-align: right; font-weight: bold; margin-top: 10px; }
-  </style>
+  <title>Solicitud de Plantillas - IM Servicios Contables</title>
+  <link rel="stylesheet" href="formulario.css">
 </head>
 <body>
-  <h2>Formulario de Cotización</h2>
-  <form id="cotizacionForm">
-    <label>Nombre del cliente:<input type="text" name="cliente" required></label><br>
-    <label>Correo electrónico:<input type="email" name="correo" required></label><br>
-    <label>Teléfono:<input type="tel" name="telefono" required></label><br>
-    <label>Tipo de cliente:</label>
-    <select name="tipo_cliente" required>
-      <option value="">--Selecciona--</option>
-      <option value="física">Persona Física</option>
-      <option value="moral">Persona Moral</option>
-    </select>
 
-    <table id="tablaServicios">
-      <thead>
-        <tr><th>Servicio</th><th>Cantidad</th><th>Precio</th><th>Total</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <select onchange="actualizarPrecio(this)">
-              <option value="">--Seleccionar--</option>
-              <option>Declaración mensual persona física</option>
-              <option>Declaración mensual persona moral</option>
-              <option>Contabilidad mensual (PF)</option>
-              <option>Contabilidad mensual (PM)</option>
-              <option>Factura electrónica adicional</option>
-              <option>Asesoría fiscal personalizada</option>
-              <option>Alta o baja ante el IMSS</option>
-              <option>CREACION DE SASHBOARD O PANEL ADMINISTRATIVO</option>
-              <option>Otro</option>
-            </select>
-            <textarea placeholder="Describe el servicio..." style="display:none;"></textarea>
-          </td>
-          <td><input type="number" value="1" min="1" onchange="calcularFila(this)"></td>
-          <td class="precio">$0.00</td>
-          <td class="total">$0.00</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="form-container">
+    <h2>📄 Solicitud de Plantilla</h2>
+    <form id="solicitudForm">
 
-    <button type="button" class="btn" onclick="agregarFila()"> ➕ Añadir servicio</button>
-    <div class="total-container">Total estimado: $<span id="sumaTotal">0.00</span></div>
+      <!-- Tipo de persona -->
+      <label for="tipoPersona">¿Eres persona física o moral?</label>
+      <select id="tipoPersona" name="tipoPersona" required>
+        <option value="">Seleccione...</option>
+        <option value="Fisica">Persona Física</option>
+        <option value="Moral">Persona Moral</option>
+        <option value="No sabe">No sé por el momento</option>
+      </select>
 
-    <label>Comentarios adicionales:<textarea name="comentarios" rows="3"></textarea></label><br>
-    <button type="submit" class="btn">Enviar Cotización</button>
-  </form>
+      <!-- Uso -->
+      <label for="usoPlantilla">¿Cuál será el principal uso de la plantilla?</label>
+      <textarea id="usoPlantilla" name="usoPlantilla" placeholder="Describa brevemente" required></textarea>
+      <small class="nota">
+        ℹ️ Esta información nos ayuda a recomendarle la plantilla genérica que más se adapte a sus necesidades.
+      </small>
 
-  <script>
-    const precios = {
-      "Declaración mensual persona física": 800,
-      "Declaración mensual persona moral": 1800,
-      "Contabilidad mensual (PF)": 1500,
-      "Contabilidad mensual (PM)": 2500,
-      "Factura electrónica adicional": 100,
-      "Asesoría fiscal personalizada": 600,
-      "Alta o baja ante el IMSS": 250,
-      "CREACION DE SASHBOARD O PANEL ADMINISTRATIVO": "250 - 1400"
-    };
+      <!-- Apoyo -->
+      <label>¿Requiere apoyo para conocer la plantilla?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="requiereApoyo" value="No" checked> No</label>
+        <label><input type="radio" name="requiereApoyo" value="Si"> Sí</label>
+      </div>
 
-    function actualizarPrecio(sel) {
-      const row = sel.closest("tr");
-      const precioTd = row.querySelector(".precio");
-      const totalTd = row.querySelector(".total");
-      const qty = parseInt(row.querySelector("input[type=number]").value) || 1;
-      const txt = row.querySelector("textarea");
+      <div id="opcionApoyoDiv" style="display:none;">
+        <label for="opcionApoyo">Seleccione el tipo de apoyo:</label>
+        <select id="opcionApoyo" name="opcionApoyo">
+          <option value="Tutorial">Tutorial</option>
+          <option value="Meet">Sesión Meet</option>
+        </select>
+      </div>
 
-      if (sel.value === "Otro") {
-        txt.style.display = "block";
-        precioTd.innerText = "A cotizar";
-        totalTd.innerText = "-";
-      } else {
-        txt.style.display = "none";
-        const p = precios[sel.value];
-        if (typeof p === "number") {
-          precioTd.innerText = `$${p.toFixed(2)}`;
-          totalTd.innerText = `$${(p*qty).toFixed(2)}`;
-        } else {
-          precioTd.innerText = p;
-          totalTd.innerText = "Depende";
-        }
-      }
-      calcularTotalGeneral();
-    }
+      <!-- Nombre -->
+      <label for="nombre">Nombre completo</label>
+      <input type="text" id="nombre" name="nombre" required>
 
-    function calcularFila(inp) {
-      actualizarPrecio(inp.closest("tr").querySelector("select"));
-    }
+      <!-- Correo -->
+      <label for="correo">Correo electrónico</label>
+      <input type="email" id="correo" name="correo" required>
 
-    function calcularTotalGeneral() {
-      let sum = 0;
-      document.querySelectorAll("#tablaServicios tbody tr").forEach(row => {
-        const sel = row.querySelector("select").value;
-        const p = precios[sel];
-        const q = parseInt(row.querySelector("input[type=number]").value) || 0;
-        if (typeof p === "number") sum += p * q;
-      });
-      document.getElementById("sumaTotal").innerText = sum.toFixed(2);
-    }
+      <!-- Comentarios -->
+      <label for="comentarios">Comentarios adicionales</label>
+      <textarea id="comentarios" name="comentarios" placeholder="Opcional"></textarea>
 
-    function agregarFila() {
-      const tbody = document.querySelector("#tablaServicios tbody");
-      const row = tbody.querySelector("tr");
-      const clone = row.cloneNode(true);
-      clone.querySelector("select").selectedIndex = 0;
-      clone.querySelector("textarea").value = "";
-      clone.querySelector("textarea").style.display = "none";
-      clone.querySelector("input[type=number]").value = 1;
-      clone.querySelector(".precio").innerText = "$0.00";
-      clone.querySelector(".total").innerText = "$0.00";
-      clone.querySelector("select").onchange = function() { actualizarPrecio(this); };
-      clone.querySelector("input[type=number]").onchange = function(){ calcularFila(this); };
-      tbody.appendChild(clone);
-    }
-  </script>
+      <!-- Botón -->
+      <button type="submit" class="btn">Solicitar</button>
+    </form>
+
+    <!-- Animación de éxito -->
+    <div id="mensajeExito" class="oculto">
+      <h3>✅ ¡Gracias por tu solicitud!</h3>
+      <p>Recibirás la plantilla en tu correo en un plazo de <strong>1 a 48 horas</strong>.</p>
+      <div class="social-icons">
+        <a href="https://instagram.com" target="_blank">📸</a>
+        <a href="https://facebook.com" target="_blank">📘</a>
+        <a href="https://tiktok.com" target="_blank">🎵</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="formulario.js"></script>
 </body>
 </html>
+
