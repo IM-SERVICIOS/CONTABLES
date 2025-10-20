@@ -84,6 +84,26 @@
     .oculto {
         display: none;
     }
+    
+    /* 💥 REGLA CRÍTICA: Estiliza el enlace de descarga como un botón */
+    .social-icons .btn.primary.lg {
+        font-size: 1.1rem;
+        padding: 12px 30px;
+        margin: 20px auto 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        text-decoration: none;
+        display: block;
+        max-width: 80%;
+        color: var(--primary-contrast); /* Color de texto del botón */
+        background-color: var(--primary); /* Color de fondo del botón */
+        border-radius: var(--radius); /* Radio de las esquinas */
+        transition: background-color 0.3s;
+    }
+    .social-icons .btn.primary.lg:hover {
+        background-color: #1a3247; /* Un poco más oscuro al pasar el ratón */
+    }
+    
   </style>
   </head>
 
@@ -169,8 +189,10 @@
         </form>
 
         <div id="mensajeExito" class="oculto">
-          <h3>✅ ¡Gracias por tu solicitud!</h3>
-          <p>Recibirás la plantilla en tu correo en un plazo de <strong>1 a 48 horas</strong>.</p>
+          <h3>✅ ¡Solicitud Exitosa!</h3>
+          <p>
+            Gracias por visitar nuestra página...
+          </p>
           <div class="social-icons">
             <a href="https://instagram.com" target="_blank">📸</a>
             <a href="https://facebook.com" target="_blank">📘</a>
