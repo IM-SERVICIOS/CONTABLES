@@ -1,4 +1,4 @@
-/* Archivo: styles.css */
+/* Archivo: styles.css (Actualizado para Modal) */
 
 /* Paleta */
 :root{
@@ -85,152 +85,117 @@ body{
 .catalog-cta .btn{align-self:flex-start}
 
 
-/* === FORMULARIO DE SOLICITUD DE PLANTILLA === */
+/* === FORMULARIO MODAL (ESTILOS NUEVOS) === */
 
-.template-form {
-  background: var(--accent-2);
-  padding: 3rem 2rem;
+/* Fondo oscurecido del modal */
+.modal {
+  display: none; /* Oculto por defecto, se activa con JS */
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+}
+
+/* Contenido del modal */
+.modal-content {
+  background-color: var(--panel);
+  margin: 8% auto;
+  padding: 30px;
   border-radius: 18px;
-  max-width: 700px;
-  margin: 4rem auto;
-  box-shadow: 0 10px 35px rgba(0,0,0,0.06);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 600px;
+  position: relative;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.2);
+  animation-name: animatetop;
+  animation-duration: 0.4s;
 }
 
-.template-form:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+/* Animación de entrada */
+@keyframes animatetop {
+  from {top: -300px; opacity: 0}
+  to {top: 0; opacity: 1}
 }
 
-.template-form h2 {
-  font-size: 1.8rem;
-  color: var(--text-primary);
-  margin-bottom: 1rem;
-  text-align: center;
+/* Botón de cerrar (la 'x') */
+.close {
+  color: var(--muted);
+  float: right;
+  font-size: 32px;
+  font-weight: bold;
+  transition: color 0.2s;
 }
 
-.template-form p {
-  color: var(--text-secondary);
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.template-form form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.4rem;
-}
-
-.template-form label {
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.template-form input,
-.template-form select,
-.template-form textarea {
-  width: 100%;
-  padding: 0.9rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: #fff;
-  color: var(--text-primary);
-  font-size: 1rem;
-  transition: border 0.2s, box-shadow 0.2s;
-}
-
-.template-form input:focus,
-.template-form select:focus,
-.template-form textarea:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(57,122,255,0.15);
-}
-
-.template-form button {
-  background: var(--accent);
-  color: #fff;
-  padding: 0.9rem 1.4rem;
-  border: none;
-  border-radius: 10px;
+.close:hover,
+.close:focus {
+  color: var(--primary);
+  text-decoration: none;
   cursor: pointer;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: background 0.3s, transform 0.2s;
 }
 
-.template-form button:hover {
-  background: #3366ff;
-  transform: translateY(-2px);
+/* Estilos de los pasos del formulario */
+.form-step {
+  display: none; /* Ocultar todos los pasos por defecto */
+  padding-top: 10px;
 }
 
-.template-form small {
-  display: block;
-  text-align: center;
-  margin-top: 1rem;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
+.form-step.active {
+  display: block; /* Mostrar solo el paso activo */
 }
 
+.form-step h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--primary);
+}
 
-// --- 1️⃣ Mostrar u ocultar el tipo de apoyo ---
-const radioApoyo = document.querySelectorAll('input[name="requiereApoyo"]');
-const opcionApoyoDiv = document.getElementById('opcionApoyoDiv');
+.form-step label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
 
-radioApoyo.forEach(radio => {
-  radio.addEventListener('change', () => {
-    if (radio.value === 'Si') {
-      opcionApoyoDiv.style.display = 'block';
-    } else {
-      opcionApoyoDiv.style.display = 'none';
-    }
-  });
-});
+.form-step input[type="text"],
+.form-step input[type="email"],
+.form-step select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--accent-2);
+    border-radius: 10px;
+    font-size: 1rem;
+}
 
+/* Contenedor de botones para la navegación entre pasos */
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    gap: 15px;
+}
 
-// --- 2️⃣ Manejo del envío del formulario ---
-const form = document.getElementById('solicitudForm');
-const mensajeExito = document.getElementById('mensajeExito');
+.nav-buttons .btn {
+    flex-grow: 1;
+    text-align: center;
+}
 
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
+.form-step p {
+    margin: 8px 0;
+}
 
-  // ✅ Validación básica (puedes personalizarla si gustas)
-  const nombre = document.getElementById('nombre').value.trim();
-  const correo = document.getElementById('correo').value.trim();
-  const tipoPersona = document.getElementById('tipoPersona').value;
-
-  if (!nombre || !correo || !tipoPersona) {
-    alert('Por favor, complete todos los campos obligatorios.');
-    return;
+/* Responsive para el modal en pantallas pequeñas */
+@media (max-width: 650px) {
+  .modal-content {
+    width: 90%;
+    margin: 5% auto;
+    padding: 20px;
   }
+}
 
-  // 🔄 Simula el envío (podrías conectar con un backend en el futuro)
-  form.style.display = 'none';
-  mensajeExito.classList.remove('oculto');
-
-  // 🕒 Regresa al formulario después de unos segundos (opcional)
-  setTimeout(() => {
-    form.reset();
-    mensajeExito.classList.add('oculto');
-    form.style.display = 'block';
-  }, 6000);
-});
-
-
-// --- 3️⃣ Animación suave al cargar la página ---
-window.addEventListener('DOMContentLoaded', () => {
-  const formContainer = document.querySelector('.form-container');
-  formContainer.style.opacity = 0;
-  formContainer.style.transform = 'translateY(20px)';
-  setTimeout(() => {
-    formContainer.style.transition = 'all 0.8s ease';
-    formContainer.style.opacity = 1;
-    formContainer.style.transform = 'translateY(0)';
-  }, 150);
-});
-
-/* CONTACTO */
+/* CONTACTO (Original) */
 .contact-form{display:flex;flex-direction:column;gap:12px;max-width:540px}
 .contact-form input,
 .contact-form textarea,
@@ -241,10 +206,10 @@ window.addEventListener('DOMContentLoaded', () => {
 }
 .form-actions{display:flex;gap:8px}
 
-/* FOOTER */
+/* FOOTER (Original) */
 .footer{padding:20px;text-align:center;color:var(--muted)}
 
-/* RESPONSIVE */
+/* RESPONSIVE (Original) */
 @media(max-width:900px){
   .hero{flex-direction:column}
   .grid-3{grid-template-columns:1fr}
@@ -253,48 +218,3 @@ window.addEventListener('DOMContentLoaded', () => {
   .catalog-cta{align-items:center;text-align:center}
   .catalog-cta .btn{align-self:center}
 }
-/* === MODAL FORMULARIO MULTIPASO === */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.6);
-  justify-content: center; align-items: center;
-}
-.modal-content {
-  background: #fff;
-  padding: 30px;
-  border-radius: 16px;
-  width: 90%; max-width: 520px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.2);
-  animation: fadeIn 0.3s ease;
-}
-@keyframes fadeIn { from { opacity: 0; transform: translateY(-10px);} to { opacity: 1; transform: translateY(0);} }
-.close { float: right; font-size: 24px; cursor: pointer; color: #555; }
-.form-step { display: none; flex-direction: column; gap: 10px; }
-.form-step.active { display: flex; }
-label { font-weight: 500; margin-top: 5px; }
-input, select {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  width: 100%;
-}
-.btn { margin-top: 10px; cursor: pointer; border-radius: 8px; padding: 8px 16px; }
-.btn.primary { background: #1f3b52; color: white; border: none; }
-.btn.outline { border: 1px solid #1f3b52; background: transparent; color: #1f3b52; }
-.nav-buttons { display: flex; justify-content: space-between; margin-top: 10px; }
-a.descargar-link {
-  display: inline-block;
-  margin-top: 10px;
-  color: #fff;
-  background: #1f3b52;
-  padding: 10px 14px;
-  border-radius: 6px;
-  text-decoration: none;
-}
-
-
-
