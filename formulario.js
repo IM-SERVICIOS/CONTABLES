@@ -8,37 +8,49 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const form = document.getElementById('solicitudForm');
     const mensajeExito = document.getElementById('mensajeExito');
+    const mensajeExitoContenido = mensajeExito.querySelector('p'); // Para inyectar el mensaje dinámico
+    const mensajeExitoSocial = mensajeExito.querySelector('.social-icons'); // Para inyectar el botón de descarga o iconos sociales
+
+
+    // Mapeo de URL de Descarga (🚨 AJUSTA ESTAS RUTAS SEGÚN TU ESTRUCTURA DE ARCHIVOS 🚨)
+    // El formato debe ser: [Valor del select tipoPersona][Valor del select plantillaSolicita]
+    const rutasPlantillas = {
+        'Moral-estado-resultados': 'plantillas/moral_estado_resultados.xlsx',
+        'Moral-flujo-efectivo': 'plantillas/moral_flujo_efectivo.xlsx',
+        'Moral-nomina': 'plantillas/moral_nomina.xlsx',
+        'Moral-contabilidad-general': 'plantillas/moral_contabilidad_general.xlsx',
+
+        'Fisica-estado-resultados': 'plantillas/fisica_estado_resultados.xlsx',
+        'Fisica-flujo-efectivo': 'plantillas/fisica_flujo_efectivo.xlsx',
+        'Fisica-nomina': 'plantillas/fisica_nomina.xlsx',
+        'Fisica-contabilidad-general': 'plantillas/fisica_contabilidad_general.xlsx',
+        
+        // Asumiendo que "No sabe" usa las mismas plantillas que Física o unas genéricas:
+        'No sabe-estado-resultados': 'plantillas/generica_estado_resultados.xlsx',
+        'No sabe-flujo-efectivo': 'plantillas/generica_flujo_efectivo.xlsx',
+        'No sabe-nomina': 'plantillas/generica_nomina.xlsx',
+        'No sabe-contabilidad-general': 'plantillas/generica_contabilidad_general.xlsx',
+    };
+
 
     // 2. Lógica Condicional (Apoyo y Modo de Entrega)
     const updateEntregaOptions = () => {
-        // Obtiene el estado del radio "Sí"
         const apoyoSiSeleccionado = document.getElementById('apoyoSi').checked;
-        
-        // Muestra/Oculta el selector de tipo de apoyo (Tutorial/Meet)
         opcionApoyoDiv.style.display = apoyoSiSeleccionado ? 'block' : 'none';
 
-        // Elemento para la opción de descarga
         const descargaOption = modoEntregaSelect.querySelector('option[value="descarga"]');
         
-        // 🚨 Lógica de restricción del Modo de Entrega
         if (apoyoSiSeleccionado) {
-            // Si requiere apoyo, SOLO permite "Enviar por correo"
-            
-            // Oculta la opción de descarga
+            // Si requiere apoyo, forzar a Correo
             descargaOption.style.display = 'none';
-            
-            // Selecciona "Enviar por correo" y deshabilita el selector
             modoEntregaSelect.value = 'correo';
             modoEntregaSelect.disabled = true;
-            
-            entregaNota.textContent = '🔒 Si requiere apoyo, la plantilla se enviará automáticamente por correo.';
-
+            entregaNota.textContent = '🔒 Si requiere apoyo (tutorial o meet), la plantilla se enviará automáticamente por correo.';
         } else {
-            // Si NO requiere apoyo, habilita ambas opciones
+            // Si NO requiere apoyo, habilitar ambas opciones
             descargaOption.style.display = 'block';
             modoEntregaSelect.disabled = false;
             
-            // Si estaba forzado a 'correo', lo deseleccionamos para forzar al usuario a elegir
             if(modoEntregaSelect.value === 'correo' && modoEntregaSelect.disabled === false) {
                  modoEntregaSelect.value = ''; 
             }
@@ -47,12 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
-    // Asigna el listener a los radios para actualizar las opciones de entrega
     requiereApoyoRadios.forEach(radio => {
         radio.addEventListener('change', updateEntregaOptions);
     });
     
-    // Inicializa las opciones al cargar la página
     updateEntregaOptions();
 
 
@@ -60,38 +70,63 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        // Obtener valores para validación
+        // Obtener valores
         const nombre = document.getElementById('nombre').value.trim();
         const correo = document.getElementById('correo').value.trim();
         const tipoPersona = document.getElementById('tipoPersona').value;
         const plantillaSolicita = document.getElementById('plantillaSolicita').value;
-        const usoPlantilla = document.getElementById('usoPlantilla').value.trim();
         const modoEntrega = modoEntregaSelect.value; 
 
         // Validación de campos obligatorios
-        if (!nombre || !correo || !tipoPersona || !plantillaSolicita || !usoPlantilla || !modoEntrega) {
+        if (!nombre || !correo || !tipoPersona || !plantillaSolicita || !modoEntrega) {
             alert('⚠️ Por favor, complete todos los campos obligatorios y seleccione el modo de entrega.');
             return;
         }
 
-        // Si el usuario seleccionó "Descargar ahora mismo"
-        if (modoEntrega === 'descarga' && !modoEntregaSelect.disabled) {
-            
-            // 🚨 SIMULACIÓN DE DESCARGA: Aquí iría la lógica para redirigir/iniciar descarga
-            alert('🔗 La descarga de la plantilla solicitada está iniciando...');
-            
-            // Si haces una descarga directa, no necesitas mostrar el mensaje de éxito tan largo,
-            // pero para mantener la consistencia del flujo, lo dejamos.
-        }
+        // Determinar la clave para la URL
+        const urlKey = `${tipoPersona}-${plantillaSolicita}`;
+        const urlDescarga = rutasPlantillas[urlKey];
         
-        // Oculta el formulario y muestra el mensaje de éxito
+        // 💥 LÓGICA DE MENSAJE DINÁMICO Y DESPEDIDA 💥
+        if (modoEntrega === 'descarga' && urlDescarga) {
+            // Modo: DESCARGA
+            mensajeExitoContenido.innerHTML = `
+                ¡Tu solicitud fue exitosa! A continuación, puedes **descargar tu plantilla** y usarla de inmediato. 
+                Si tienes dudas, no olvides seguirnos en redes:
+            `;
+            
+            // Reemplaza los iconos sociales con el botón de descarga
+            mensajeExitoSocial.innerHTML = `
+                <a href="${urlDescarga}" download class="btn primary lg" style="margin-bottom: 15px; display: inline-block;">
+                    ⬇️ Descargar Plantilla Ahora
+                </a>
+                <p style="font-size: 0.9em; color: var(--muted);">Este enlace expira en 5 minutos.</p>
+            `;
+
+        } else {
+            // Modo: CORREO (Incluye caso en que se forzó a correo por requerir apoyo)
+            mensajeExitoContenido.innerHTML = `
+                ¡Tu solicitud fue exitosa! Recibirás la plantilla en tu correo <strong>${correo}</strong> 
+                en un plazo de <strong>1 a 48 horas</strong>.
+            `;
+            
+            // Restaura los iconos sociales (asumiendo que estaban en el HTML original)
+             mensajeExitoSocial.innerHTML = `
+                <a href="https://instagram.com" target="_blank">📸</a>
+                <a href="https://facebook.com" target="_blank">📘</a>
+                <a href="https://tiktok.com" target="_blank">🎵</a>
+            `;
+        }
+
+
+        // Mostrar mensaje de éxito
         form.style.display = 'none';
         mensajeExito.classList.remove('oculto'); 
         
         // Opcional: Después de 6 segundos, regresa a la vista del formulario
         setTimeout(() => {
             form.reset();
-            updateEntregaOptions(); // Asegura que las opciones de entrega se restablezcan
+            updateEntregaOptions(); 
             mensajeExito.classList.add('oculto'); 
             form.style.display = 'block';
         }, 6000); 
