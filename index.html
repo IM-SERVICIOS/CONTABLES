@@ -133,6 +133,29 @@
     </div>
   </section>
 
+  <section id="descarga-plantilla" class="template-form">
+  <h2>Descarga tu plantilla de Excel</h2>
+  <p>Llena el formulario y recibe el formato con macros directamente.</p>
+  <form id="formPlantilla">
+    <label for="nombre">Nombre completo:</label>
+    <input type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre" required>
+
+    <label for="correo">Correo electrónico:</label>
+    <input type="email" id="correo" name="correo" placeholder="correo@ejemplo.com" required>
+
+    <label for="plantilla">Selecciona la plantilla:</label>
+    <select id="plantilla" name="plantilla" required>
+      <option value="">-- Elige una plantilla --</option>
+      <option value="estado-resultados">Estado de resultados</option>
+      <option value="flujo-efectivo">Flujo de efectivo</option>
+      <option value="nomina">Cálculo de nómina</option>
+    </select>
+
+    <button type="submit">Solicitar plantilla</button>
+    <small>Recibirás el archivo por correo en minutos.</small>
+  </form>
+</section>
+
   <!-- ====== FOOTER ====== -->
   </footer>
   <footer class="footer">
