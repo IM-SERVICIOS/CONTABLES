@@ -133,28 +133,118 @@
     </div>
   </section>
 
-  <section id="descarga-plantilla" class="template-form">
-  <h2>Descarga tu plantilla de Excel</h2>
-  <p>Llena el formulario y recibe el formato con macros directamente.</p>
-  <form id="formPlantilla">
-    <label for="nombre">Nombre completo:</label>
-    <input type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre" required>
+<div id="modalPlantilla" class="modal">
+    <div class="modal-content">
+      <span id="cerrarModal" class="close">&times;</span>
 
-    <label for="correo">Correo electrónico:</label>
-    <input type="email" id="correo" name="correo" placeholder="correo@ejemplo.com" required>
+      <div class="form-step active" data-step="1">
+        <h2>Paso 1: Datos de Contacto</h2>
+        <label for="nombre-plantilla">Nombre completo:</label>
+        <input type="text" id="nombre-plantilla" name="nombre" placeholder="Escribe tu nombre" required>
+        
+        <label for="correo-plantilla">Correo electrónico:</label>
+        <input type="email" id="correo-plantilla" name="correo" placeholder="correo@ejemplo.com" required>
+        
+        <button class="next-step btn primary">Siguiente</button>
+      </div>
 
-    <label for="plantilla">Selecciona la plantilla:</label>
-    <select id="plantilla" name="plantilla" required>
-      <option value="">-- Elige una plantilla --</option>
-      <option value="estado-resultados">Estado de resultados</option>
-      <option value="flujo-efectivo">Flujo de efectivo</option>
-      <option value="nomina">Cálculo de nómina</option>
-    </select>
+      <div class="form-step" data-step="2">
+        <h2>Paso 2: Tipo de Cliente y Uso</h2>
+        
+        <label for="tipoPersona">¿Eres persona física o moral?</label>
+        <select id="tipoPersona" name="tipoPersona" required>
+          <option value="">Seleccione...</option>
+          <option value="Fisica">Persona Física</option>
+          <option value="Moral">Persona Moral</option>
+          <option value="No sabe">No sé por el momento</option>
+        </select>
+        
+        <label for="usoPlantilla">¿Cuál será el principal uso de la plantilla?</label>
+        <textarea id="usoPlantilla" name="usoPlantilla" placeholder="Describa brevemente (ej. 'Control de ingresos mensuales')" required></textarea>
+        <small class="nota">
+          ℹ️ Esta información nos ayuda a recomendarle la plantilla genérica que más se adapte.
+        </small>
+        
+        <div class="nav-buttons">
+          <button class="prev-step btn outline">Anterior</button>
+          <button class="next-step btn primary">Siguiente</button>
+        </div>
+      </div>
 
-    <button type="submit">Solicitar plantilla</button>
-    <small>Recibirás el archivo por correo en minutos.</small>
-  </form>
-</section>
+      <div class="form-step" data-step="3">
+        <h2>Paso 3: Plantilla y Asesoría</h2>
+        
+        <label for="plantilla-select">Selecciona la plantilla:</label>
+        <select id="plantilla-select" name="plantilla" required>
+          <option value="">-- Elige una plantilla --</option>
+          <option value="estado-resultados">Estado de resultados</option>
+          <option value="flujo-efectivo">Flujo de efectivo</option>
+          <option value="nomina">Cálculo de nómina</option>
+          <option value="contabilidad-general">Control Contable General</option>
+        </select>
+        
+        <label>¿Requiere apoyo para conocer la plantilla?</label>
+        <div class="radio-group" id="radioApoyoGroup">
+          <label><input type="radio" name="requiereApoyo" value="No" checked> No</label>
+          <label><input type="radio" name="requiereApoyo" value="Si"> Sí</label>
+        </div>
+        
+        <div id="opcionApoyoDiv" style="display:none;">
+          <label for="opcionApoyo">Seleccione el tipo de apoyo:</label>
+          <select id="opcionApoyo" name="opcionApoyo">
+            <option value="Tutorial">Tutorial</option>
+            <option value="Meet">Sesión Meet</option>
+          </select>
+        </div>
+        
+        <div class="nav-buttons">
+          <button class="prev-step btn outline">Anterior</button>
+          <button class="next-step btn primary">Siguiente</button>
+        </div>
+      </div>
+
+      <div class="form-step" data-step="4">
+        <h2>Paso 4: Modo de Entrega</h2>
+        
+        <label for="modoEntrega">¿Cómo prefieres recibir tu plantilla?</label>
+        <select id="modoEntrega" name="modoEntrega" required>
+          <option value="">Selecciona una opción</option>
+          <option value="correo">Recibir por correo (recomendado)</option>
+          <option value="descargar">Descargar directamente (link temporal)</option>
+        </select>
+        
+        <label for="comentarios">Comentarios adicionales (Opcional)</label>
+        <textarea id="comentarios" name="comentarios" placeholder="Ej: 'Me urge el de flujo de efectivo'"></textarea>
+        
+        <div class="nav-buttons">
+          <button class="prev-step btn outline">Anterior</button>
+          <button class="next-step btn primary">Revisar y Enviar</button>
+        </div>
+      </div>
+
+      <div class="form-step" data-step="5">
+        <h2>Paso 5: Confirmación</h2>
+        <p>Por favor, revisa tus datos antes de enviar:</p>
+        
+        <div class="summary-box">
+          <p>👤 **Nombre:** <span id="nombreConfirm"></span></p>
+          <p>📧 **Correo:** <span id="correoConfirm"></span></p>
+          <p>🏢 **Tipo:** <span id="tipoClienteConfirm"></span></p>
+          <p>📊 **Plantilla:** <span id="plantillaConfirm"></span></p>
+          <p>🤝 **Apoyo:** <span id="apoyoConfirm"></span></p>
+          <p>📦 **Entrega:** <span id="entregaConfirm"></span></p>
+        </div>
+
+        <div id="accionesEntrega" style="margin-top:20px; text-align:center;">
+          </div>
+
+        <div class="nav-buttons">
+          <button class="prev-step btn outline">Anterior</button>
+          <button id="enviarFormulario" class="btn primary">Finalizar Solicitud</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ====== FOOTER ====== -->
   </footer>
@@ -182,32 +272,156 @@
 </body>
 
   <!-- ====== SCRIPTS JS ====== -->
-  <script>
+  
+ <script>
   // --- NAV: Mostrar/ocultar menú en dispositivos móviles ---
-  const navToggle = document.getElementById('navToggle')
-  const navLinks = document.getElementById('navLinks')
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
   navToggle?.addEventListener('click', ()=>{
-    navLinks.style.display = navLinks.style.display==='flex'?'none':'flex'
-  })
+    navLinks.style.display = navLinks.style.display==='flex'?'none':'flex';
+  });
 
   // --- CARRUSEL: Movimiento hacia izquierda/derecha ---
-  const carousel=document.getElementById('servicesCarousel')
-  const prevBtn=document.getElementById('carouselPrev')
-  const nextBtn=document.getElementById('carouselNext')
+  const carousel=document.getElementById('servicesCarousel');
+  const prevBtn=document.getElementById('carouselPrev');
+  const nextBtn=document.getElementById('carouselNext');
   function moveCarousel(d){
-    const w=carousel.querySelector('.card').offsetWidth+18
-    carousel.scrollBy({left:d*w,behavior:'smooth'})
+    const w=carousel.querySelector('.card').offsetWidth+18;
+    carousel.scrollBy({left:d*w,behavior:'smooth'});
   }
-  prevBtn?.addEventListener('click',()=>moveCarousel(-1))
-  nextBtn?.addEventListener('click',()=>moveCarousel(1))
+  prevBtn?.addEventListener('click',()=>moveCarousel(-1));
+  nextBtn?.addEventListener('click',()=>moveCarousel(1));
 
-  // --- FORMULARIO: Envío de datos (demo, no back-end real) ---
-  const form=document.getElementById('contactForm')
-  form?.addEventListener('submit',(e)=>{
-    e.preventDefault()
-    alert('Gracias. Tu solicitud ha sido recibida.')
-    form.reset()
-  })
+  // --- FORMULARIO CONTACTO: Envío de datos (demo) ---
+  const formContacto=document.getElementById('contactForm');
+  formContacto?.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    alert('Gracias. Tu solicitud de contacto ha sido recibida.');
+    formContacto.reset();
+  });
+  
+  // =========================================================
+  // --- CONTROL DEL MODAL MULTI-PASOS (PLANTILLA) ---
+  // =========================================================
+  const modal = document.getElementById('modalPlantilla');
+  const abrirBtn = document.getElementById('abrirPlantillaModal');
+  const cerrarBtn = document.getElementById('cerrarModal');
+  const nextBtns = document.querySelectorAll('.next-step');
+  const prevBtns = document.querySelectorAll('.prev-step');
+  const formSteps = document.querySelectorAll('.form-step');
+  let currentStep = 1;
+
+  // Variables de campos
+  const nombreInput = document.getElementById('nombre-plantilla');
+  const correoInput = document.getElementById('correo-plantilla');
+  const tipoPersonaSelect = document.getElementById('tipoPersona');
+  const plantillaSelect = document.getElementById('plantilla-select');
+  const requiereApoyoRadios = document.getElementsByName('requiereApoyo');
+  const opcionApoyoSelect = document.getElementById('opcionApoyo');
+  const modoEntregaSelect = document.getElementById('modoEntrega');
+  const opcionApoyoDiv = document.getElementById('opcionApoyoDiv');
+
+
+  // Abrir y Cerrar Modal
+  abrirBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    modal.style.display = 'block';
+  });
+
+  cerrarBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  window.addEventListener('click', (event) => {
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  });
+  
+  // Lógica de Mostrar/Ocultar Apoyo (PASO 3)
+  requiereApoyoRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      opcionApoyoDiv.style.display = radio.value === 'Si' ? 'block' : 'none';
+    });
+  });
+
+  // Navegación (Siguiente)
+  nextBtns.forEach(button => {
+    button.addEventListener('click', () => {
+      const currentStepElement = formSteps[currentStep - 1];
+      const inputs = currentStepElement.querySelectorAll('input[required], select[required], textarea[required]');
+      let allValid = true;
+      
+      // Validación de campos del paso actual
+      inputs.forEach(input => {
+        if (!input.value.trim() && input.offsetParent !== null) { // offsetParent !== null: para ignorar elementos ocultos
+          allValid = false;
+        }
+      });
+
+      if (allValid) {
+        if (currentStep < formSteps.length) {
+          currentStepElement.classList.remove('active');
+          currentStep++;
+          formSteps[currentStep - 1].classList.add('active');
+          if (currentStep === formSteps.length) {
+            updateConfirmation();
+          }
+        }
+      } else {
+        alert('⚠️ Por favor, rellena todos los campos marcados como obligatorios.');
+      }
+    });
+  });
+
+  // Navegación (Anterior)
+  prevBtns.forEach(button => {
+    button.addEventListener('click', () => {
+      if (currentStep > 1) {
+        formSteps[currentStep - 1].classList.remove('active');
+        currentStep--;
+        formSteps[currentStep - 1].classList.add('active');
+      }
+    });
+  });
+
+  // Función para actualizar la pantalla de confirmación (Paso 5)
+  function updateConfirmation() {
+    // Lectura de datos
+    const nombre = nombreInput.value;
+    const correo = correoInput.value;
+    const tipoCliente = tipoPersonaSelect.options[tipoPersonaSelect.selectedIndex].text;
+    const plantilla = plantillaSelect.options[plantillaSelect.selectedIndex].text;
+    const requiereApoyo = Array.from(requiereApoyoRadios).find(r => r.checked).value;
+    const apoyo = requiereApoyo === 'Si' ? opcionApoyoSelect.options[opcionApoyoSelect.selectedIndex].text : 'No requiere';
+    const entrega = modoEntregaSelect.value;
+    const entregaTexto = modoEntregaSelect.options[modoEntregaSelect.selectedIndex].text;
+
+    // Actualizar resumen
+    document.getElementById('nombreConfirm').textContent = nombre;
+    document.getElementById('correoConfirm').textContent = correo;
+    document.getElementById('tipoClienteConfirm').textContent = tipoCliente;
+    document.getElementById('plantillaConfirm').textContent = plantilla;
+    document.getElementById('apoyoConfirm').textContent = apoyo;
+    document.getElementById('entregaConfirm').textContent = entregaTexto;
+    
+    // Acciones de Entrega
+    const accionesDiv = document.getElementById('accionesEntrega');
+    accionesDiv.innerHTML = '';
+    
+    if (entrega === 'descargar') {
+      accionesDiv.innerHTML = '<a href="/plantillas/ejemplo.xlsx" download class="btn primary lg">🔗 DESCARGAR PLANTILLA AHORA</a><p class="nota">El link de descarga solo es temporal. ¡Guárdalo!</p>';
+      document.getElementById('enviarFormulario').style.display = 'none';
+    } else {
+      accionesDiv.innerHTML = '<p class="nota">Recibirás la plantilla en el correo <strong>' + correo + '</strong> en unos minutos.</p>';
+      document.getElementById('enviarFormulario').style.display = 'block';
+    }
+  }
+
+  // Finalizar formulario (Simulación de envío final)
+  document.getElementById('enviarFormulario')?.addEventListener('click', () => {
+    alert('✅ ¡Gracias! Tu plantilla ha sido solicitada y será enviada por correo.');
+    modal.style.display = 'none';
+    // Aquí iría el código real para enviar todos los datos al servidor.
+  });
   </script>
-</body>
-</html>
