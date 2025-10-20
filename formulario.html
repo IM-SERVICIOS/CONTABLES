@@ -8,14 +8,12 @@
   <link rel="stylesheet" href="styles.css">
 
   <style>
-    /* Asegura que el contenedor principal use el estilo de "panel" */
     .panel.contact {
         margin: 40px auto;
         max-width: 900px;
     }
 
     .form-container {
-        /* Usa la paleta de colores de styles.css (ej: var(--panel)) */
         background: var(--panel); 
         padding: 30px;
         border-radius: 18px;
@@ -78,7 +76,7 @@
     #mensajeExito {
         text-align: center;
         padding: 20px;
-        background: #e6f7e6; /* Fondo verde claro */
+        background: #e6f7e6;
         border: 1px solid #c8e6c9;
         border-radius: 12px;
     }
@@ -117,6 +115,15 @@
             <option value="No sabe">No sé por el momento</option>
           </select>
 
+          <label for="plantillaSolicita">Plantilla que solicita</label>
+          <select id="plantillaSolicita" name="plantillaSolicita" required>
+            <option value="">Seleccione...</option>
+            <option value="estado-resultados">Estado de Resultados</option>
+            <option value="flujo-efectivo">Flujo de Efectivo</option>
+            <option value="nomina">Plantilla de Nómina</option>
+            <option value="contabilidad-general">Contabilidad General</option>
+          </select>
+
           <label for="usoPlantilla">¿Cuál será el principal uso de la plantilla?</label>
           <textarea id="usoPlantilla" name="usoPlantilla" placeholder="Describa brevemente" required></textarea>
           <small class="nota">
@@ -125,16 +132,28 @@
 
           <label>¿Requiere apoyo para conocer la plantilla?</label>
           <div class="radio-group">
-            <label><input type="radio" name="requiereApoyo" value="No" checked> No</label>
-            <label><input type="radio" name="requiereApoyo" value="Si"> Sí</label>
+            <label><input type="radio" name="requiereApoyo" value="No" id="apoyoNo" checked> No</label>
+            <label><input type="radio" name="requiereApoyo" value="Si" id="apoyoSi"> Sí</label>
           </div>
 
           <div id="opcionApoyoDiv" style="display:none;">
             <label for="opcionApoyo">Seleccione el tipo de apoyo:</label>
             <select id="opcionApoyo" name="opcionApoyo">
-              <option value="Tutorial">Tutorial</option>
-              <option value="Meet">Sesión Meet</option>
+              <option value="Tutorial">Video Tutorial</option>
+              <option value="Meet">Videollamada / Meet</option>
             </select>
+          </div>
+          
+          <div id="modoEntregaDiv">
+            <label for="modoEntrega">Modo de entrega</label>
+            <select id="modoEntrega" name="modoEntrega" required>
+              <option value="">Seleccione...</option>
+              <option value="descarga">Descargar ahora mismo</option>
+              <option value="correo">Enviar por correo</option>
+            </select>
+            <small id="entregaNota" class="nota" style="color:var(--primary); font-weight: 600;">
+              Elige si quieres descargarla inmediatamente o recibirla por email.
+            </small>
           </div>
 
           <label for="nombre">Nombre completo</label>
@@ -158,6 +177,10 @@
             <a href="https://tiktok.com" target="_blank">🎵</a>
           </div>
         </div>
-      </div> </div> </section> <script src="formulario.js"></script>
+      </div>
+    </div>
+  </section>
+
+  <script src="formulario.js"></script>
 </body>
 </html>
