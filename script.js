@@ -1,4 +1,8 @@
-// --- NAV y CARRUSEL (Existente) ---
+<script>
+  // 1. ACTIVAR ICONOS
+  lucide.createIcons();
+
+  // --- NAV y CARRUSEL (Existente) ---
   const navToggle = document.getElementById('navToggle')
   const navLinks = document.getElementById('navLinks')
   navToggle?.addEventListener('click', ()=>{
@@ -24,163 +28,172 @@
   })
 
   // =========================================================
-  // --- CONTROL DEL MODAL MULTI-PASOS (PLANTILLA CORREGIDO) ---
+  // --- LÓGICA DEL MODAL MULTI-PASOS (INICIALIZACIÓN SEGURA) ---
   // =========================================================
-  const modal = document.getElementById('modalPlantilla');
-  const abrirBtn = document.getElementById('abrirPlantillaModal');
-  const cerrarBtn = document.getElementById('cerrarModal');
-  const nextBtns = document.querySelectorAll('.next-step');
-  const prevBtns = document.querySelectorAll('.prev-step');
-  const formSteps = document.querySelectorAll('.form-step');
-  let currentStep = 1;
 
-  // Declaración de Variables de los Campos (Asegúrate que estos IDs coincidan con tu HTML)
-  const nombreInput = document.getElementById('nombre-plantilla');
-  const correoInput = document.getElementById('correo-plantilla');
-  const tipoPersonaSelect = document.getElementById('tipoPersona-select');
-  const plantillaSelect = document.getElementById('plantilla-select');
-  const requiereApoyoRadios = document.getElementsByName('requiereApoyo');
-  const opcionApoyoSelect = document.getElementById('opcionApoyo-select');
-  const modoEntregaSelect = document.getElementById('modoEntrega-select');
-  const opcionApoyoDiv = document.getElementById('opcionApoyoDiv');
+  document.addEventListener('DOMContentLoaded', () => {
+
+    const modal = document.getElementById('modalPlantilla');
+    const abrirBtn = document.getElementById('abrirPlantillaModal'); // Buscando el ID CORRECTO
+    const cerrarBtn = document.getElementById('cerrarModal');
+    const nextBtns = document.querySelectorAll('.next-step');
+    const prevBtns = document.querySelectorAll('.prev-step');
+    const formSteps = document.querySelectorAll('.form-step');
+    let currentStep = 1;
+
+    // Declaración de Variables de los Campos
+    const nombreInput = document.getElementById('nombre-plantilla');
+    const correoInput = document.getElementById('correo-plantilla');
+    const tipoPersonaSelect = document.getElementById('tipoPersona-select');
+    const plantillaSelect = document.getElementById('plantilla-select');
+    const requiereApoyoRadios = document.getElementsByName('requiereApoyo');
+    const opcionApoyoSelect = document.getElementById('opcionApoyo-select');
+    const modoEntregaSelect = document.getElementById('modoEntrega-select');
+    const opcionApoyoDiv = document.getElementById('opcionApoyoDiv');
 
 
-  // Abrir y Cerrar Modal
-  abrirBtn?.addEventListener('click', (e) => {
-    e.preventDefault(); // 🛑 CLAVE: Evita la redirección
-    modal.style.display = 'block';
-    // Asegura que siempre se inicie en el paso 1
-    formSteps.forEach((s, i) => s.classList.remove('active'));
-    formSteps[0].classList.add('active');
-    currentStep = 1;
-  });
-
-  cerrarBtn?.addEventListener('click', () => {
-    modal.style.display = 'none';
-  });
-
-  window.addEventListener('click', (event) => {
-    if (event.target == modal) {
-      modal.style.display = 'none';
-    }
-  });
-  
-  // Lógica de Mostrar/Ocultar Apoyo (PASO 3)
-  requiereApoyoRadios.forEach(radio => {
-    radio.addEventListener('change', () => {
-      opcionApoyoDiv.style.display = radio.value === 'Si' ? 'block' : 'none';
-    });
-  });
-
-  // Navegación (Siguiente)
-  nextBtns.forEach(button => {
-    button.addEventListener('click', () => {
-      const currentStepElement = formSteps[currentStep - 1];
-      const inputs = currentStepElement.querySelectorAll('[required]');
-      let allValid = true;
-      
-      // Validación de campos del paso actual
-      inputs.forEach(input => {
-        // Validación básica: comprueba si el campo está visible y vacío
-        if (input.offsetParent !== null && !input.value.trim()) {
-          allValid = false;
+    // Abrir y Cerrar Modal
+    if(abrirBtn) { // Asegura que el botón exista antes de agregar el listener
+      abrirBtn.addEventListener('click', (e) => {
+        e.preventDefault(); // 🛑 CLAVE: Evita la redirección
+        modal.style.display = 'block';
+        // Asegura que siempre se inicie en el paso 1
+        formSteps.forEach((s) => s.classList.remove('active'));
+        if(formSteps[0]) {
+            formSteps[0].classList.add('active');
+            currentStep = 1;
         }
       });
-
-      if (allValid) {
-        if (currentStep < formSteps.length) {
-          currentStepElement.classList.remove('active');
-          currentStep++;
-          formSteps[currentStep - 1].classList.add('active');
-          if (currentStep === formSteps.length) {
-            updateConfirmation(); // Ejecuta la función de resumen en el último paso
-          }
-        }
-      } else {
-        alert('⚠️ Por favor, rellena todos los campos marcados como obligatorios.');
-      }
-    });
-  });
-
-  // Navegación (Anterior)
-  prevBtns.forEach(button => {
-    button.addEventListener('click', () => {
-      if (currentStep > 1) {
-        formSteps[currentStep - 1].classList.remove('active');
-        currentStep--;
-        formSteps[currentStep - 1].classList.add('active');
-      }
-    });
-  });
-
-  // Función para actualizar la pantalla de confirmación (Paso 5)
-  function updateConfirmation() {
-    
-    // Mapeo para URLs de descarga (Ajusta estas rutas si tus archivos .xlsx están en otra ubicación)
-    const rutas = {
-      'Moral': { // Empresa
-        'estado-resultados': 'plantillas/empresa_estado_resultados.xlsx',
-        'flujo-efectivo': 'plantillas/empresa_flujo_efectivo.xlsx',
-        'nomina': 'plantillas/empresa_nomina.xlsx',
-        'contabilidad-general': 'plantillas/empresa_contabilidad_general.xlsx'
-      },
-      'Fisica': { // Negocio / Act. Empresarial
-        'estado-resultados': 'plantillas/pf_negocio_estado_resultados.xlsx',
-        'flujo-efectivo': 'plantillas/pf_negocio_flujo_efectivo.xlsx',
-        'nomina': 'plantillas/pf_negocio_nomina.xlsx',
-        'contabilidad-general': 'plantillas/pf_negocio_contabilidad_general.xlsx'
-      },
-      'Independiente': { // Asalariado / Independiente
-        'estado-resultados': 'plantillas/pf_ind_estado_resultados.xlsx',
-        'flujo-efectivo': 'plantillas/pf_ind_flujo_efectivo.xlsx',
-        'nomina': 'plantillas/pf_ind_nomina.xlsx',
-        'contabilidad-general': 'plantillas/pf_ind_contabilidad_general.xlsx'
-      }
-    };
-
-    // Lectura de datos
-    const nombre = nombreInput.value;
-    const correo = correoInput.value;
-    const tipoCliente = tipoPersonaSelect.value; // Valor (Moral, Fisica, Independiente)
-    const tipoClienteTexto = tipoPersonaSelect.options[tipoPersonaSelect.selectedIndex].text;
-    const plantilla = plantillaSelect.value; // Valor (estado-resultados, flujo-efectivo, etc.)
-    const plantillaTexto = plantillaSelect.options[plantillaSelect.selectedIndex].text;
-    const requiereApoyo = Array.from(requiereApoyoRadios).find(r => r.checked).value;
-    const apoyo = requiereApoyo === 'Si' ? opcionApoyoSelect.options[opcionApoyoSelect.selectedIndex].text : 'No requiere';
-    const entrega = modoEntregaSelect.value;
-    const entregaTexto = modoEntregaSelect.options[modoEntregaSelect.selectedIndex].text;
-    
-    // Obtener URL de descarga
-    const urlPlantilla = rutas[tipoCliente]?.[plantilla] || '#';
-
-
-    // 1. Actualizar resumen
-    document.getElementById('nombreConfirm').textContent = nombre;
-    document.getElementById('correoConfirm').textContent = correo;
-    document.getElementById('tipoClienteConfirm').textContent = tipoClienteTexto;
-    document.getElementById('plantillaConfirm').textContent = plantillaTexto;
-    document.getElementById('apoyoConfirm').textContent = apoyo;
-    document.getElementById('entregaConfirm').textContent = entregaTexto;
-    
-    // 2. Definir Acciones de Entrega
-    const accionesDiv = document.getElementById('accionesEntrega');
-    accionesDiv.innerHTML = '';
-    
-    if (entrega === 'descargar' && urlPlantilla !== '#') {
-      // Si eligió descargar, ocultamos el botón de "Finalizar" y mostramos el de descarga
-      accionesDiv.innerHTML = `<a href="${urlPlantilla}" download class="btn primary lg">🔗 DESCARGAR PLANTILLA AHORA</a><p class="nota">El link de descarga solo es temporal. ¡Guárdalo!</p>`;
-      document.getElementById('enviarFormulario').style.display = 'none';
-    } else {
-      // Si eligió correo, mostramos el botón de "Finalizar"
-      accionesDiv.innerHTML = `<p class="nota">Recibirás la plantilla en el correo <strong>${correo}</strong> en unos minutos.</p>`;
-      document.getElementById('enviarFormulario').style.display = 'block';
     }
-  }
 
-  // Finalizar formulario (Simulación de envío final)
-  document.getElementById('enviarFormulario')?.addEventListener('click', () => {
-    alert('✅ ¡Gracias! Tu plantilla ha sido solicitada y será enviada por correo.');
-    modal.style.display = 'none';
-    // Aquí iría el código real para enviar todos los datos al servidor.
+    cerrarBtn?.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    });
+    
+    // Lógica de Mostrar/Ocultar Apoyo (PASO 3)
+    requiereApoyoRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        opcionApoyoDiv.style.display = radio.value === 'Si' ? 'block' : 'none';
+      });
+    });
+
+    // Navegación (Siguiente)
+    nextBtns.forEach(button => {
+      button.addEventListener('click', () => {
+        const currentStepElement = formSteps[currentStep - 1];
+        const inputs = currentStepElement.querySelectorAll('[required]');
+        let allValid = true;
+        
+        // Validación de campos del paso actual
+        inputs.forEach(input => {
+          // Comprueba si el campo está visible y vacío
+          if (input.offsetParent !== null && !input.value.trim()) {
+            allValid = false;
+          }
+        });
+
+        if (allValid) {
+          if (currentStep < formSteps.length) {
+            currentStepElement.classList.remove('active');
+            currentStep++;
+            formSteps[currentStep - 1].classList.add('active');
+            if (currentStep === formSteps.length) {
+              updateConfirmation(); // Ejecuta la función de resumen en el último paso
+            }
+          }
+        } else {
+          alert('⚠️ Por favor, rellena todos los campos marcados como obligatorios.');
+        }
+      });
+    });
+
+    // Navegación (Anterior)
+    prevBtns.forEach(button => {
+      button.addEventListener('click', () => {
+        if (currentStep > 1) {
+          formSteps[currentStep - 1].classList.remove('active');
+          currentStep--;
+          formSteps[currentStep - 1].classList.add('active');
+        }
+      });
+    });
+
+    // Función para actualizar la pantalla de confirmación (Paso 5)
+    function updateConfirmation() {
+      
+      // Mapeo para URLs de descarga
+      const rutas = {
+        'Moral': { 
+          'estado-resultados': 'plantillas/empresa_estado_resultados.xlsx',
+          'flujo-efectivo': 'plantillas/empresa_flujo_efectivo.xlsx',
+          'nomina': 'plantillas/empresa_nomina.xlsx',
+          'contabilidad-general': 'plantillas/empresa_contabilidad_general.xlsx'
+        },
+        'Fisica': { 
+          'estado-resultados': 'plantillas/pf_negocio_estado_resultados.xlsx',
+          'flujo-efectivo': 'plantillas/pf_negocio_flujo_efectivo.xlsx',
+          'nomina': 'plantillas/pf_negocio_nomina.xlsx',
+          'contabilidad-general': 'plantillas/pf_negocio_contabilidad_general.xlsx'
+        },
+        'Independiente': { 
+          'estado-resultados': 'plantillas/pf_ind_estado_resultados.xlsx',
+          'flujo-efectivo': 'plantillas/pf_ind_flujo_efectivo.xlsx',
+          'nomina': 'plantillas/pf_ind_nomina.xlsx',
+          'contabilidad-general': 'plantillas/pf_ind_contabilidad_general.xlsx'
+        }
+      };
+
+      // Lectura de datos
+      const nombre = nombreInput.value;
+      const correo = correoInput.value;
+      const tipoCliente = tipoPersonaSelect.value;
+      const tipoClienteTexto = tipoPersonaSelect.options[tipoPersonaSelect.selectedIndex].text;
+      const plantilla = plantillaSelect.value;
+      const plantillaTexto = plantillaSelect.options[plantillaSelect.selectedIndex].text;
+      const requiereApoyo = Array.from(requiereApoyoRadios).find(r => r.checked).value;
+      const apoyo = requiereApoyo === 'Si' ? opcionApoyoSelect.options[opcionApoyoSelect.selectedIndex].text : 'No requiere';
+      const entrega = modoEntregaSelect.value;
+      const entregaTexto = modoEntregaSelect.options[modoEntregaSelect.selectedIndex].text;
+      
+      // Obtener URL de descarga
+      const urlPlantilla = rutas[tipoCliente]?.[plantilla] || '#';
+
+
+      // 1. Actualizar resumen
+      document.getElementById('nombreConfirm').textContent = nombre;
+      document.getElementById('correoConfirm').textContent = correo;
+      document.getElementById('tipoClienteConfirm').textContent = tipoClienteTexto;
+      document.getElementById('plantillaConfirm').textContent = plantillaTexto;
+      document.getElementById('apoyoConfirm').textContent = apoyo;
+      document.getElementById('entregaConfirm').textContent = entregaTexto;
+      
+      // 2. Definir Acciones de Entrega
+      const accionesDiv = document.getElementById('accionesEntrega');
+      accionesDiv.innerHTML = '';
+      
+      if (entrega === 'descargar' && urlPlantilla !== '#') {
+        // Muestra botón de descarga
+        accionesDiv.innerHTML = `<a href="${urlPlantilla}" download class="btn primary lg">🔗 DESCARGAR PLANTILLA AHORA</a><p class="nota">El link de descarga solo es temporal. ¡Guárdalo!</p>`;
+        document.getElementById('enviarFormulario').style.display = 'none';
+      } else {
+        // Muestra mensaje de correo
+        accionesDiv.innerHTML = `<p class="nota">Recibirás la plantilla en el correo <strong>${correo}</strong> en unos minutos.</p>`;
+        document.getElementById('enviarFormulario').style.display = 'block';
+      }
+    }
+
+    // Finalizar formulario (Simulación de envío final)
+    document.getElementById('enviarFormulario')?.addEventListener('click', () => {
+      alert('✅ ¡Gracias! Tu plantilla ha sido solicitada y será enviada por correo.');
+      modal.style.display = 'none';
+      // Código real de envío de datos
+    });
   });
+  </script>
 
