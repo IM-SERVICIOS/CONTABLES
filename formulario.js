@@ -8,28 +8,28 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const form = document.getElementById('solicitudForm');
     const mensajeExito = document.getElementById('mensajeExito');
-    const mensajeExitoContenido = mensajeExito.querySelector('p'); // Para inyectar el mensaje dinámico
-    const mensajeExitoSocial = mensajeExito.querySelector('.social-icons'); // Para inyectar el botón de descarga o iconos sociales
+    const mensajeExitoTitulo = mensajeExito.querySelector('h3');
+    const mensajeExitoContenido = mensajeExito.querySelector('p'); 
+    const mensajeExitoSocial = mensajeExito.querySelector('.social-icons'); 
 
 
-    // Mapeo de URL de Descarga (🚨 AJUSTA ESTAS RUTAS SEGÚN TU ESTRUCTURA DE ARCHIVOS 🚨)
-    // El formato debe ser: [Valor del select tipoPersona][Valor del select plantillaSolicita]
+    // 🚨 Mapeo de URL de Descarga (¡Asegúrate que las URL sean correctas!) 🚨
     const rutasPlantillas = {
-        'Moral-estado-resultados': 'plantillas/moral_estado_resultados.xlsx',
-        'Moral-flujo-efectivo': 'plantillas/moral_flujo_efectivo.xlsx',
-        'Moral-nomina': 'plantillas/moral_nomina.xlsx',
-        'Moral-contabilidad-general': 'plantillas/moral_contabilidad_general.xlsx',
+        'Moral-estado-resultados': { nombre: 'Estado de Resultados', url: 'plantillas/moral_estado_resultados.xlsx' },
+        'Moral-flujo-efectivo': { nombre: 'Flujo de Efectivo', url: 'plantillas/moral_flujo_efectivo.xlsx' },
+        'Moral-nomina': { nombre: 'Plantilla de Nómina', url: 'plantillas/moral_nomina.xlsx' },
+        'Moral-contabilidad-general': { nombre: 'Contabilidad General', url: 'plantillas/moral_contabilidad_general.xlsx' },
 
-        'Fisica-estado-resultados': 'plantillas/fisica_estado_resultados.xlsx',
-        'Fisica-flujo-efectivo': 'plantillas/fisica_flujo_efectivo.xlsx',
-        'Fisica-nomina': 'plantillas/fisica_nomina.xlsx',
-        'Fisica-contabilidad-general': 'plantillas/fisica_contabilidad_general.xlsx',
+        'Fisica-estado-resultados': { nombre: 'Estado de Resultados', url: 'plantillas/fisica_estado_resultados.xlsx' },
+        'Fisica-flujo-efectivo': { nombre: 'Flujo de Efectivo', url: 'plantillas/fisica_flujo_efectivo.xlsx' },
+        'Fisica-nomina': { nombre: 'Plantilla de Nómina', url: 'plantillas/fisica_nomina.xlsx' },
+        'Fisica-contabilidad-general': { nombre: 'Contabilidad General', url: 'plantillas/fisica_contabilidad_general.xlsx' },
         
-        // Asumiendo que "No sabe" usa las mismas plantillas que Física o unas genéricas:
-        'No sabe-estado-resultados': 'plantillas/generica_estado_resultados.xlsx',
-        'No sabe-flujo-efectivo': 'plantillas/generica_flujo_efectivo.xlsx',
-        'No sabe-nomina': 'plantillas/generica_nomina.xlsx',
-        'No sabe-contabilidad-general': 'plantillas/generica_contabilidad_general.xlsx',
+        // Plantillas genéricas para "No sabe"
+        'No sabe-estado-resultados': { nombre: 'Estado de Resultados Genérico', url: 'plantillas/generica_estado_resultados.xlsx' },
+        'No sabe-flujo-efectivo': { nombre: 'Flujo de Efectivo Genérico', url: 'plantillas/generica_flujo_efectivo.xlsx' },
+        'No sabe-nomina': { nombre: 'Plantilla de Nómina Genérica', url: 'plantillas/generica_nomina.xlsx' },
+        'No sabe-contabilidad-general': { nombre: 'Contabilidad General Genérica', url: 'plantillas/generica_contabilidad_general.xlsx' },
     };
 
 
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateEntregaOptions();
 
 
-    // 3. Manejo del Envío del Formulario
+    // 3. Manejo del Envío del Formulario y Mensaje Final
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -76,6 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const tipoPersona = document.getElementById('tipoPersona').value;
         const plantillaSolicita = document.getElementById('plantillaSolicita').value;
         const modoEntrega = modoEntregaSelect.value; 
+        
+        // Obtener el nombre legible de la plantilla seleccionada
+        const plantillaTexto = document.getElementById('plantillaSolicita').options[document.getElementById('plantillaSolicita').selectedIndex].text;
 
         // Validación de campos obligatorios
         if (!nombre || !correo || !tipoPersona || !plantillaSolicita || !modoEntrega) {
@@ -83,34 +86,39 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Determinar la clave para la URL
+        // Determinar la información de la plantilla
         const urlKey = `${tipoPersona}-${plantillaSolicita}`;
-        const urlDescarga = rutasPlantillas[urlKey];
+        const plantillaInfo = rutasPlantillas[urlKey];
         
         // 💥 LÓGICA DE MENSAJE DINÁMICO Y DESPEDIDA 💥
-        if (modoEntrega === 'descarga' && urlDescarga) {
+
+        if (modoEntrega === 'descarga' && plantillaInfo && plantillaInfo.url) {
             // Modo: DESCARGA
+            
+            // Mensaje profesional
             mensajeExitoContenido.innerHTML = `
-                ¡Tu solicitud fue exitosa! A continuación, puedes **descargar tu plantilla** y usarla de inmediato. 
-                Si tienes dudas, no olvides seguirnos en redes:
+                Gracias por visitar nuestra página. Aquí tienes tu plantilla de: <strong>${plantillaInfo.nombre}</strong>.
+                Esperamos que le sea útil y podamos seguir en contacto en diversos proyectos apoyando a su tranquilidad.
             `;
             
-            // Reemplaza los iconos sociales con el botón de descarga
+            // Inyecta el botón de descarga con el estilo CSS
             mensajeExitoSocial.innerHTML = `
-                <a href="${urlDescarga}" download class="btn primary lg" style="margin-bottom: 15px; display: inline-block;">
-                    ⬇️ Descargar Plantilla Ahora
+                <a href="${plantillaInfo.url}" download class="btn primary lg">
+                    ⬇️ DESCARGAR ${plantillaInfo.nombre.toUpperCase()} AHORA
                 </a>
-                <p style="font-size: 0.9em; color: var(--muted);">Este enlace expira en 5 minutos.</p>
             `;
 
         } else {
-            // Modo: CORREO (Incluye caso en que se forzó a correo por requerir apoyo)
+            // Modo: CORREO (Incluye caso en que se forzó a correo)
+            
+            // Mensaje profesional para correo
             mensajeExitoContenido.innerHTML = `
-                ¡Tu solicitud fue exitosa! Recibirás la plantilla en tu correo <strong>${correo}</strong> 
-                en un plazo de <strong>1 a 48 horas</strong>.
+                Gracias por visitar nuestra página. Recibirás tu plantilla de <strong>${plantillaInfo.nombre}</strong> 
+                en el correo <strong>${correo}</strong> en un plazo de <strong>1 a 48 horas</strong>. 
+                Esperamos que le sea útil y podamos seguir en contacto en diversos proyectos apoyando a su tranquilidad.
             `;
             
-            // Restaura los iconos sociales (asumiendo que estaban en el HTML original)
+            // Restaura los iconos sociales
              mensajeExitoSocial.innerHTML = `
                 <a href="https://instagram.com" target="_blank">📸</a>
                 <a href="https://facebook.com" target="_blank">📘</a>
