@@ -85,7 +85,93 @@ body{
 .catalog-cta .btn{align-self:flex-start}
 
 
-// === FORMULARIO DE SOLICITUD DE PLANTILLA ===
+/* === FORMULARIO DE SOLICITUD DE PLANTILLA === */
+
+.template-form {
+  background: var(--accent-2);
+  padding: 3rem 2rem;
+  border-radius: 18px;
+  max-width: 700px;
+  margin: 4rem auto;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.template-form:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+}
+
+.template-form h2 {
+  font-size: 1.8rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.template-form p {
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.template-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.template-form label {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.template-form input,
+.template-form select,
+.template-form textarea {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.template-form input:focus,
+.template-form select:focus,
+.template-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(57,122,255,0.15);
+}
+
+.template-form button {
+  background: var(--accent);
+  color: #fff;
+  padding: 0.9rem 1.4rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.template-form button:hover {
+  background: #3366ff;
+  transform: translateY(-2px);
+}
+
+.template-form small {
+  display: block;
+  text-align: center;
+  margin-top: 1rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
 
 // --- 1️⃣ Mostrar u ocultar el tipo de apoyo ---
 const radioApoyo = document.querySelectorAll('input[name="requiereApoyo"]');
@@ -167,4 +253,5 @@ window.addEventListener('DOMContentLoaded', () => {
   .catalog-cta{align-items:center;text-align:center}
   .catalog-cta .btn{align-self:center}
 }
+
 
