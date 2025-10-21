@@ -28,9 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'requiereApoyo': 'entry.1802951737', // (Requiere Apoyo)
         
         // CÓDIGOS ASUMIDOS (basados en el orden de las preguntas. ¡REVISAR SI FALLAN!)
-        'opcionApoyo': 'entry.1764658098', // ⚠️ Posible error, si falla cambia este código
-        'modoEntrega': 'entry.1065046571', // ⚠️ Posible error, si falla cambia este código
-        'comentarios': 'entry.839337161', // ⚠️ Posible error, si falla cambia este código
+        'opcionApoyo': 'entry.1464272175', 
+        'modoEntrega': 'entry.793266826', 
+        'comentarios': 'entry.1653561268',
         'timestamp': 'entry.1200000000', // Campo genérico para fecha/hora.
     };
     
@@ -204,3 +204,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 150);
     }
 });
+
