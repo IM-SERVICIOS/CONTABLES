@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 🚨 CONFIGURACIÓN DEL REGISTRO A GOOGLE SHEETS 🚨
     // URL DE ACCIÓN CORREGIDA PARA TU FORMULARIO: 
-    const GOOGLE_FORM_URL = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSd7g5_2X94X3M6u7e954i9uH0y1zS5w21zGqj0O8q6sK1K-7A/formResponse'; 
+    const GOOGLE_FORM_URL = 'https://forms.gle/pZnqsaGf5k5uh5vJ6'; 
     
     // CÓDIGOS ENTRY.XXXXX OBTENIDOS DEL FORMULARIO
     const FIELD_MAP = {
@@ -204,4 +204,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 150);
     }
 });
+
 
