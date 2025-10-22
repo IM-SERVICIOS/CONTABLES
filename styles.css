@@ -543,6 +543,84 @@ body{
   }
 }
 
+/* ==================================== */
+/* ESTILOS DE LA VENTANA DE SELECCIÓN */
+/* ==================================== */
+
+.modal-selector {
+  display: none; /* Oculto por defecto */
+  position: fixed;
+  z-index: 110; /* Z-index más alto que el modal de contacto (100) */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  /* Animación de entrada suave (opcional) */
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.selector-content {
+  background-color: var(--panel);
+  margin: 15% auto; /* Centrado vertical y horizontal */
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 450px; /* Tamaño pequeño y centrado */
+  position: relative;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.selector-content h3 {
+    color: var(--primary);
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+.selector-content p {
+    color: var(--muted);
+    margin-bottom: 25px;
+}
+
+.selector-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.selector-options .btn {
+    width: 100%; /* Botones de ancho completo */
+    font-size: 1rem;
+    padding: 12px 16px;
+}
+
+.close-selector {
+  color: var(--muted);
+  float: right;
+  font-size: 32px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-selector:hover {
+  color: var(--primary);
+}
+
+/* Responsive para la ventana de selección */
+@media (max-width: 600px) {
+  .selector-content {
+    margin: 10% auto;
+    max-width: 90%;
+  }
+}
 
 /* CONTACTO (Original) */
 .contact-form{display:flex;flex-direction:column;gap:12px;max-width:540px}
@@ -567,6 +645,7 @@ body{
   .catalog-cta{align-items:center;text-align:center}
   .catalog-cta .btn{align-self:center}
 }
+
 
 
 
