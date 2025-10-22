@@ -82,7 +82,26 @@ body{
 .carousel .card{min-width:260px;flex:0 0 auto;background:var(--accent-2);padding:16px;border-radius:14px;box-shadow:0 6px 18px rgba(20,20,50,0.04);transition:transform .3s ease,box-shadow .25s}
 .carousel .card:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(20,20,50,0.08)}
 .card-icon{font-size:32px}
-.carousel-btn{background:transparent;border:1px solid rgba(0,0,0,0.06);border-radius:999px;padding:8px 12px;cursor:pointer}
+.carousel-btn {
+  background: var(--panel);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 50%;
+  font-size: 22px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  transition: all .2s ease;
+}
+
+.carousel-btn:hover {
+  background: var(--accent-2);
+  transform: scale(1.08);
+}
+
+
 
 /* CATÁLOGO */
 .catalog-cta{
@@ -277,5 +296,6 @@ body{
   .catalog-cta{align-items:center;text-align:center}
   .catalog-cta .btn{align-self:center}
 }
+
 
 
