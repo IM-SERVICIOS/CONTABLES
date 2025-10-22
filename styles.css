@@ -59,7 +59,7 @@ body{
 }
 
 /* ==================================== */
-/* ESTILOS DE SECCIÓN QUIÉNES SOMOS (NUEVOS) */
+/* ESTILOS DE SECCIÓN QUIÉNES SOMOS  */
 /* ==================================== */
 
 .sobre-container {
@@ -199,7 +199,143 @@ body{
   transform: scale(1.08);
 }
 
+/* ==================================== */
+/* ESTILOS DE SECCIÓN DESCARGA CTA */
+/* ==================================== */
+.download-cta h2 {
+    font-size: 2rem;
+    margin-bottom: 40px;
+    text-align: center;
+    color: var(--primary);
+}
 
+.download-content {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.download-img-wrap {
+    flex: 1 1 45%; /* La imagen ocupa menos espacio */
+    display: flex;
+    justify-content: center;
+}
+
+.plantilla-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+}
+
+.download-text-wrap {
+    flex: 1 1 55%; /* El texto ocupa más espacio */
+}
+
+.download-text-wrap p {
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 15px;
+    font-size: 1.05rem;
+}
+
+.download-text-wrap .cta-title {
+    font-size: 1.25rem;
+    color: var(--primary);
+    margin: 25px 0 15px 0;
+}
+
+.download-text-wrap .cta-btn {
+    margin-top: 15px;
+    /* Ajusta el estilo del botón si es necesario */
+}
+
+/* Responsive para Descarga CTA */
+@media (max-width: 900px) {
+  .download-content {
+    flex-direction: column; /* Apila las columnas en móvil */
+    text-align: center;
+  }
+  
+  .download-img-wrap,
+  .download-text-wrap {
+      flex: 1 1 100%; /* Ocupan todo el ancho */
+  }
+  
+  .download-text-wrap .cta-btn {
+      width: 100%; /* El botón ocupa todo el ancho */
+  }
+}
+/* ==================================== */
+/* ESTILOS DE SECCIÓN GRÁFICA */
+/* ==================================== */
+.tools-chart h2 {
+    font-size: 2rem;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
+    text-align: center;
+}
+
+.tools-chart .lead {
+    font-size: 1.2rem;
+    color: var(--primary);
+    margin-top: 20px;
+    text-align: center;
+}
+
+.chart-image-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+}
+
+.chart-image {
+    max-width: 700px; /* Limita el tamaño de la imagen */
+    width: 100%;
+    height: auto;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15); /* Sombra sutil */
+    border-radius: 10px;
+}
+
+.text-center {
+    text-align: center; /* Útil para centrar texto sin usar Flexbox */
+}
+
+/* ==================================== */
+/* ESTILOS DE SECCIÓN FAQ */
+/* ==================================== */
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.faq-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.faq-item h4 {
+  font-size: 1.1rem;
+  color: var(--primary);
+  margin-bottom: 6px;
+}
+
+.faq-item p {
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive para FAQ */
+@media (max-width: 900px) {
+  .faq-grid {
+    grid-template-columns: 1fr; /* Una sola columna en móvil */
+    gap: 0; /* Espacio entre columnas */
+  }
+}
 
 /* CATÁLOGO */
 .catalog-cta{
@@ -431,6 +567,7 @@ body{
   .catalog-cta{align-items:center;text-align:center}
   .catalog-cta .btn{align-self:center}
 }
+
 
 
 
