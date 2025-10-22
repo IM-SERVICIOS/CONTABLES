@@ -1,5 +1,69 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // ----------------------------------------------------
+    // --- LÓGICA DE LA VENTANA DE SELECCIÓN (SELECTOR) ---
+    // ----------------------------------------------------
+
+    // 1. Declaración de Elementos del Selector
+    const selectorModal = document.getElementById("selectorModal");
+    // Asumiendo que el botón "Solicitar Plantilla" ahora tiene este ID:
+    const selectorBtn = document.getElementById("openSelectorBtn"); 
+    const closeSelector = document.getElementsByClassName("close-selector")[0];
+    const optionFree = document.getElementById("optionFree"); // Botón para ir a la opción gratuita
+    
+    // *** ¡IMPORTANTE! Reemplaza 'myModal' por el ID de tu modal principal, si es diferente ***
+    const mainModal = document.getElementById("myModal"); 
+    
+    // La URL de tu nuevo catálogo
+    const CATALOGO_URL = 'catalogo-adicional.html'; 
+    
+
+    if (selectorBtn && selectorModal && mainModal) {
+        
+        // A. Abrir el Selector
+        selectorBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            selectorModal.style.display = "block";
+        });
+        
+        // B. Cerrar el Selector con (X)
+        closeSelector.addEventListener('click', () => {
+            selectorModal.style.display = "none";
+        });
+        
+        // C. Cerrar el Selector haciendo clic fuera
+        window.addEventListener('click', (event) => {
+            if (event.target === selectorModal) {
+                selectorModal.style.display = "none";
+            }
+        });
+        
+        // D. Opción 1: Plantillas Gratuitas (Abre el Modal Principal)
+        optionFree.addEventListener('click', () => {
+            selectorModal.style.display = "none"; // Cierra el selector
+            mainModal.style.display = "block";   // Abre tu formulario modal
+        });
+        
+        // E. Opción 2: Explorar Opciones Adicionales (Redirección, manejada por el <a> en HTML)
+        // El botón con clase 'outline' ya tiene href="catalogo-adicional.html"
+    }
+
+
+    // ----------------------------------------------------
+    // --- FIN DE LÓGICA DEL SELECTOR ---
+    // ----------------------------------------------------
+
+
+    // 2. Aquí comienza tu código original de formulario (document.addEventListener('DOMContentLoaded', ...))
+    // ... tu código original del formulario sigue aquí ...
+
+}); 
+
+// NOTA: Si tu JS está en un archivo sin el addEventListener, simplemente encierra el código de arriba
+// junto con tu código original dentro de un solo document.addEventListener('DOMContentLoaded', () => { ... });
+
+document.addEventListener('DOMContentLoaded', () => {
+
     // 1. Declaración de Elementos
     const requiereApoyoRadios = document.getElementsByName('requiereApoyo');
     const opcionApoyoDiv = document.getElementById('opcionApoyoDiv');
@@ -204,5 +268,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 150);
     }
 });
+
 
 
