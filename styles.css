@@ -65,7 +65,20 @@ body{
 
 /* SERVICES */
 .carousel-wrap{position:relative;display:flex;align-items:center}
-.carousel{display:flex;gap:18px;overflow:hidden;padding:14px;border-radius:12px}
+.carousel {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 14px;
+  border-radius: 12px;
+}
+
+.carousel .card {
+  scroll-snap-align: start;
+}
+
 .carousel .card{min-width:260px;flex:0 0 auto;background:var(--accent-2);padding:16px;border-radius:14px;box-shadow:0 6px 18px rgba(20,20,50,0.04);transition:transform .3s ease,box-shadow .25s}
 .carousel .card:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(20,20,50,0.08)}
 .card-icon{font-size:32px}
@@ -264,4 +277,5 @@ body{
   .catalog-cta{align-items:center;text-align:center}
   .catalog-cta .btn{align-self:center}
 }
+
 
