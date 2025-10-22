@@ -68,9 +68,8 @@ body{
 .carousel {
   display: flex;
   gap: 18px;
-  overflow-x: auto;
+  overflow-x: auto; /* ✅ permite desplazamiento */
   scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
   padding: 14px;
   border-radius: 12px;
 }
@@ -285,7 +284,7 @@ body{
 .form-actions{display:flex;gap:8px}
 
 /* FOOTER (Original) */
-.footer{padding:20px;text-align:center;color:var(--muted)}
+.footer{padding:23px;text-align:center;color:var(--muted)}
 
 /* RESPONSIVE (Original) */
 @media(max-width:900px){
@@ -296,6 +295,7 @@ body{
   .catalog-cta{align-items:center;text-align:center}
   .catalog-cta .btn{align-self:center}
 }
+
 
 
 
