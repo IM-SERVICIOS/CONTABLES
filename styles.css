@@ -276,7 +276,7 @@ body{
 /* Contenedor flex para formulario + imagen */
 .contact-flex {
   display: flex;
-  gap: 24px;
+  gap: 22px;
   align-items: stretch;
 }
 
@@ -301,7 +301,7 @@ body{
 }
 
 /* Responsive: en móvil se apilan */
-@media (max-width: 900px) {
+@media (max-width: 800px) {
   .contact-flex {
     flex-direction: column;
   }
@@ -335,6 +335,7 @@ body{
   .catalog-cta{align-items:center;text-align:center}
   .catalog-cta .btn{align-self:center}
 }
+
 
 
 
