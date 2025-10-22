@@ -1,122 +1,116 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ----------------------------------------------------
-    // --- LÓGICA DE LA VENTANA DE SELECCIÓN (SELECTOR) ---
-    // ----------------------------------------------------
+    // ====================================================================
+    // 1. CONFIGURACIÓN Y DECLARACIÓN DE ELEMENTOS
+    // ====================================================================
 
-    // 1. Declaración de Elementos del Selector
-    const selectorModal = document.getElementById("selectorModal");
-    // Asumiendo que el botón "Solicitar Plantilla" ahora tiene este ID:
-    const selectorBtn = document.getElementById("openSelectorBtn"); 
-    const closeSelector = document.getElementsByClassName("close-selector")[0];
-    const optionFree = document.getElementById("optionFree"); // Botón para ir a la opción gratuita
-    
-    // *** ¡IMPORTANTE! Reemplaza 'myModal' por el ID de tu modal principal, si es diferente ***
-    const mainModal = document.getElementById("myModal"); 
-    
-    // La URL de tu nuevo catálogo
-    const CATALOGO_URL = 'catalogo-adicional.html'; 
-    
+    // Variables del Modal Principal (Formulario)
+    const mainModal = document.getElementById("myModal"); // *** ¡Asegúrate que el ID de tu modal sea 'myModal'! ***
+    const form = document.getElementById('solicitudForm');
+    const mensajeExito = document.getElementById('mensajeExito');
+    const mensajeExitoTitulo = mensajeExito ? mensajeExito.querySelector('h3') : null;
+    const mensajeExitoContenido = mensajeExito ? mensajeExito.querySelector('p') : null;
+    const mensajeExitoSocial = mensajeExito ? mensajeExito.querySelector('.social-icons') : null;
 
-    if (selectorBtn && selectorModal && mainModal) {
-        
-        // A. Abrir el Selector
-        selectorBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            selectorModal.style.display = "block";
-        });
-        
-        // B. Cerrar el Selector con (X)
-        closeSelector.addEventListener('click', () => {
-            selectorModal.style.display = "none";
-        });
-        
-        // C. Cerrar el Selector haciendo clic fuera
-        window.addEventListener('click', (event) => {
-            if (event.target === selectorModal) {
-                selectorModal.style.display = "none";
-            }
-        });
-        
-        // D. Opción 1: Plantillas Gratuitas (Abre el Modal Principal)
-        optionFree.addEventListener('click', () => {
-            selectorModal.style.display = "none"; // Cierra el selector
-            mainModal.style.display = "block";   // Abre tu formulario modal
-        });
-        
-        // E. Opción 2: Explorar Opciones Adicionales (Redirección, manejada por el <a> en HTML)
-        // El botón con clase 'outline' ya tiene href="catalogo-adicional.html"
-    }
-
-
-    // ----------------------------------------------------
-    // --- FIN DE LÓGICA DEL SELECTOR ---
-    // ----------------------------------------------------
-
-
-    // 2. Aquí comienza tu código original de formulario (document.addEventListener('DOMContentLoaded', ...))
-    // ... tu código original del formulario sigue aquí ...
-
-}); 
-
-// NOTA: Si tu JS está en un archivo sin el addEventListener, simplemente encierra el código de arriba
-// junto con tu código original dentro de un solo document.addEventListener('DOMContentLoaded', () => { ... });
-
-document.addEventListener('DOMContentLoaded', () => {
-
-    // 1. Declaración de Elementos
+    // Variables de Lógica Condicional
     const requiereApoyoRadios = document.getElementsByName('requiereApoyo');
     const opcionApoyoDiv = document.getElementById('opcionApoyoDiv');
     const modoEntregaSelect = document.getElementById('modoEntrega');
     const entregaNota = document.getElementById('entregaNota');
     
-    const form = document.getElementById('solicitudForm');
-    const mensajeExito = document.getElementById('mensajeExito');
-    const mensajeExitoTitulo = mensajeExito.querySelector('h3');
-    const mensajeExitoContenido = mensajeExito.querySelector('p'); 
-    const mensajeExitoSocial = mensajeExito.querySelector('.social-icons'); 
-
+    // Variables de Botones y Selector
+    const btnDescargaDirecta = document.getElementById("openModalBtn"); // Botón: Descargar Ahora (GRATIS)
+    const btnSolicitarSelector = document.getElementById("openSelectorBtn"); // Botón: Solicitar Plantilla (Abre selector)
+    const selectorModal = document.getElementById("selectorModal");
+    const closeSelector = selectorModal ? selectorModal.querySelector(".close-selector") : null;
+    const optionFree = document.getElementById("optionFree"); // Botón interno del selector
 
     // 🚨 CONFIGURACIÓN DEL REGISTRO A GOOGLE SHEETS 🚨
-    // URL DE ACCIÓN CORREGIDA PARA TU FORMULARIO: 
     const GOOGLE_FORM_URL = 'https://forms.gle/pZnqsaGf5k5uh5vJ6'; 
+    const CATALOGO_URL = 'catalogo-adicional.html'; // URL de tu nuevo catálogo
     
-    // CÓDIGOS ENTRY.XXXXX OBTENIDOS DEL FORMULARIO
+    // CÓDIGOS ENTRY.XXXXX
     const FIELD_MAP = {
-        // Códigos confirmados en el código fuente de tu Google Form:
-        'nombre': 'entry.1764658097', // (Nombre Completo)
-        'correo': 'entry.1065046570', // (Correo Electrónico)
-        'tipoPersona': 'entry.839337160', // (Tipo de Persona)
-        'plantillaSolicita': 'entry.1744670085', // (Plantilla que solicita)
-        'usoPlantilla': 'entry.1030386183', // (Uso)
-        'requiereApoyo': 'entry.1802951737', // (Requiere Apoyo)
-        
-        // CÓDIGOS ASUMIDOS (basados en el orden de las preguntas. ¡REVISAR SI FALLAN!)
+        'nombre': 'entry.1764658097', 
+        'correo': 'entry.1065046570',
+        'tipoPersona': 'entry.839337160',
+        'plantillaSolicita': 'entry.1744670085',
+        'usoPlantilla': 'entry.1030386183',
+        'requiereApoyo': 'entry.1802951737',
         'opcionApoyo': 'entry.1464272175', 
         'modoEntrega': 'entry.793266826', 
         'comentarios': 'entry.1653561268',
-        'timestamp': 'entry.1200000000', // Campo genérico para fecha/hora.
+        'timestamp': 'entry.1200000000',
     };
     
-
-    // Mapeo de URL de Descarga (Asegúrate que estas rutas y archivos existan)
+    // Mapeo de URL de Descarga
     const rutasPlantillas = {
         'Moral-estado-resultados': { nombre: 'Estado de Resultados', url: 'plantillas/moral_estado_resultados.xlsx' },
         'Moral-flujo-efectivo': { nombre: 'Flujo de Efectivo', url: 'plantillas/moral_flujo_efectivo.xlsx' },
         'Moral-nomina': { nombre: 'Plantilla de Nómina', url: 'plantillas/moral_nomina.xlsx' },
         'Moral-contabilidad-general': { nombre: 'Contabilidad General', url: 'plantillas/moral_contabilidad_general.xlsx' },
-
         'Fisica-estado-resultados': { nombre: 'Estado de Resultados', url: 'plantillas/fisica_estado_resultados.xlsx' },
         'Fisica-flujo-efectivo': { nombre: 'Flujo de Efectivo', url: 'plantillas/fisica_flujo_efectivo.xlsx' },
         'Fisica-nomina': { nombre: 'Plantilla de Nómina', url: 'plantillas/fisica_nomina.xlsx' },
         'Fisica-contabilidad-general': { nombre: 'Contabilidad General', url: 'plantillas/fisica_contabilidad_general.xlsx' },
-        
         'No sabe-estado-resultados': { nombre: 'Estado de Resultados Genérico', url: 'plantillas/generica_estado_resultados.xlsx' },
         'No sabe-flujo-efectivo': { nombre: 'Flujo de Efectivo Genérico', url: 'plantillas/generica_flujo_efectivo.xlsx' },
         'No sabe-nomina': { nombre: 'Plantilla de Nómina Genérica', url: 'plantillas/generica_nomina.xlsx' },
         'No sabe-contabilidad-general': { nombre: 'Contabilidad General Genérica', url: 'plantillas/generica_contabilidad_general.xlsx' },
     };
 
+
+    // ====================================================================
+    // 2. LÓGICA DE APERTURA DE BOTONES (Selector y Modal Directo)
+    // ====================================================================
+
+    // A. Botón "Descargar Ahora (GRATIS)" - Abre el modal principal directamente
+    if (btnDescargaDirecta && mainModal) {
+        btnDescargaDirecta.addEventListener('click', (e) => {
+            e.preventDefault();
+            mainModal.style.display = "block"; 
+        });
+    }
+
+    // B. Botón "Solicitar Plantilla" - Abre el Selector
+    if (btnSolicitarSelector && selectorModal) {
+        btnSolicitarSelector.addEventListener('click', (e) => {
+            e.preventDefault();
+            selectorModal.style.display = "block";
+        });
+    }
+
+    // C. Manejo del Selector
+    if (selectorModal && mainModal) {
+        // Cierre con (X)
+        if (closeSelector) {
+            closeSelector.addEventListener('click', () => {
+                selectorModal.style.display = "none";
+            });
+        }
+        
+        // Cierre al hacer clic fuera
+        window.addEventListener('click', (event) => {
+            if (event.target === selectorModal) {
+                selectorModal.style.display = "none";
+            }
+        });
+
+        // Opción 'Gratis' en el Selector: Cierra selector y abre el formulario principal
+        if (optionFree) {
+            optionFree.addEventListener('click', () => {
+                selectorModal.style.display = "none"; 
+                mainModal.style.display = "block";   
+            });
+        }
+        
+        // Opción 'Explorar Opciones': Redirecciona (manejado por el <a> en HTML, no necesita JS aquí)
+    }
+
+
+    // ====================================================================
+    // 3. FUNCIONES CORE DEL FORMULARIO ORIGINAL
+    // ====================================================================
 
     // FUNCIÓN PARA ENVIAR DATOS A GOOGLE SHEETS
     const registrarSolicitud = (formData) => {
@@ -136,7 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
         dataToSubmit.append(FIELD_MAP.modoEntrega, formData.modoEntrega);
         dataToSubmit.append(FIELD_MAP.comentarios, formData.comentarios);
 
-
         // Envío de los datos al Google Form
         fetch(GOOGLE_FORM_URL, {
             method: 'POST',
@@ -148,115 +141,125 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    // 2. Lógica Condicional (Apoyo y Modo de Entrega)
+    // Lógica Condicional (Apoyo y Modo de Entrega)
     const updateEntregaOptions = () => {
         const apoyoSiSeleccionado = document.getElementById('apoyoSi')?.checked;
         opcionApoyoDiv.style.display = apoyoSiSeleccionado ? 'block' : 'none';
 
-        const descargaOption = modoEntregaSelect.querySelector('option[value="descarga"]');
+        const descargaOption = modoEntregaSelect ? modoEntregaSelect.querySelector('option[value="descarga"]') : null;
         
-        if (apoyoSiSeleccionado) {
-            // Si requiere apoyo, no puede descargar, se envía por correo
-            descargaOption.style.display = 'none';
-            modoEntregaSelect.value = 'correo';
-            modoEntregaSelect.disabled = true;
-            entregaNota.textContent = '🔒 Si requiere apoyo (tutorial o meet), la plantilla se enviará automáticamente por correo.';
-        } else {
-            // Si NO requiere apoyo, puede elegir
-            descargaOption.style.display = 'block';
-            modoEntregaSelect.disabled = false;
-            
-            if(modoEntregaSelect.value === 'correo' && modoEntregaSelect.disabled === false) {
-                 modoEntregaSelect.value = ''; // Limpia si estaba en 'correo' antes
+        if (descargaOption) { // Asegura que el elemento existe
+            if (apoyoSiSeleccionado) {
+                // Si requiere apoyo, no puede descargar, se envía por correo
+                descargaOption.style.display = 'none';
+                modoEntregaSelect.value = 'correo';
+                modoEntregaSelect.disabled = true;
+                entregaNota.textContent = '🔒 Si requiere apoyo (tutorial o meet), la plantilla se enviará automáticamente por correo.';
+            } else {
+                // Si NO requiere apoyo, puede elegir
+                descargaOption.style.display = 'block';
+                modoEntregaSelect.disabled = false;
+                
+                if(modoEntregaSelect.value === 'correo' && modoEntregaSelect.disabled === false) {
+                    modoEntregaSelect.value = ''; // Limpia si estaba en 'correo' antes
+                }
+                
+                entregaNota.textContent = 'Elige si quieres descargarla inmediatamente o recibirla por email.';
             }
-            
-            entregaNota.textContent = 'Elige si quieres descargarla inmediatamente o recibirla por email.';
         }
     };
     
+    // Asignación de eventos de cambio
     requiereApoyoRadios.forEach(radio => {
         radio.addEventListener('change', updateEntregaOptions);
     });
     
-    updateEntregaOptions();
+    // Ejecutar al inicio
+    if (modoEntregaSelect) {
+        updateEntregaOptions();
+    }
 
 
-    // 3. Manejo del Envío del Formulario y Mensaje Final
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
+    // 4. Manejo del Envío del Formulario (Evento 'submit')
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
 
-        // Obtener valores
-        const requiereApoyoValor = document.querySelector('input[name="requiereApoyo"]:checked')?.value || 'No';
+            // Obtener valores
+            const requiereApoyoValor = document.querySelector('input[name="requiereApoyo"]:checked')?.value || 'No';
 
-        const formData = {
-            nombre: document.getElementById('nombre').value.trim(),
-            correo: document.getElementById('correo').value.trim(),
-            tipoPersona: document.getElementById('tipoPersona').value,
-            plantillaSolicita: document.getElementById('plantillaSolicita').value,
-            usoPlantilla: document.getElementById('usoPlantilla').value.trim(),
-            requiereApoyo: requiereApoyoValor,
-            opcionApoyo: (requiereApoyoValor === 'Si') ? document.getElementById('opcionApoyo').value : 'N/A',
-            modoEntrega: modoEntregaSelect.value, 
-            comentarios: document.getElementById('comentarios').value.trim(),
-        };
+            const formData = {
+                nombre: document.getElementById('nombre').value.trim(),
+                correo: document.getElementById('correo').value.trim(),
+                tipoPersona: document.getElementById('tipoPersona').value,
+                plantillaSolicita: document.getElementById('plantillaSolicita').value,
+                usoPlantilla: document.getElementById('usoPlantilla').value.trim(),
+                requiereApoyo: requiereApoyoValor,
+                opcionApoyo: (requiereApoyoValor === 'Si') ? document.getElementById('opcionApoyo').value : 'N/A',
+                modoEntrega: modoEntregaSelect.value, 
+                comentarios: document.getElementById('comentarios').value.trim(),
+            };
 
-        const plantillaTexto = document.getElementById('plantillaSolicita').options[document.getElementById('plantillaSolicita').selectedIndex].text;
-        
-        // Validación de campos obligatorios
-        if (!formData.nombre || !formData.correo || !formData.tipoPersona || !formData.plantillaSolicita || !formData.usoPlantilla || !formData.modoEntrega) {
-            alert('⚠️ Por favor, complete todos los campos obligatorios y seleccione el modo de entrega.');
-            return;
-        }
-
-        // 💥 PASO CLAVE: REGISTRAR SOLICITUD 💥
-        registrarSolicitud(formData);
-
-        const urlKey = `${formData.tipoPersona}-${formData.plantillaSolicita}`;
-        const plantillaInfo = rutasPlantillas[urlKey];
-
-        mensajeExitoTitulo.textContent = '¡Solicitud Exitosa!';
-
-        if (formData.modoEntrega === 'descarga' && plantillaInfo && plantillaInfo.url) {
-            // Modo: DESCARGA
-            mensajeExitoContenido.innerHTML = `
-                Gracias por visitar nuestra página. Aquí tienes tu plantilla de: <strong>${plantillaInfo.nombre}</strong>.
-                Esperamos que le sea útil y podamos seguir en contacto en diversos proyectos apoyando a su tranquilidad.
-            `;
+            const plantillaSelect = document.getElementById('plantillaSolicita');
+            const plantillaTexto = plantillaSelect.options[plantillaSelect.selectedIndex].text;
             
-            mensajeExitoSocial.innerHTML = `
-                <a href="${plantillaInfo.url}" download class="btn primary lg">
-                    ⬇️ DESCARGAR ${plantillaInfo.nombre.toUpperCase()} AHORA
-                </a>
-            `;
+            // Validación de campos obligatorios
+            if (!formData.nombre || !formData.correo || !formData.tipoPersona || !formData.plantillaSolicita || !formData.usoPlantilla || !formData.modoEntrega) {
+                alert('⚠️ Por favor, complete todos los campos obligatorios y seleccione el modo de entrega.');
+                return;
+            }
 
-        } else {
-            // Modo: CORREO / Requiere Apoyo (siempre va por correo)
-            mensajeExitoContenido.innerHTML = `
-                Gracias por visitar nuestra página. Recibirás tu plantilla de <strong>${plantillaInfo.nombre}</strong> 
-                en el correo <strong>${formData.correo}</strong> en un plazo de <strong>1 a 48 horas</strong>. 
-                Esperamos que le sea útil y podamos seguir en contacto en diversos proyectos apoyando a su tranquilidad.
-            `;
+            // 💥 PASO CLAVE: REGISTRAR SOLICITUD 💥
+            registrarSolicitud(formData);
+
+            const urlKey = `${formData.tipoPersona}-${formData.plantillaSolicita}`;
+            const plantillaInfo = rutasPlantillas[urlKey];
+
+            if (mensajeExitoTitulo) mensajeExitoTitulo.textContent = '¡Solicitud Exitosa!';
+
+            if (formData.modoEntrega === 'descarga' && plantillaInfo && plantillaInfo.url && mensajeExitoContenido && mensajeExitoSocial) {
+                // Modo: DESCARGA
+                mensajeExitoContenido.innerHTML = `
+                    Gracias por visitar nuestra página. Aquí tienes tu plantilla de: <strong>${plantillaInfo.nombre}</strong>.
+                    Esperamos que le sea útil y podamos seguir en contacto en diversos proyectos apoyando a su tranquilidad.
+                `;
+                
+                mensajeExitoSocial.innerHTML = `
+                    <a href="${plantillaInfo.url}" download class="btn primary lg">
+                        ⬇️ DESCARGAR ${plantillaInfo.nombre.toUpperCase()} AHORA
+                    </a>
+                `;
+
+            } else if (mensajeExitoContenido && mensajeExitoSocial) {
+                // Modo: CORREO / Requiere Apoyo (siempre va por correo)
+                mensajeExitoContenido.innerHTML = `
+                    Gracias por visitar nuestra página. Recibirás tu plantilla de <strong>${plantillaInfo ? plantillaInfo.nombre : 'Plantilla Solicitada'}</strong> 
+                    en el correo <strong>${formData.correo}</strong> en un plazo de <strong>1 a 48 horas</strong>. 
+                    Esperamos que le sea útil y podamos seguir en contacto en diversos proyectos apoyando a su tranquilidad.
+                `;
+                
+                mensajeExitoSocial.innerHTML = `
+                    <a href="https://instagram.com" target="_blank">📸</a>
+                    <a href="https://facebook.com" target="_blank">📘</a>
+                    <a href="https://tiktok.com" target="_blank">🎵</a>
+                `;
+            }
+
+            // Mostrar mensaje de éxito
+            form.style.display = 'none';
+            if (mensajeExito) mensajeExito.classList.remove('oculto');
             
-             mensajeExitoSocial.innerHTML = `
-                <a href="https://instagram.com" target="_blank">📸</a>
-                <a href="https://facebook.com" target="_blank">📘</a>
-                <a href="https://tiktok.com" target="_blank">🎵</a>
-            `;
-        }
-
-        form.style.display = 'none';
-        mensajeExito.classList.remove('oculto'); 
-        
-        // Regresa al formulario después de 6 segundos
-        setTimeout(() => {
-            form.reset();
-            updateEntregaOptions(); 
-            mensajeExito.classList.add('oculto'); 
-            form.style.display = 'block';
-        }, 6000); 
-    });
+            // Regresa al formulario después de 6 segundos
+            setTimeout(() => {
+                form.reset();
+                updateEntregaOptions(); 
+                if (mensajeExito) mensajeExito.classList.add('oculto'); 
+                form.style.display = 'block';
+            }, 6000); 
+        });
+    }
     
-    // 4. Animación suave de carga
+    // 5. Animación suave de carga (Mantenido)
     const formContainer = document.querySelector('.form-container');
     if (formContainer) {
         formContainer.style.opacity = 0;
