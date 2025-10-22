@@ -282,12 +282,12 @@ body{
 
 /* Formulario a la izquierda */
 .contact-form-wrapper {
-  flex: 1;
+  flex: 1 1 400px; /* Crece pero mínimo 400px */
 }
 
 /* Imagen a la derecha */
 .contact-img {
-  flex: 1;
+  flex: 1 1 400px; /* Crece pero mínimo 400px */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -297,7 +297,7 @@ body{
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 16px;
+  border-radius: 18px;
 }
 
 /* Responsive: en móvil se apilan */
@@ -309,7 +309,6 @@ body{
     height: auto;
   }
 }
-
 
 
 /* CONTACTO (Original) */
@@ -335,6 +334,7 @@ body{
   .catalog-cta{align-items:center;text-align:center}
   .catalog-cta .btn{align-self:center}
 }
+
 
 
 
