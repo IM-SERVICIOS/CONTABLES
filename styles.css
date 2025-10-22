@@ -273,16 +273,21 @@ body{
   }
 }
 
-/* Contenedor flex para el formulario y la imagen */
+/* Contenedor flex para formulario + imagen */
 .contact-flex {
   display: flex;
   gap: 24px;
-  align-items: stretch; /* La imagen toma la misma altura que el formulario */
+  align-items: stretch;
 }
 
-/* Imagen del contacto */
+/* Formulario a la izquierda */
+.contact-form-wrapper {
+  flex: 1;
+}
+
+/* Imagen a la derecha */
 .contact-img {
-  flex: 1; /* Ocupa el mismo espacio proporcional que el formulario */
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -291,11 +296,11 @@ body{
 .contact-img img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ajusta la imagen al contenedor sin deformarla */
+  object-fit: cover;
   border-radius: 16px;
 }
 
-/* Responsive: en pantallas pequeñas, formulario arriba y imagen debajo */
+/* Responsive: en móvil se apilan */
 @media (max-width: 900px) {
   .contact-flex {
     flex-direction: column;
@@ -304,6 +309,7 @@ body{
     height: auto;
   }
 }
+
 
 
 /* CONTACTO (Original) */
@@ -329,6 +335,7 @@ body{
   .catalog-cta{align-items:center;text-align:center}
   .catalog-cta .btn{align-self:center}
 }
+
 
 
 
