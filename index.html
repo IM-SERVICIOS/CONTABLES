@@ -12,6 +12,37 @@
   <!-- Descripción para SEO -->
   <meta name="description" content="Servicios contables, administrativos y asesoría financiera con soluciones tecnológicas.">
 </head>
+  <script>
+document.addEventListener("DOMContentLoaded", function() {
+  const carousel = document.querySelector(".carousel");
+  const prevBtn = document.querySelector(".carousel-btn.prev");
+  const nextBtn = document.querySelector(".carousel-btn.next");
+
+  if (!carousel || !prevBtn || !nextBtn) return;
+
+  // Cantidad de desplazamiento (en px) por clic
+  const scrollAmount = 280; 
+
+  nextBtn.addEventListener("click", () => {
+    carousel.scrollBy({ left: scrollAmount, behavior: "smooth" });
+  });
+
+  prevBtn.addEventListener("click", () => {
+    carousel.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+  });
+
+  // Opcional: ocultar los botones si se llega al inicio o fin
+  const updateButtons = () => {
+    const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+    prevBtn.style.opacity = carousel.scrollLeft > 0 ? 1 : 0.3;
+    nextBtn.style.opacity = carousel.scrollLeft < maxScrollLeft ? 1 : 0.3;
+  };
+
+  carousel.addEventListener("scroll", updateButtons);
+  updateButtons();
+});
+</script>
+
 <body>
   <!-- ====== MENÚ DE NAVEGACIÓN (NAV) ====== -->
   <!-- Contiene enlaces internos que redirigen a secciones de esta misma página -->
