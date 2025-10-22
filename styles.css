@@ -58,7 +58,12 @@ body{
   border-radius:12px;
 }
 
+/* ==================================== */
+/* ESTILOS DE SECCIÓN QUIÉNES SOMOS (NUEVOS) */
+/* ==================================== */
+
 .sobre-container {
+  /* Habilita Flexbox, centra el contenido y añade espacio */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -69,8 +74,7 @@ body{
 .sobre-intro {
   /* Limita el ancho del texto principal */
   max-width: 800px;
-  /* Asegura que el texto dentro de este div esté centrado */
-  text-align: center; /* <<< AÑADE ESTA LÍNEA (o verifica que esté) */
+  text-align: center; /* Asegura el centrado de todo el texto */
 }
 
 .sobre-intro .sobre-icon {
@@ -78,6 +82,12 @@ body{
   width: 60px;
   height: 60px;
   margin: 0 auto 16px auto; /* Centra el ícono */
+}
+
+.sobre-intro img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Ajusta la imagen al contenedor */
 }
 
 .sobre-intro h2 {
@@ -92,22 +102,29 @@ body{
   line-height: 1.7;
 }
 
-/* Valores: Misión, Visión, Valores */
+/* Valores: Misión, Visión, Valores (Las tarjetas) */
 .sobre-values {
   display: flex;
   gap: 24px;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-wrap: wrap; /* Permite que las tarjetas se envuelvan */
+  justify-content: center; /* Centra las tarjetas horizontalmente */
+  width: 100%;
 }
 
 .value-card {
-  flex: 1 1 250px;
+  /* Configura el tamaño base y el crecimiento de la tarjeta */
+  flex: 1 1 250px; /* Base de 250px, puede crecer y encogerse */
   max-width: 300px;
-  background: var(--accent-2);
+  
+  /* Estilos de la tarjeta */
+  background: var(--accent-2); 
   padding: 24px;
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  
+  /* Transiciones para el efecto hover */
   transition: transform 0.3s, box-shadow 0.3s;
+  text-align: center; 
 }
 
 .value-card h3 {
@@ -122,17 +139,20 @@ body{
   line-height: 1.6;
 }
 
-/* Hover efecto sutil */
+/* Hover: efecto sutil de elevación */
 .value-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  transform: translateY(-4px); /* Levanta la tarjeta ligeramente */
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08); /* Sombra más pronunciada */
 }
 
-/* Responsive */
+/* Responsive (sección Quiénes Somos) */
 @media (max-width: 900px) {
   .sobre-values {
     flex-direction: column;
     gap: 20px;
+  }
+  .value-card {
+      max-width: 100%;
   }
 }
 
@@ -411,6 +431,7 @@ body{
   .catalog-cta{align-items:center;text-align:center}
   .catalog-cta .btn{align-self:center}
 }
+
 
 
 
