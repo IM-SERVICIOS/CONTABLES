@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ====================================================================
 
     // Variables del Modal Principal (Formulario)
-    const mainModal = document.getElementById("myModal"); // *** ¡Asegúrate que el ID de tu modal sea 'myModal'! ***
+    const mainModal = document.getElementById("modalPlantilla"); // *** ¡CORREGIDO! Usa el ID real de tu HTML ***
     const form = document.getElementById('solicitudForm');
     const mensajeExito = document.getElementById('mensajeExito');
     const mensajeExitoTitulo = mensajeExito ? mensajeExito.querySelector('h3') : null;
@@ -271,6 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 150);
     }
 });
+
 
 
 
