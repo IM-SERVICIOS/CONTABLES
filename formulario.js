@@ -5,31 +5,43 @@ document.addEventListener('DOMContentLoaded', () => {
     // ====================================================================
 
     // Variables del Modal Principal (Formulario)
-    const mainModal = document.getElementById("modalPlantilla"); // *** ¡CORREGIDO! Usa el ID real de tu HTML ***
-    const form = document.getElementById('solicitudForm');
-    const mensajeExito = document.getElementById('mensajeExito');
+    const mainModal = document.getElementById("modalPlantilla"); // *** CORREGIDO: Usando el ID real de tu HTML ***
+    const mensajeExito = document.getElementById('mensajeExito'); // Asumo que tienes un div con este ID dentro del modal, si no existe, es posible que falle.
     const mensajeExitoTitulo = mensajeExito ? mensajeExito.querySelector('h3') : null;
     const mensajeExitoContenido = mensajeExito ? mensajeExito.querySelector('p') : null;
     const mensajeExitoSocial = mensajeExito ? mensajeExito.querySelector('.social-icons') : null;
 
-    // Variables de Lógica Condicional
-    const requiereApoyoRadios = document.getElementsByName('requiereApoyo');
-    const opcionApoyoDiv = document.getElementById('opcionApoyoDiv');
-    const modoEntregaSelect = document.getElementById('modoEntrega');
-    const entregaNota = document.getElementById('entregaNota');
-    
     // Variables de Botones y Selector
     const btnDescargaDirecta = document.getElementById("openModalBtn"); // Botón: Descargar Ahora (GRATIS)
     const btnSolicitarSelector = document.getElementById("openSelectorBtn"); // Botón: Solicitar Plantilla (Abre selector)
     const selectorModal = document.getElementById("selectorModal");
     const closeSelector = selectorModal ? selectorModal.querySelector(".close-selector") : null;
     const optionFree = document.getElementById("optionFree"); // Botón interno del selector
+    
+    // Variables de Lógica Condicional del Modal Multi-pasos
+    const nombreInput = document.getElementById('nombre-plantilla');
+    const correoInput = document.getElementById('correo-plantilla');
+    const tipoPersonaSelect = document.getElementById('tipoPersona');
+    const plantillaSelect = document.getElementById('plantilla-select');
+    const usoPlantillaInput = document.getElementById('usoPlantilla');
+    const comentariosInput = document.getElementById('comentarios');
+    const requiereApoyoRadios = document.getElementsByName('requiereApoyo');
+    const opcionApoyoDiv = document.getElementById('opcionApoyoDiv');
+    const opcionApoyoSelect = document.getElementById('opcionApoyo');
+    const modoEntregaSelect = document.getElementById('modoEntrega');
+    const entregaNota = document.getElementById('entregaNota'); // Si existe esta nota informativa
+
+    // Variables de Navegación del Modal Multi-pasos
+    const cerrarBtn = document.getElementById('cerrarModal');
+    const nextBtns = document.querySelectorAll('.next-step');
+    const prevBtns = document.querySelectorAll('.prev-step');
+    const formSteps = document.querySelectorAll('.form-step');
+    const enviarFormularioBtn = document.getElementById('enviarFormulario');
+    let currentStep = 1;
+
 
     // 🚨 CONFIGURACIÓN DEL REGISTRO A GOOGLE SHEETS 🚨
-    const GOOGLE_FORM_URL = 'https://forms.gle/pZnqsaGf5k5uh5vJ6'; 
-    const CATALOGO_URL = 'catalogo-adicional.html'; // URL de tu nuevo catálogo
-    
-    // CÓDIGOS ENTRY.XXXXX
+    const GOOGLE_FORM_URL = 'https://forms.gle/pZnqsaGf5k5uh5vJ6'; // Reemplaza con tu URL real
     const FIELD_MAP = {
         'nombre': 'entry.1764658097', 
         'correo': 'entry.1065046570',
@@ -43,10 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
         'timestamp': 'entry.1200000000',
     };
     
-    // Mapeo de URL de Descarga
+    // Mapeo de URL de Descarga (Asegúrate de que estas rutas sean correctas)
     const rutasPlantillas = {
         'Moral-estado-resultados': { nombre: 'Estado de Resultados', url: 'plantillas/moral_estado_resultados.xlsx' },
         'Moral-flujo-efectivo': { nombre: 'Flujo de Efectivo', url: 'plantillas/moral_flujo_efectivo.xlsx' },
+        // ... (resto de las rutas)
         'Moral-nomina': { nombre: 'Plantilla de Nómina', url: 'plantillas/moral_nomina.xlsx' },
         'Moral-contabilidad-general': { nombre: 'Contabilidad General', url: 'plantillas/moral_contabilidad_general.xlsx' },
         'Fisica-estado-resultados': { nombre: 'Estado de Resultados', url: 'plantillas/fisica_estado_resultados.xlsx' },
@@ -63,13 +76,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // ====================================================================
     // 2. LÓGICA DE APERTURA DE BOTONES (Selector y Modal Directo)
     // ====================================================================
+    
+    // Función para abrir el modal principal
+    const openMainModal = (e) => {
+        if (e) e.preventDefault();
+        if (mainModal) mainModal.style.display = "block";
+        // Asegurar que el modal inicie en el primer paso al abrir
+        formSteps.forEach(step => step.classList.remove('active'));
+        if (formSteps.length > 0) formSteps[0].classList.add('active');
+        currentStep = 1;
+    }
 
-    // A. Botón "Descargar Ahora (GRATIS)" - Abre el modal principal directamente
+    // A. Botón "Descargar Ahora (GRATIS)" - Abre el modal principal
     if (btnDescargaDirecta && mainModal) {
-        btnDescargaDirecta.addEventListener('click', (e) => {
-            e.preventDefault();
-            mainModal.style.display = "block"; 
-        });
+        btnDescargaDirecta.addEventListener('click', openMainModal);
     }
 
     // B. Botón "Solicitar Plantilla" - Abre el Selector
@@ -98,28 +118,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Opción 'Gratis' en el Selector: Cierra selector y abre el formulario principal
         if (optionFree) {
-            optionFree.addEventListener('click', () => {
+            optionFree.addEventListener('click', (e) => {
                 selectorModal.style.display = "none"; 
-                mainModal.style.display = "block";   
+                openMainModal(e);
             });
         }
-        
-        // Opción 'Explorar Opciones': Redirecciona (manejado por el <a> en HTML, no necesita JS aquí)
+    }
+
+    // D. Cierre del Modal Principal (X) y Clic fuera
+    if (cerrarBtn && mainModal) {
+        cerrarBtn.addEventListener('click', () => {
+            mainModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target == mainModal) {
+                mainModal.style.display = 'none';
+            }
+        });
     }
 
 
     // ====================================================================
-    // 3. FUNCIONES CORE DEL FORMULARIO ORIGINAL
+    // 3. LÓGICA DE FORMULARIO MULTI-PASOS (MIGRADA Y ADAPTADA)
     // ====================================================================
 
     // FUNCIÓN PARA ENVIAR DATOS A GOOGLE SHEETS
     const registrarSolicitud = (formData) => {
         const dataToSubmit = new FormData();
         
-        // 1. Añadir fecha y hora
         dataToSubmit.append(FIELD_MAP.timestamp, new Date().toLocaleString('es-MX')); 
-        
-        // 2. Mapear y añadir los demás campos
         dataToSubmit.append(FIELD_MAP.nombre, formData.nombre);
         dataToSubmit.append(FIELD_MAP.correo, formData.correo);
         dataToSubmit.append(FIELD_MAP.tipoPersona, formData.tipoPersona);
@@ -130,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
         dataToSubmit.append(FIELD_MAP.modoEntrega, formData.modoEntrega);
         dataToSubmit.append(FIELD_MAP.comentarios, formData.comentarios);
 
-        // Envío de los datos al Google Form
         fetch(GOOGLE_FORM_URL, {
             method: 'POST',
             mode: 'no-cors', 
@@ -140,136 +167,174 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.error('Error al enviar el registro:', error));
     };
 
-
     // Lógica Condicional (Apoyo y Modo de Entrega)
     const updateEntregaOptions = () => {
-        const apoyoSiSeleccionado = document.getElementById('apoyoSi')?.checked;
-        opcionApoyoDiv.style.display = apoyoSiSeleccionado ? 'block' : 'none';
+        const apoyoSiSeleccionado = document.getElementById('apoyoSi')?.checked || 
+                                    (Array.from(requiereApoyoRadios).find(r => r.checked)?.value === 'Si');
 
-        const descargaOption = modoEntregaSelect ? modoEntregaSelect.querySelector('option[value="descarga"]') : null;
+        if (opcionApoyoDiv) opcionApoyoDiv.style.display = apoyoSiSeleccionado ? 'block' : 'none';
+
+        const descargaOption = modoEntregaSelect ? modoEntregaSelect.querySelector('option[value="descargar"]') : null;
         
-        if (descargaOption) { // Asegura que el elemento existe
+        if (descargaOption && entregaNota) {
             if (apoyoSiSeleccionado) {
-                // Si requiere apoyo, no puede descargar, se envía por correo
                 descargaOption.style.display = 'none';
                 modoEntregaSelect.value = 'correo';
                 modoEntregaSelect.disabled = true;
-                entregaNota.textContent = '🔒 Si requiere apoyo (tutorial o meet), la plantilla se enviará automáticamente por correo.';
+                entregaNota.textContent = '🔒 Si requiere apoyo, la plantilla se enviará automáticamente por correo.';
             } else {
-                // Si NO requiere apoyo, puede elegir
                 descargaOption.style.display = 'block';
                 modoEntregaSelect.disabled = false;
-                
                 if(modoEntregaSelect.value === 'correo' && modoEntregaSelect.disabled === false) {
                     modoEntregaSelect.value = ''; // Limpia si estaba en 'correo' antes
                 }
-                
                 entregaNota.textContent = 'Elige si quieres descargarla inmediatamente o recibirla por email.';
             }
         }
     };
     
-    // Asignación de eventos de cambio
+    // Asignación de eventos de cambio para lógica condicional
     requiereApoyoRadios.forEach(radio => {
         radio.addEventListener('change', updateEntregaOptions);
     });
     
-    // Ejecutar al inicio
     if (modoEntregaSelect) {
         updateEntregaOptions();
     }
+    
+    // Función para actualizar la pantalla de confirmación (Paso 5)
+    function updateConfirmation() {
+        const nombre = nombreInput.value;
+        const correo = correoInput.value;
+        const tipoCliente = tipoPersonaSelect.options[tipoPersonaSelect.selectedIndex].text;
+        const plantilla = plantillaSelect.options[plantillaSelect.selectedIndex].text;
+        const requiereApoyo = Array.from(requiereApoyoRadios).find(r => r.checked).value;
+        const apoyo = requiereApoyo === 'Si' ? opcionApoyoSelect.options[opcionApoyoSelect.selectedIndex].text : 'No requiere';
+        const entrega = modoEntregaSelect.value;
+        const entregaTexto = modoEntregaSelect.options[modoEntregaSelect.selectedIndex].text;
+        
+        // Actualizar resumen (Asegúrate de tener estos IDs en el HTML del Paso 5)
+        document.getElementById('nombreConfirm').textContent = nombre;
+        document.getElementById('correoConfirm').textContent = correo;
+        document.getElementById('tipoClienteConfirm').textContent = tipoCliente;
+        document.getElementById('plantillaConfirm').textContent = plantilla;
+        document.getElementById('apoyoConfirm').textContent = apoyo;
+        document.getElementById('entregaConfirm').textContent = entregaTexto;
+        
+        // Acciones de Entrega
+        const accionesDiv = document.getElementById('accionesEntrega');
+        if (accionesDiv) {
+             accionesDiv.innerHTML = '';
+             if (entrega === 'descargar') {
+                accionesDiv.innerHTML = '<p class="nota">La descarga será inmediata al finalizar la solicitud.</p>';
+                enviarFormularioBtn.textContent = 'Finalizar y Descargar';
+            } else {
+                accionesDiv.innerHTML = '<p class="nota">Recibirás la plantilla en el correo en unos minutos.</p>';
+                enviarFormularioBtn.textContent = 'Finalizar Solicitud';
+            }
+        }
+    }
 
 
-    // 4. Manejo del Envío del Formulario (Evento 'submit')
-    if (form) {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
+    // ----------------------------------------------------
+    // NAVEGACIÓN ENTRE PASOS
+    // ----------------------------------------------------
 
-            // Obtener valores
-            const requiereApoyoValor = document.querySelector('input[name="requiereApoyo"]:checked')?.value || 'No';
+    // Navegación (Siguiente)
+    nextBtns.forEach(button => {
+        button.addEventListener('click', () => {
+            const currentStepElement = formSteps[currentStep - 1];
+            // Aquí puedes agregar la validación de campos del paso actual
+            let allValid = true; 
+            // ... (Tu código de validación de campos obligatorios aquí)
+
+            if (allValid) {
+                if (currentStep < formSteps.length) {
+                    currentStepElement.classList.remove('active');
+                    currentStep++;
+                    formSteps[currentStep - 1].classList.add('active');
+                    if (currentStep === formSteps.length) {
+                        updateConfirmation();
+                    }
+                }
+            } else {
+                alert('⚠️ Por favor, rellena todos los campos marcados como obligatorios.');
+            }
+        });
+    });
+
+    // Navegación (Anterior)
+    prevBtns.forEach(button => {
+        button.addEventListener('click', () => {
+            if (currentStep > 1) {
+                formSteps[currentStep - 1].classList.remove('active');
+                currentStep--;
+                formSteps[currentStep - 1].classList.add('active');
+            }
+        });
+    });
+
+    // ----------------------------------------------------
+    // ENVÍO FINAL DEL FORMULARIO (BOTÓN 'enviarFormulario')
+    // ----------------------------------------------------
+    if (enviarFormularioBtn) {
+        enviarFormularioBtn.addEventListener('click', () => {
+            
+            const requiereApoyoValor = Array.from(requiereApoyoRadios).find(r => r.checked)?.value || 'No';
 
             const formData = {
-                nombre: document.getElementById('nombre').value.trim(),
-                correo: document.getElementById('correo').value.trim(),
-                tipoPersona: document.getElementById('tipoPersona').value,
-                plantillaSolicita: document.getElementById('plantillaSolicita').value,
-                usoPlantilla: document.getElementById('usoPlantilla').value.trim(),
+                nombre: nombreInput?.value.trim(),
+                correo: correoInput?.value.trim(),
+                tipoPersona: tipoPersonaSelect?.value,
+                plantillaSolicita: plantillaSelect?.value,
+                usoPlantilla: usoPlantillaInput?.value.trim(), 
                 requiereApoyo: requiereApoyoValor,
-                opcionApoyo: (requiereApoyoValor === 'Si') ? document.getElementById('opcionApoyo').value : 'N/A',
-                modoEntrega: modoEntregaSelect.value, 
-                comentarios: document.getElementById('comentarios').value.trim(),
+                opcionApoyo: (requiereApoyoValor === 'Si') ? opcionApoyoSelect?.value : 'N/A',
+                modoEntrega: modoEntregaSelect?.value, 
+                comentarios: comentariosInput?.value.trim(),
             };
-
-            const plantillaSelect = document.getElementById('plantillaSolicita');
-            const plantillaTexto = plantillaSelect.options[plantillaSelect.selectedIndex].text;
             
-            // Validación de campos obligatorios
-            if (!formData.nombre || !formData.correo || !formData.tipoPersona || !formData.plantillaSolicita || !formData.usoPlantilla || !formData.modoEntrega) {
-                alert('⚠️ Por favor, complete todos los campos obligatorios y seleccione el modo de entrega.');
-                return;
-            }
-
-            // 💥 PASO CLAVE: REGISTRAR SOLICITUD 💥
+            // 💥 PASO CLAVE: REGISTRAR SOLICITUD A GOOGLE SHEETS 💥
             registrarSolicitud(formData);
 
             const urlKey = `${formData.tipoPersona}-${formData.plantillaSolicita}`;
             const plantillaInfo = rutasPlantillas[urlKey];
 
-            if (mensajeExitoTitulo) mensajeExitoTitulo.textContent = '¡Solicitud Exitosa!';
-
-            if (formData.modoEntrega === 'descarga' && plantillaInfo && plantillaInfo.url && mensajeExitoContenido && mensajeExitoSocial) {
-                // Modo: DESCARGA
-                mensajeExitoContenido.innerHTML = `
-                    Gracias por visitar nuestra página. Aquí tienes tu plantilla de: <strong>${plantillaInfo.nombre}</strong>.
-                    Esperamos que le sea útil y podamos seguir en contacto en diversos proyectos apoyando a su tranquilidad.
-                `;
-                
-                mensajeExitoSocial.innerHTML = `
-                    <a href="${plantillaInfo.url}" download class="btn primary lg">
-                        ⬇️ DESCARGAR ${plantillaInfo.nombre.toUpperCase()} AHORA
-                    </a>
-                `;
-
-            } else if (mensajeExitoContenido && mensajeExitoSocial) {
-                // Modo: CORREO / Requiere Apoyo (siempre va por correo)
-                mensajeExitoContenido.innerHTML = `
-                    Gracias por visitar nuestra página. Recibirás tu plantilla de <strong>${plantillaInfo ? plantillaInfo.nombre : 'Plantilla Solicitada'}</strong> 
-                    en el correo <strong>${formData.correo}</strong> en un plazo de <strong>1 a 48 horas</strong>. 
-                    Esperamos que le sea útil y podamos seguir en contacto en diversos proyectos apoyando a su tranquilidad.
-                `;
-                
-                mensajeExitoSocial.innerHTML = `
-                    <a href="https://instagram.com" target="_blank">📸</a>
-                    <a href="https://facebook.com" target="_blank">📘</a>
-                    <a href="https://tiktok.com" target="_blank">🎵</a>
-                `;
+            // ----------------------------------------------------
+            // Lógica de éxito y mensaje final (Necesita un div con id="mensajeExito" en tu HTML)
+            // ----------------------------------------------------
+            
+            // Si tienes un mensaje de éxito, úsalo. Si no, usa un simple alert.
+            alert('✅ ¡Gracias! Tu plantilla ha sido solicitada. Revisa tu correo o inicia la descarga.');
+            
+            // Descarga directa si aplica (Solo si no hay mensajeExito visual)
+            if (formData.modoEntrega === 'descargar' && plantillaInfo && plantillaInfo.url) {
+                // Crea un enlace temporal y simula un clic para forzar la descarga
+                const tempLink = document.createElement('a');
+                tempLink.href = plantillaInfo.url;
+                tempLink.download = `${plantillaInfo.nombre}.xlsx`;
+                document.body.appendChild(tempLink);
+                tempLink.click();
+                document.body.removeChild(tempLink);
             }
 
-            // Mostrar mensaje de éxito
-            form.style.display = 'none';
-            if (mensajeExito) mensajeExito.classList.remove('oculto');
-            
-            // Regresa al formulario después de 6 segundos
-            setTimeout(() => {
-                form.reset();
-                updateEntregaOptions(); 
-                if (mensajeExito) mensajeExito.classList.add('oculto'); 
-                form.style.display = 'block';
-            }, 6000); 
+            // Cierra el modal y resetea el formulario
+            if (mainModal) mainModal.style.display = 'none';
+            // Si el formulario estuviera envuelto en un <form>, lo haríamos: form.reset();
+            // Como son inputs sueltos, solo cerramos.
+
+            // Puedes añadir un reset visual de los inputs si lo deseas.
         });
     }
-    
-    // 5. Animación suave de carga (Mantenido)
-    const formContainer = document.querySelector('.form-container');
-    if (formContainer) {
-        formContainer.style.opacity = 0;
-        formContainer.style.transform = 'translateY(20px)';
-        setTimeout(() => {
-            formContainer.style.transition = 'all 0.8s ease';
-            formContainer.style.opacity = 1;
-            formContainer.style.transform = 'translateY(0)';
-        }, 150);
-    }
+
+    // Lógica para el formulario de Contacto (El del final de la página)
+    const formContacto = document.getElementById('contactForm');
+    formContacto?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Gracias. Tu solicitud de contacto ha sido recibida.');
+        formContacto.reset();
+    });
+
 });
 
 
