@@ -413,7 +413,16 @@ if (carousel && prevBtn && nextBtn) {
   // --- CONTROL DEL MODAL MULTI-PASOS (PLANTILLA) ---
   // =========================================================
   const modal = document.getElementById('modalPlantilla');
-  const abrirBtn = document.getElementById('abrirPlantillaModal');
+// --- ABRIR MODAL (corrige ambos botones) ---
+const abrirBtns = document.querySelectorAll('#openModalBtn, #openSelectorBtn');
+
+abrirBtns.forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    modal.style.display = 'block';
+  });
+});
+
   const cerrarBtn = document.getElementById('cerrarModal');
   const nextBtns = document.querySelectorAll('.next-step');
   const prevBtns = document.querySelectorAll('.prev-step');
