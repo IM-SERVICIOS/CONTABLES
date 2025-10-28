@@ -89,15 +89,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // A. Botón "Descargar Ahora (GRATIS)" - Abre el modal principal
     if (btnDescargaDirecta && mainModal) {
-        btnDescargaDirecta.addEventListener('click', openMainModal);
+        btnDescargaDirecta.addEventListener('click', (e) => { // CAMBIAMOS openMainModal por una función anónima
+            if (e) e.preventDefault();
+            
+            // 1. Abrir el modal principal
+            if (mainModal) mainModal.style.display = "block";
+            
+            // 2. Asegurar que el modal inicie en el primer paso
+            formSteps.forEach(step => step.classList.remove('active'));
+            if (formSteps.length > 0) formSteps[0].classList.add('active');
+            currentStep = 1;
+
+            // 🌟🌟🌟 MODIFICACIÓN CLAVE: PRE-SELECCIONAR PLANTILLA GRATUITA 🌟🌟🌟
+            // Asumiendo que 'flujo-efectivo' es la plantilla que quieres dar GRATIS
+            if (plantillaSelect) {
+                 plantillaSelect.value = 'flujo-efectivo'; 
+            }
+            // Opcional: Deshabilitar el selector de plantilla para que el usuario no cambie
+            // if (plantillaSelect) {
+            //      plantillaSelect.disabled = true; 
+            // }
+
+        });
     }
 
-    // B. Botón "Solicitar Plantilla" - Abre el Selector
+// B. Botón "Solicitar Plantilla" - Abre el Selector
     if (btnSolicitarSelector && selectorModal) {
         btnSolicitarSelector.addEventListener('click', (e) => {
             e.preventDefault();
+            // 🌟 Limpiar la pre-selección de plantilla
+            if (plantillaSelect) {
+                 plantillaSelect.value = ''; 
+                 plantillaSelect.disabled = false; // Asegura que esté habilitado para elegir
+            }
             selectorModal.style.display = "block";
         });
+    }
     }
 
     // C. Manejo del Selector
@@ -336,6 +363,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
 
 
 
