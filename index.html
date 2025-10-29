@@ -216,7 +216,7 @@
         <div id="formPlantilla">
 
             <div class="form-step active" data-step="1">
-                <h2>Paso 1: ¿A dónde enviamos la plantilla?</h2>
+                <h2>Paso 1: ¿A dónde enviamos la información?</h2>
                 <p>Necesitamos tu nombre y correo para registrar tu solicitud.</p>
 
                 <label for="nombre-plantilla">Nombre Completo <span class="required">*</span></label>
@@ -231,78 +231,58 @@
             </div>
 
             <div class="form-step" data-step="2">
-                <h2>Paso 2: Selecciona tu Plantilla Ideal</h2>
-                <p>Elige el formato que más se adapte a tus necesidades. La plantilla gratuita es "Flujo de efectivo".</p>
-                
-                <div class="plantilla-list-grid">
-                    <div class="plantilla-option-card" data-plantilla="flujo-efectivo" data-nombre="Flujo de Efectivo">
-                        <h3>Flujo de Efectivo 🆓</h3>
-                        <p>Control de ingresos y egresos diarios, ideal para PyMES y emprendedores.</p>
-                        <button type="button" class="btn primary select-plantilla-btn">Seleccionar</button>
-                    </div>
+                <h2>Paso 2: ¿Qué tipo de persona eres?</h2>
+                <p>Esto nos permite mostrarte las plantillas adecuadas para ti.</p>
 
-                    <div class="plantilla-option-card" data-plantilla="estado-resultados" data-nombre="Estado de Resultados">
-                        <h3>Estado de Resultados</h3>
-                        <p>Calcula la utilidad o pérdida de tu negocio en un periodo específico.</p>
-                        <button type="button" class="btn outline select-plantilla-btn">Seleccionar</button>
-                    </div>
-                    
-                    <div class="plantilla-option-card" data-plantilla="nomina" data-nombre="Cálculo de Nómina">
-                        <h3>Cálculo de Nómina</h3>
-                        <p>Formato para calcular sueldos, deducciones e impuestos de tus empleados.</p>
-                        <button type="button" class="btn outline select-plantilla-btn">Seleccionar</button>
-                    </div>
-
-                    <div class="plantilla-option-card" data-plantilla="contabilidad-general" data-nombre="Control Contable General">
-                        <h3>Contabilidad General</h3>
-                        <p>Registro completo de activos, pasivos y capital de tu empresa.</p>
-                        <button type="button" class="btn outline select-plantilla-btn">Seleccionar</button>
-                    </div>
-                </div>
-                
-                <div class="nav-buttons">
-                    <button class="prev-step btn outline">Anterior</button>
-                </div>
-            </div>
-
-            <div class="form-step" data-step="3">
-                <h2>Paso 3: Tipo de Cliente y Uso</h2>
-                
-                <label for="tipoPersona">¿Eres persona física o moral? <span class="required">*</span></label>
+                <label for="tipoPersona">Selecciona tu tipo de persona <span class="required">*</span></label>
                 <select id="tipoPersona" name="tipoPersona" required>
                     <option value="">Seleccione...</option>
                     <option value="Fisica">Persona Física</option>
                     <option value="Moral">Persona Moral</option>
-                    <option value="No sabe">No sé por el momento</option>
                 </select>
-                
-                <label for="usoPlantilla">¿Cuál será el principal uso de la plantilla? <span class="required">*</span></label>
-                <textarea type="text" id="usoPlantilla" name="usoPlantilla" placeholder="Describa brevemente (ej. 'Control de ingresos mensuales')" required></textarea>
-                <small class="nota">ℹ️ Esta información nos ayuda a registrar el tipo de archivo que necesitas.</small>
                 
                 <div class="nav-buttons">
                     <button class="prev-step btn outline">Anterior</button>
-                    <button class="next-step btn primary">Siguiente</button>
+                    <button class="next-step btn primary">Explorar Plantillas</button> 
                 </div>
             </div>
 
+            <div class="form-step" data-step="3">
+                <h2 id="tituloPaso3">Paso 3: Plantillas Disponibles para <span id="tipoPersonaDisplay"></span></h2>
+                <p>Elige una plantilla. Las **Gratuitas** tienen la opción de "Seleccionar". Las de **Pago** tienen el botón de "Comprar".</p>
+                
+                <div id="plantillaExplorerGrid" class="plantilla-list-grid">
+                    </div>
+                
+                <div class="nav-buttons">
+                    <button class="prev-step btn outline">Anterior</button>
+                </div>
+            </div>
 
             <div class="form-step" data-step="4">
-                <h2>Paso 4: Asesoría y Entrega</h2>
+                <h2>Paso Final: Confirmación de Plantilla GRATUITA</h2>
+                <p>Verifica tu solicitud de descarga gratuita. La recibirás de inmediato.</p>
                 
-                <label>¿Requiere apoyo para conocer la plantilla?</label>
-                <div class="radio-group" id="radioApoyoGroup">
-                    <label><input type="radio" name="requiereApoyo" value="No" checked> No</label>
-                    <label><input type="radio" name="requiereApoyo" value="Si" id="apoyoSi"> Sí</label>
+                <div class="confirmation-summary">
+                    <p><strong>Plantilla Solicitada:</strong> <span id="plantillaConfirm"></span></p>
+                    <p><strong>Tipo de Cliente:</strong> <span id="tipoClienteConfirm"></span></p>
+                    <hr>
+                    <p><strong>Nombre:</strong> <span id="nombreConfirm"></span></p>
+                    <p><strong>Correo:</strong> <span id="correoConfirm"></span></p>
                 </div>
-                
-                <div id="opcionApoyoDiv" style="display:none;">
-                    <label for="opcionApoyo">Seleccione el tipo de apoyo:</label>
-                    <select id="opcionApoyo" name="opcionApoyo">
-                        <option value="Tutorial">Tutorial</option>
-                        <option value="Meet">Sesión Meet</option>
-                    </select>
+
+                <div class="nav-buttons">
+                    <button class="prev-step btn outline" data-target-step="3">Volver a Plantillas</button>
+                    <button id="enviarFormularioGratis" class="btn primary">Finalizar y Descargar</button>
                 </div>
+            </div>
+            
+            <div class="form-step" data-step="5" style="display:none;">
+                </div>
+
+        </div> 
+        </div>
+</div>
 
                 <hr style="margin: 20px 0;">
 
