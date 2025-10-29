@@ -1,122 +1,85 @@
+// CÓDIGO JAVASCRIPT: REEMPLAZA TODO EL CONTENIDO DEL ARCHIVO .JS CON ESTO
 document.addEventListener('DOMContentLoaded', () => {
 
     // ====================================================================
     // 1. CONFIGURACIÓN Y DECLARACIÓN DE ELEMENTOS
     // ====================================================================
 
-    // Variables del Modal Principal (Formulario)
+    // Variables del Modal Principal
     const mainModal = document.getElementById("modalPlantilla");
-    // (Asumo que mensajeExito y sus dependencias existen o las eliminas)
-    
-    // Variables de Botones y Selector
-    const btnDescargaDirecta = document.getElementById("openModalBtn"); // Botón: Descargar Ahora (GRATIS)
-    const btnsSolicitar = document.querySelectorAll('#openSelectorBtn, #openSelectorBtn_Ingresos, #openSelectorBtn_Gastos'); // Botones: Solicitar Plantilla
     
     // Variables de Lógica Condicional del Modal Multi-pasos
     const nombreInput = document.getElementById('nombre-plantilla');
     const correoInput = document.getElementById('correo-plantilla');
     const tipoPersonaSelect = document.getElementById('tipoPersona');
-    // NOTA: ELIMINAMOS plantillaSelect del HTML, ahora es un campo virtual en JS
-    const usoPlantillaInput = document.getElementById('usoPlantilla');
-    const comentariosInput = document.getElementById('comentarios');
-    const requiereApoyoRadios = document.getElementsByName('requiereApoyo');
-    const opcionApoyoDiv = document.getElementById('opcionApoyoDiv');
-    const opcionApoyoSelect = document.getElementById('opcionApoyo');
-    const modoEntregaSelect = document.getElementById('modoEntrega');
-    const entregaNota = document.getElementById('entregaNota'); 
     
     // Variables de Navegación del Modal Multi-pasos
     const cerrarBtn = document.getElementById('cerrarModal');
     const formSteps = document.querySelectorAll('.form-step');
     const nextBtns = document.querySelectorAll('.next-step');
     const prevBtns = document.querySelectorAll('.prev-step');
-    const enviarFormularioBtn = document.getElementById('enviarFormulario');
+    const explorerGrid = document.getElementById('plantillaExplorerGrid');
+    const enviarFormularioGratisBtn = document.getElementById('enviarFormularioGratis');
     
-    // Elementos del Nuevo Paso 2 (Listado Visual)
-    const plantillaOptionCards = document.querySelectorAll('.plantilla-option-card');
     let currentStep = 1;
-    let selectedPlantillaValue = ''; // 🌟 Almacena el valor de la plantilla seleccionada (por listado o gratis)
-
+    let selectedPlantillaValue = ''; // Código interno de la plantilla
+    let selectedPlantillaName = ''; // Nombre legible de la plantilla
+    let selectedPlantillaType = ''; // 'GRATIS' o 'PAGO'
 
     // 🚨 CONFIGURACIÓN DEL REGISTRO A GOOGLE SHEETS 🚨
-    const GOOGLE_FORM_URL = 'https://forms.gle/pZnqsaGf5k5uh5vJ6'; // Reemplaza con tu URL real
+    const GOOGLE_FORM_URL = 'https://forms.gle/pZnqsaGf5k5uh5vJ6'; // REEMPLAZA CON TU URL REAL
     const FIELD_MAP = {
         'nombre': 'entry.1764658097', 
         'correo': 'entry.1065046570',
         'tipoPersona': 'entry.839337160',
-        'plantillaSolicita': 'entry.1744670085', // Usaremos selectedPlantillaValue
-        'usoPlantilla': 'entry.1030386183',
-        'requiereApoyo': 'entry.1802951737',
-        'opcionApoyo': 'entry.1464272175', 
-        'modoEntrega': 'entry.793266826', 
-        'comentarios': 'entry.1653561268',
+        'plantillaSolicita': 'entry.1744670085',
+        'esPago': 'entry.999999999', // Campo que debes añadir en tu form si quieres registrar el tipo de solicitud
         'timestamp': 'entry.1200000000',
     };
     
-    // Mapeo de URL de Descarga (Mantener rutas)
-    const rutasPlantillas = {
-        // ... (Tu objeto rutasPlantillas completo) ...
-        'flujo-efectivo': { nombre: 'Flujo de Efectivo', url: 'plantillas/generica_flujo_efectivo.xlsx' }, // Añadido genérico
-        'estado-resultados': { nombre: 'Estado de Resultados', url: 'plantillas/generica_estado_resultados.xlsx' },
-        'nomina': { nombre: 'Plantilla de Nómina', url: 'plantillas/generica_nomina.xlsx' },
-        'contabilidad-general': { nombre: 'Contabilidad General', url: 'plantillas/generica_contabilidad_general.xlsx' },
-        // NOTA: La lógica de descarga final usará 'tipoPersona' + 'plantilla' si tienes rutas específicas.
-    };
+    // ====================================================================
+    // 2. DATA DE PLANTILLAS Y RUTAS (MODIFICAR AQUÍ)
+    // ====================================================================
+
+    const PLANTILLAS_DATA = [
+        // GRATUITAS (Flujo de Efectivo) - Disponibles para ambos
+        { code: 'flujo-efectivo', name: 'Flujo de Efectivo', desc: 'Control de ingresos y egresos diarios.', type: 'GRATIS', price: 0, url: 'plantillas/generica_flujo_efectivo.xlsx', allowed: ['Fisica', 'Moral'] },
+        
+        // PAGO
+        { code: 'estado-resultados', name: 'Estado de Resultados', desc: 'Calcula la utilidad o pérdida de tu negocio.', type: 'PAGO', price: 15.00, url: 'plantillas/premium_estado_resultados.xlsx', allowed: ['Fisica', 'Moral'], paymentLink: 'https://link-de-pago.com/estado-resultados' },
+        { code: 'nomina-fiscal', name: 'Cálculo de Nómina Fiscal', desc: 'Formato para sueldos, deducciones e impuestos.', type: 'PAGO', price: 25.00, url: 'plantillas/premium_nomina_fiscal.xlsx', allowed: ['Moral'], paymentLink: 'https://link-de-pago.com/nomina' },
+        { code: 'contabilidad-general', name: 'Contabilidad General', desc: 'Registro completo de activos, pasivos y capital.', type: 'PAGO', price: 40.00, url: 'plantillas/premium_contabilidad_general.xlsx', allowed: ['Moral'], paymentLink: 'https://link-de-pago.com/contabilidad' },
+        { code: 'declaracion-anual', name: 'Declaración Anual Simplificada', desc: 'Plantilla de apoyo para tu declaración anual.', type: 'PAGO', price: 30.00, url: 'plantillas/premium_declaracion_anual.xlsx', allowed: ['Fisica'], paymentLink: 'https://link-de-pago.com/declaracion-anual' },
+
+        // Si quieres añadir otra GRATIS, por ejemplo, solo para Física
+        // { code: 'caja-chica', name: 'Control de Caja Chica', desc: 'Control de gastos menores.', type: 'GRATIS', price: 0, url: 'plantillas/fisica_caja_chica.xlsx', allowed: ['Fisica'] },
+    ];
 
 
     // ====================================================================
-    // 2. LÓGICA DE APERTURA DE BOTONES Y MODAL
+    // 3. LÓGICA DE APERTURA Y RESET
     // ====================================================================
     
     const resetModal = () => {
         currentStep = 1;
-        selectedPlantillaValue = ''; // Limpiar la plantilla seleccionada
+        selectedPlantillaValue = '';
+        selectedPlantillaName = '';
+        selectedPlantillaType = '';
         formSteps.forEach(step => step.classList.remove('active'));
         if (formSteps.length > 0) formSteps[0].classList.add('active');
-        // Resetear visualmente las tarjetas
-        plantillaOptionCards.forEach(card => card.classList.remove('selected')); 
-        // Deshabilitar selector de plantilla si se había deshabilitado antes (por la lógica GRATIS)
-        if (tipoPersonaSelect) tipoPersonaSelect.disabled = false;
-        // Limpiar inputs (si es necesario)
         document.getElementById('formPlantilla')?.reset();
+        document.querySelectorAll('.form-step input, .form-step select').forEach(input => input.style.border = '');
     };
-
-    // Función para abrir el modal principal
-    const openMainModal = (e, isFree = false) => {
-        if (e) e.preventDefault();
-        resetModal(); // Asegura un estado limpio
-        if (mainModal) mainModal.style.display = "block";
-        
-        if (isFree) {
-            // 🌟 Plantilla GRATUITA: Pre-seleccionar y SALTAR PASO 2 (Selección Visual)
-            selectedPlantillaValue = 'flujo-efectivo';
-            
-            // Opcional: Si quieres saltar directamente al paso 3 (Tipo de Cliente)
-            if (formSteps.length > 1) {
-                formSteps[0].classList.remove('active'); // Paso 1 (Datos de contacto)
-                formSteps[1].classList.add('active'); // Paso 2 (Selección Visual) - Aún tiene que pasar por el
-                currentStep = 2; // Inicia en el Paso 2
-
-                // HACK: Simular paso siguiente para saltar el listado, si ya seleccionamos
-                // Para esto, necesitarías una lógica más compleja que pre-valide el paso 2.
-                // LO MÁS FÁCIL es que el botón 'Descargar Ahora' abra en el paso 1, y el usuario haga 'Siguiente'.
-            }
-
-            // Marcar la tarjeta visualmente como seleccionada
-            const freeCard = document.querySelector('.plantilla-option-card[data-plantilla="flujo-efectivo"]');
-            if(freeCard) freeCard.classList.add('selected');
-        }
-    }
-
-    // A. Botón "Descargar Ahora (GRATIS)"
-    btnDescargaDirecta?.addEventListener('click', (e) => openMainModal(e, true));
-
-    // B. Botones "Solicitar Plantilla" (Catálogo)
-    btnsSolicitar.forEach(btn => {
-        btn.addEventListener('click', (e) => openMainModal(e, false)); // No es gratis, inicia normal
-    });
     
-    // Cierre del Modal Principal (X) y Clic fuera
+    // Asumiendo que tienes un botón o botones que abren el modal (ej: openModalBtn)
+    document.querySelectorAll('#openModalBtn, #openSelectorBtn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            resetModal(); 
+            if (mainModal) mainModal.style.display = "block";
+        });
+    });
+
     cerrarBtn?.addEventListener('click', () => {
         mainModal.style.display = 'none';
         resetModal();
@@ -129,106 +92,141 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // ====================================================================
+    // 4. LÓGICA DE RENDERIZADO DE PLANTILLAS (PASO 3)
+    // ====================================================================
 
-    // ====================================================================
-    // 3. LÓGICA DEL NUEVO PASO 2 (SELECCIÓN VISUAL)
-    // ====================================================================
-    plantillaOptionCards.forEach(card => {
-        card.querySelector('.select-plantilla-btn').addEventListener('click', () => {
-            // 1. Deseleccionar todo
-            plantillaOptionCards.forEach(c => c.classList.remove('selected'));
-            
-            // 2. Seleccionar la tarjeta actual
-            card.classList.add('selected');
-            
-            // 3. Almacenar el valor
-            selectedPlantillaValue = card.getAttribute('data-plantilla');
-            
-            // 4. Mover al siguiente paso automáticamente
-            const currentStepElement = document.querySelector('.form-step[data-step="2"]');
-            if (currentStepElement) {
-                currentStepElement.classList.remove('active');
-                currentStep = 3;
-                formSteps[currentStep - 1].classList.add('active');
+    const renderPlantillas = (tipoPersona) => {
+        if (!explorerGrid) return;
+        explorerGrid.innerHTML = '';
+        
+        const filteredPlantillas = PLANTILLAS_DATA.filter(p => p.allowed.includes(tipoPersona));
+        
+        filteredPlantillas.forEach(plantilla => {
+            const card = document.createElement('div');
+            card.classList.add('plantilla-option-card', `type-${plantilla.type.toLowerCase()}`);
+            card.setAttribute('data-plantilla', plantilla.code);
+            card.setAttribute('data-nombre', plantilla.name);
+            card.setAttribute('data-type', plantilla.type);
+
+            let buttonHTML = '';
+            if (plantilla.type === 'GRATIS') {
+                // Botón para avanzar al Paso 4 (Confirmación)
+                buttonHTML = `<button type="button" class="btn primary select-plantilla-btn" data-action="select-gratis">Seleccionar</button>`;
+            } else {
+                // Botón con link de pago y manejo de referencia
+                buttonHTML = `
+                    <p style="font-weight: bold; margin-top: 10px;">Costo: $${plantilla.price.toFixed(2)} USD</p>
+                    <a href="${plantilla.paymentLink}" target="_blank" class="btn secondary comprar-plantilla-btn" data-action="comprar-pago">Comprar y Recibir por Correo</a>
+                `;
             }
+
+            card.innerHTML = `
+                <h3>${plantilla.name} ${plantilla.type === 'GRATIS' ? '🆓' : '💳'}</h3>
+                <p>${plantilla.desc}</p>
+                ${buttonHTML}
+            `;
+            
+            explorerGrid.appendChild(card);
         });
-    });
+        
+        // Añadir listeners a los nuevos botones
+        addPlantillaActionListeners();
+    };
+    
+    const addPlantillaActionListeners = () => {
+        document.querySelectorAll('.select-plantilla-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const card = e.target.closest('.plantilla-option-card');
+                selectedPlantillaValue = card.getAttribute('data-plantilla');
+                selectedPlantillaName = card.getAttribute('data-nombre');
+                selectedPlantillaType = card.getAttribute('data-type');
+                
+                // Avanzar al Paso 4 (Confirmación/Descarga GRATIS)
+                navigateToStep(4); 
+            });
+        });
+        
+        document.querySelectorAll('.comprar-plantilla-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const card = e.target.closest('.plantilla-option-card');
+                const plantillaName = card.getAttribute('data-nombre');
+                const correo = correoInput.value.trim();
+                const username = correo.split('@')[0];
+                
+                // 1. Mensaje de Instrucción (Alerta o Modal de Pago)
+                alert(`¡Gracias por tu interés en la plantilla "${plantillaName}"! \n\nInstrucciones de Pago:\n1. Haz clic en ACEPTAR para ir al link de pago.\n2. **IMPORTANTE:** Usa tu email o el username "${username}" como REFERENCIA DE PAGO para que podamos enviarte la plantilla a tu correo.`);
+                
+                // 2. Registrar la Solicitud de Pago antes de abrir el link
+                registrarSolicitud({
+                    nombre: nombreInput.value.trim(),
+                    correo: correo,
+                    tipoPersona: tipoPersonaSelect.value,
+                    plantillaSolicita: plantillaName,
+                    esPago: 'SI',
+                    modoEntrega: 'correo (pago)',
+                });
+
+                // El link de pago se abre porque el botón es un <a> con target="_blank"
+                // Aquí podrías añadir lógica para cerrar el modal si lo deseas, o dejarlo abierto
+                // mainModal.style.display = 'none';
+            });
+        });
+    };
 
 
     // ====================================================================
-    // 4. NAVEGACIÓN Y VALIDACIÓN
+    // 5. NAVEGACIÓN Y VALIDACIÓN
     // ====================================================================
-
-    // Función de Validación (Asegurar que la Plantilla esté seleccionada)
+    
     const validateStep = (index) => {
         const step = formSteps[index];
         const inputs = step.querySelectorAll('input[required], select[required], textarea[required]');
         let allValid = true;
 
-        if (index === 1) { // Nuevo Paso 2 (Selección Visual)
-            if (!selectedPlantillaValue) {
-                alert('⚠️ Por favor, selecciona una plantilla para continuar.');
-                return false;
-            }
-            return true;
-        }
-
         inputs.forEach(input => {
-             // Lógica de validación visual
+            input.style.border = '';
             if (input.value.trim() === "") { 
                 allValid = false;
                 input.style.border = '1px solid red'; 
-            } else {
-                input.style.border = ''; 
             }
         });
+        
+        if (index === 0 && allValid && !correoInput.value.includes('@')) { // Paso 1: Correo válido
+            allValid = false;
+            correoInput.style.border = '1px solid red';
+            alert('⚠️ Por favor, ingresa un correo electrónico válido.');
+        }
 
         if (!allValid) {
-            alert('⚠️ Por favor, rellena todos los campos marcados como obligatorios.');
+            alert('⚠️ Por favor, rellena todos los campos marcados con (*).');
         }
         return allValid;
     };
     
-    // Asignación de eventos de cambio para lógica condicional (Paso 4)
-    const updateEntregaOptions = () => {
-        const apoyoSiSeleccionado = document.getElementById('apoyoSi')?.checked;
-        if (opcionApoyoDiv) opcionApoyoDiv.style.display = apoyoSiSeleccionado ? 'block' : 'none';
+    const navigateToStep = (targetStep) => {
+        formSteps[currentStep - 1].classList.remove('active');
+        currentStep = targetStep;
+        formSteps[currentStep - 1].classList.add('active');
 
-        const descargaOption = modoEntregaSelect ? modoEntregaSelect.querySelector('option[value="descargar"]') : null;
-        
-        if (descargaOption && entregaNota) {
-            // Lógica: Si requiere apoyo, forzamos el correo.
-            if (apoyoSiSeleccionado) {
-                descargaOption.style.display = 'none';
-                modoEntregaSelect.value = 'correo';
-                modoEntregaSelect.disabled = true;
-                entregaNota.textContent = '🔒 Si requiere apoyo, la plantilla se enviará automáticamente por correo.';
-            } else {
-                descargaOption.style.display = 'block';
-                modoEntregaSelect.disabled = false;
-                entregaNota.textContent = 'Elige si quieres descargarla inmediatamente o recibirla por email.';
-            }
+        if (targetStep === 3) {
+            // Lógica especial para el Paso 3: Renderizar plantillas
+            const tipoPersona = tipoPersonaSelect.value;
+            document.getElementById('tipoPersonaDisplay').textContent = (tipoPersona === 'Fisica' ? 'Persona Física' : 'Persona Moral');
+            renderPlantillas(tipoPersona);
         }
-    };
-    
-    requiereApoyoRadios.forEach(radio => {
-        radio.addEventListener('change', updateEntregaOptions);
-    });
-    
-    updateEntregaOptions();
-
+        if (targetStep === 4) {
+            updateConfirmation();
+        }
+    }
 
     // Navegación (Siguiente)
     nextBtns.forEach(button => {
         button.addEventListener('click', () => {
             if (validateStep(currentStep - 1)) {
-                if (currentStep < formSteps.length) {
-                    formSteps[currentStep - 1].classList.remove('active');
-                    currentStep++;
-                    formSteps[currentStep - 1].classList.add('active');
-                    if (currentStep === formSteps.length) {
-                        updateConfirmation();
-                    }
+                if (currentStep < 4) { // Solo permite avanzar hasta el Paso 3 por el botón
+                    navigateToStep(currentStep + 1);
                 }
             }
         });
@@ -236,137 +234,88 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Navegación (Anterior)
     prevBtns.forEach(button => {
-        button.addEventListener('click', () => {
-            if (currentStep > 1) {
-                formSteps[currentStep - 1].classList.remove('active');
-                currentStep--;
-                formSteps[currentStep - 1].classList.add('active');
+        button.addEventListener('click', (e) => {
+            const targetStepAttr = e.target.getAttribute('data-target-step');
+            const targetStep = targetStepAttr ? parseInt(targetStepAttr) : currentStep - 1;
+
+            if (targetStep >= 1) {
+                navigateToStep(targetStep);
             }
         });
     });
 
-    // Función para actualizar la pantalla de confirmación (Paso 5)
+    // Función para actualizar la pantalla de confirmación (Paso 4 - SOLO GRATIS)
     function updateConfirmation() {
-        const nombre = nombreInput.value;
-        const correo = correoInput.value;
-        const tipoCliente = tipoPersonaSelect.options[tipoPersonaSelect.selectedIndex].text;
-        
-        // Obtener el nombre legible de la plantilla usando el valor
-        const plantillaName = rutasPlantillas[selectedPlantillaValue]?.nombre || selectedPlantillaValue;
+        if (selectedPlantillaType !== 'GRATIS') return; // Solo funciona para la descarga gratuita
 
-        const requiereApoyo = Array.from(requiereApoyoRadios).find(r => r.checked)?.value || 'No';
-        const apoyo = requiereApoyo === 'Si' ? opcionApoyoSelect.options[opcionApoyoSelect.selectedIndex].text : 'No requiere';
-        const entrega = modoEntregaSelect.value;
-        const entregaTexto = modoEntregaSelect.options[modoEntregaSelect.selectedIndex].text;
-        
-        // Actualizar resumen
-        document.getElementById('nombreConfirm').textContent = nombre;
-        document.getElementById('correoConfirm').textContent = correo;
-        document.getElementById('tipoClienteConfirm').textContent = tipoCliente;
-        document.getElementById('plantillaConfirm').textContent = plantillaName; // Usar el nombre legible
-        document.getElementById('apoyoConfirm').textContent = apoyo;
-        document.getElementById('entregaConfirm').textContent = entregaTexto;
-        
-        // Acciones de Entrega
-        const accionesDiv = document.getElementById('accionesEntrega');
-        if (accionesDiv) {
-             accionesDiv.innerHTML = '';
-             if (entrega === 'descargar') {
-                accionesDiv.innerHTML = '<p class="nota">La descarga será inmediata al finalizar la solicitud.</p>';
-                enviarFormularioBtn.textContent = 'Finalizar y Descargar';
-            } else {
-                accionesDiv.innerHTML = '<p class="nota">Recibirás la plantilla en el correo en unos minutos.</p>';
-                enviarFormularioBtn.textContent = 'Finalizar Solicitud';
-            }
-        }
+        document.getElementById('nombreConfirm').textContent = nombreInput.value;
+        document.getElementById('correoConfirm').textContent = correoInput.value;
+        document.getElementById('tipoClienteConfirm').textContent = tipoPersonaSelect.options[tipoPersonaSelect.selectedIndex].text;
+        document.getElementById('plantillaConfirm').textContent = selectedPlantillaName;
     }
 
 
-    // ----------------------------------------------------
-    // ENVÍO FINAL DEL FORMULARIO (BOTÓN 'enviarFormulario')
-    // ----------------------------------------------------
-    if (enviarFormularioBtn) {
-        enviarFormularioBtn.addEventListener('click', () => {
+    // ====================================================================
+    // 6. ENVÍO FINAL (SOLO PLANTILLA GRATUITA)
+    // ====================================================================
+
+    // Función para enviar datos a Google Sheets
+    const registrarSolicitud = (formData) => {
+        const dataToSubmit = new FormData();
+        
+        dataToSubmit.append(FIELD_MAP.timestamp, new Date().toLocaleString('es-MX')); 
+        dataToSubmit.append(FIELD_MAP.nombre, formData.nombre);
+        dataToSubmit.append(FIELD_MAP.correo, formData.correo);
+        dataToSubmit.append(FIELD_MAP.tipoPersona, formData.tipoPersona);
+        dataToSubmit.append(FIELD_MAP.plantillaSolicita, formData.plantillaSolicita);
+        
+        // Opcional: registrar si es pago o gratis
+        // if (FIELD_MAP.esPago) dataToSubmit.append(FIELD_MAP.esPago, formData.esPago || 'NO'); 
+
+        fetch(GOOGLE_FORM_URL, {
+            method: 'POST',
+            mode: 'no-cors', 
+            body: dataToSubmit,
+        })
+        .then(() => console.log('Registro de solicitud enviado a Google Sheets.'))
+        .catch(error => console.error('Error al enviar el registro:', error));
+    };
+
+    if (enviarFormularioGratisBtn) {
+        enviarFormularioGratisBtn.addEventListener('click', () => {
+            if (selectedPlantillaType !== 'GRATIS' || !selectedPlantillaValue) return;
             
-            const requiereApoyoValor = Array.from(requiereApoyoRadios).find(r => r.checked)?.value || 'No';
-            const plantillaCode = selectedPlantillaValue; // Usamos el código guardado
-            const tipoPersonaCode = tipoPersonaSelect?.value;
-
-            const formData = {
-                nombre: nombreInput?.value.trim(),
-                correo: correoInput?.value.trim(),
-                tipoPersona: tipoPersonaCode,
-                plantillaSolicita: plantillaCode,
-                usoPlantilla: usoPlantillaInput?.value.trim(), 
-                requiereApoyo: requiereApoyoValor,
-                opcionApoyo: (requiereApoyoValor === 'Si') ? opcionApoyoSelect?.value : 'N/A',
-                modoEntrega: modoEntregaSelect?.value, 
-                comentarios: comentariosInput?.value.trim(),
-            };
+            const plantillaInfo = PLANTILLAS_DATA.find(p => p.code === selectedPlantillaValue);
             
-            // 💥 PASO CLAVE: REGISTRAR SOLICITUD A GOOGLE SHEETS 💥
-            // Asegúrate de que tu Google Form reciba el código de la plantilla (plantillaCode)
-            const dataToSubmit = new FormData();
-            dataToSubmit.append(FIELD_MAP.timestamp, new Date().toLocaleString('es-MX')); 
-            dataToSubmit.append(FIELD_MAP.nombre, formData.nombre);
-            dataToSubmit.append(FIELD_MAP.correo, formData.correo);
-            dataToSubmit.append(FIELD_MAP.tipoPersona, formData.tipoPersona);
-            dataToSubmit.append(FIELD_MAP.plantillaSolicita, formData.plantillaSolicita); // Usamos el código
-            dataToSubmit.append(FIELD_MAP.usoPlantilla, formData.usoPlantilla);
-            dataToSubmit.append(FIELD_MAP.requiereApoyo, formData.requiereApoyo);
-            dataToSubmit.append(FIELD_MAP.opcionApoyo, formData.opcionApoyo);
-            dataToSubmit.append(FIELD_MAP.modoEntrega, formData.modoEntrega);
-            dataToSubmit.append(FIELD_MAP.comentarios, formData.comentarios);
+            if (plantillaInfo && plantillaInfo.url) {
+                // 1. Registro a Google Sheets (Flujo GRATIS)
+                registrarSolicitud({
+                    nombre: nombreInput.value.trim(),
+                    correo: correoInput.value.trim(),
+                    tipoPersona: tipoPersonaSelect.value,
+                    plantillaSolicita: plantillaInfo.name,
+                    esPago: 'NO',
+                });
 
-            fetch(GOOGLE_FORM_URL, {
-                method: 'POST',
-                mode: 'no-cors', 
-                body: dataToSubmit,
-            })
-            .then(() => console.log('Registro de solicitud enviado a Google Sheets.'))
-            .catch(error => console.error('Error al enviar el registro:', error));
-
-
-            // ----------------------------------------------------
-            // Lógica de éxito y mensaje final
-            // ----------------------------------------------------
-            
-            alert('✅ ¡Gracias! Tu plantilla ha sido solicitada. Revisa tu correo o inicia la descarga.');
-            
-            // Descarga directa si aplica
-            if (formData.modoEntrega === 'descargar') {
-                // Combina el tipo de persona y la plantilla para la ruta final
-                const urlKey = `${tipoPersonaCode}-${plantillaCode}`;
-                const plantillaInfo = rutasPlantillas[urlKey] || rutasPlantillas[plantillaCode]; // Fallback a genérica si no hay key combinada
-
-                if (plantillaInfo && plantillaInfo.url) {
-                    const tempLink = document.createElement('a');
-                    tempLink.href = plantillaInfo.url;
-                    tempLink.download = `${plantillaInfo.nombre}_${tipoPersonaCode}.xlsx`;
-                    document.body.appendChild(tempLink);
-                    tempLink.click();
-                    document.body.removeChild(tempLink);
-                } else {
-                    console.error('Ruta de descarga no encontrada para:', urlKey);
-                }
+                // 2. Descarga directa
+                const tempLink = document.createElement('a');
+                tempLink.href = plantillaInfo.url;
+                tempLink.download = `${plantillaInfo.name}_${tipoPersonaSelect.value}.xlsx`;
+                document.body.appendChild(tempLink);
+                tempLink.click();
+                document.body.removeChild(tempLink);
+                
+                alert(`✅ ¡Descarga Iniciada! Revisa tu carpeta de descargas. También recibirás un link de respaldo en ${correoInput.value}.`);
+            } else {
+                alert('⚠️ Error al encontrar la ruta de descarga. Por favor, intenta de nuevo o contacta a soporte.');
             }
 
-            // Cierra el modal y resetea el formulario
+            // 3. Cierre y Reset
             if (mainModal) mainModal.style.display = 'none';
             resetModal();
         });
     }
-
-    // Lógica para el formulario de Contacto (El del final de la página)
-    const formContacto = document.getElementById('contactForm');
-    formContacto?.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('Gracias. Tu solicitud de contacto ha sido recibida.');
-        formContacto.reset();
-    });
-
 });
-
 
 
 
