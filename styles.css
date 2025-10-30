@@ -34,7 +34,7 @@ body{
 .nav .cta{background:var(--primary);color:var(--primary-contrast);padding:8px 12px;border-radius:12px}
 
 /* HERO */
-.hero{display:flex;gap:22px;align-items:center;padding:43px 24px}
+.hero{display:flex;gap:25px;align-items:center;padding:43px 24px}
 .hero-left{flex:1}
 .hero-right{flex:1;display:flex;justify-content:center}
 .hero h1{font-size:38px;margin:0 0 12px}
@@ -691,6 +691,7 @@ body{
   .catalog-cta{align-items:center;text-align:center}
   .catalog-cta .btn{align-self:center}
 }
+
 
 
 
