@@ -253,8 +253,12 @@
             <div class="form-step" data-step="3">
                 <h2 id="tituloPaso3">Paso 3: Plantillas Disponibles para <span id="tipoPersonaDisplay"></span></h2>
                 <p>Elige una plantilla. Las **Gratuitas** tienen la opción de "Seleccionar". Las de **Pago** tienen el botón de "Comprar".</p>
-                
-                <div id="plantillaExplorerGrid" class="plantilla-list-grid">
+                <p>Catálogo para <strong id="tipoPersonaDisplay">--</strong></p>
+                     <div id="plantillaExplorerGrid" class="plantilla-list-grid">
+                        </div>
+                    <div class="nav-buttons">
+                        <button type="button" class="prev-step btn outline" data-target-step="2">Volver</button>
+                        </div>
                     </div>
                 
                 <div class="nav-buttons">
@@ -263,33 +267,7 @@
             </div>
 
             <div class="form-step" data-step="4">
-                <h2>Paso Final: Confirmación de Plantilla GRATUITA</h2>
-                <p>Verifica tu solicitud de descarga gratuita. La recibirás de inmediato.</p>
-                
-                <div class="confirmation-summary">
-                    <p><strong>Plantilla Solicitada:</strong> <span id="plantillaConfirm"></span></p>
-                    <p><strong>Tipo de Cliente:</strong> <span id="tipoClienteConfirm"></span></p>
-                    <hr>
-                    <p><strong>Nombre:</strong> <span id="nombreConfirm"></span></p>
-                    <p><strong>Correo:</strong> <span id="correoConfirm"></span></p>
-                </div>
-                </div> <p style="font-size: 0.75em; text-align: center; margin-bottom: 10px;">
-                Al hacer clic en "Finalizar", aceptas nuestro <a href="docs/privacidad.pdf" target="_blank">Aviso de Privacidad</a>.
-                </p>
-
-                <div class="nav-buttons">
-                    <button class="prev-step btn outline" data-target-step="3">Volver a Plantillas</button>
-                    <button id="enviarFormularioGratis" class="btn primary">Finalizar y Descargar</button>
-                </div>
-            </div>
-            
-            <div class="form-step" data-step="5" style="display:none;">
-                </div>
-
-        </div> 
-        </div>
-</div>
-                <hr style="margin: 20px 0;">
+                      <hr style="margin: 20px 0;">
 
                 <label for="modoEntrega">¿Cómo prefieres recibir tu plantilla? <span class="required">*</span></label>
                 <select id="modoEntrega" name="modoEntrega" required>
@@ -307,8 +285,18 @@
                     <button class="next-step btn primary">Revisar y Enviar</button>
                 </div>
             </div>
-
-            <div class="form-step" data-step="5">
+                <h2>Paso Final: Confirmación de Plantilla GRATUITA</h2>
+                
+                <p>Verifica tu solicitud de descarga gratuita. La recibirás de inmediato.</p>
+        
+                <div class="confirmation-summary">
+                    <p><strong>Plantilla Solicitada:</strong> <span id="plantillaConfirm"></span></p>
+                    <p><strong>Tipo de Cliente:</strong> <span id="tipoClienteConfirm"></span></p>
+                    <hr>
+                    <p><strong>Nombre:</strong> <span id="nombreConfirm"></span></p>
+                    <p><strong>Correo:</strong> <span id="correoConfirm"></span></p>
+                </div>
+          <div class="form-step" data-step="5">
                 <h2>Paso 5: Confirma tu Solicitud</h2>
                 <p>Verifica los datos y haz clic en finalizar para recibir tu plantilla.</p>
                 
@@ -330,6 +318,24 @@
                     <button id="enviarFormulario" class="btn primary">Finalizar Solicitud</button>
                 </div>
             </div>
+
+            <h2>Paso Final: Confirmación de Plantilla GRATUITA</h2>
+                </div> <p style="font-size: 0.75em; text-align: center; margin-bottom: 10px;">
+                Al hacer clic en "Finalizar", aceptas nuestro <a href="docs/privacidad.pdf" target="_blank">Aviso de Privacidad</a>.
+                </p>
+
+                <div class="nav-buttons">
+                    <button class="prev-step btn outline" data-target-step="3">Volver a Plantillas</button>
+                    <button id="enviarFormularioGratis" class="btn primary">Finalizar y Descargar</button>
+                </div>
+            </div>
+            
+            <div class="form-step" data-step="5" style="display:none;">
+                </div>
+
+        </div> 
+        </div>
+</div>
 
         </div> 
         </div>
