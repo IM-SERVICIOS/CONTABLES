@@ -262,68 +262,74 @@
                 </div>
             </div>
 
-            <div class="form-step" data-step="4">
-                <h2>Paso Final: Confirmación de Plantilla GRATUITA</h2>
-                <p>Verifica tu solicitud de descarga gratuita. La recibirás de inmediato.</p>
-                
-                <div class="confirmation-summary">
-                    <p><strong>Plantilla Solicitada:</strong> <span id="plantillaConfirm"></span></p>
-                    <p><strong>Tipo de Cliente:</strong> <span id="tipoClienteConfirm"></span></p>
-                    <hr>
-                    <p><strong>Nombre:</strong> <span id="nombreConfirm"></span></p>
-                    <p><strong>Correo:</strong> <span id="correoConfirm"></span></p>
-                </div>
-                </div> <p style="font-size: 0.75em; text-align: center; margin-bottom: 10px;">
-                Al hacer clic en "Finalizar", aceptas nuestro <a href="docs/privacidad.pdf" target="_blank">Aviso de Privacidad</a>.
-                </p>
+<!-- ================= PASO 4 ================= -->
+<div class="form-step" data-step="4">
+    <h2>Paso 4: Confirma tus datos</h2>
+    <p>Revisa la información y elige cómo deseas recibir tu plantilla.</p>
 
-                <div class="nav-buttons">
-                    <button class="prev-step btn outline" data-target-step="3">Volver a Plantillas</button>
-                    <button id="enviarFormularioGratis" class="btn primary">Finalizar y Descargar</button>
-                </div>
-            </div>
-            
-            <div class="form-step" data-step="5" style="display:none;">
-                </div>
+    <div class="confirmation-summary">
+        <p><strong>Plantilla:</strong> <span id="plantillaConfirm"></span></p>
+        <p><strong>Tipo de Cliente:</strong> <span id="tipoClienteConfirm"></span></p>
+        <hr>
+        <p><strong>Nombre:</strong> <span id="nombreConfirm"></span></p>
+        <p><strong>Correo:</strong> <span id="correoConfirm"></span></p>
+    </div>
 
-        </div> 
-        </div>
+    <hr style="margin: 20px 0;">
+
+    <label for="modoEntrega">
+        ¿Cómo prefieres recibir tu plantilla? <span class="required">*</span>
+    </label>
+    <select id="modoEntrega" name="modoEntrega" required>
+        <option value="">Selecciona una opción</option>
+        <option value="correo">Recibir por correo (recomendado)</option>
+        <option value="descargar">Descargar directamente (link temporal)</option>
+    </select>
+
+    <label for="comentarios">Comentarios adicionales (Opcional)</label>
+    <textarea
+        id="comentarios"
+        name="comentarios"
+        placeholder="Ej: Me interesa el formato de flujo de efectivo">
+    </textarea>
+
+    <p style="font-size: 0.75em; text-align: center; margin-top: 10px;">
+        Al continuar, aceptas nuestro
+        <a href="docs/privacidad.pdf" target="_blank">Aviso de Privacidad</a>.
+    </p>
+
+    <div class="nav-buttons">
+        <button class="prev-step btn outline">Volver</button>
+        <button class="next-step btn primary">Revisar solicitud</button>
+    </div>
 </div>
-                <hr style="margin: 20px 0;">
 
-                <label for="modoEntrega">¿Cómo prefieres recibir tu plantilla? <span class="required">*</span></label>
-                <select id="modoEntrega" name="modoEntrega" required>
-                    <option value="">Selecciona una opción</option>
-                    <option value="correo">Recibir por correo (recomendado)</option>
-                    <option value="descargar">Descargar directamente (link temporal)</option>
-                </select>
-                <small id="entregaNota" class="nota">Elige si quieres descargarla inmediatamente o recibirla por email.</small>
-                
-                <label for="comentarios">Comentarios adicionales (Opcional)</label>
-                <textarea id="comentarios" name="comentarios" placeholder="Ej: 'Me urge el de flujo de efectivo'"></textarea>
-                
-                <div class="nav-buttons">
-                    <button class="prev-step btn outline">Anterior</button>
-                    <button class="next-step btn primary">Revisar y Enviar</button>
-                </div>
-            </div>
+<!-- ================= PASO 5 ================= -->
+<div class="form-step" data-step="5">
+    <h2>Paso 5: Solicitud lista</h2>
+    <p>Confirma tu solicitud y finaliza para recibir tu plantilla.</p>
 
-            <div class="form-step" data-step="5">
-                <h2>Paso 5: Confirma tu Solicitud</h2>
-                <p>Verifica los datos y haz clic en finalizar para recibir tu plantilla.</p>
-                
-                <div class="confirmation-summary">
-                    <p><strong>Plantilla Solicitada:</strong> <span id="plantillaConfirm"></span></p>
-                    <p><strong>Tipo de Cliente:</strong> <span id="tipoClienteConfirm"></span></p>
-                    <p><strong>Requerimiento de Apoyo:</strong> <span id="apoyoConfirm"></span></p>
-                    <p><strong>Método de Entrega:</strong> <span id="entregaConfirm"></span></p>
-                    <hr>
-                    <p><strong>Nombre:</strong> <span id="nombreConfirm"></span></p>
-                    <p><strong>Correo:</strong> <span id="correoConfirm"></span></p>
-                </div>
+    <div class="confirmation-summary">
+        <p><strong>Plantilla:</strong> <span id="plantillaConfirm"></span></p>
+        <p><strong>Tipo de Cliente:</strong> <span id="tipoClienteConfirm"></span></p>
+        <p><strong>Método de Entrega:</strong> <span id="entregaConfirm"></span></p>
+        <hr>
+        <p><strong>Nombre:</strong> <span id="nombreConfirm"></span></p>
+        <p><strong>Correo:</strong> <span id="correoConfirm"></span></p>
+    </div>
 
-                <div id="accionesEntrega" class="nota-entrega">
-                    </div>
+    <div id="accionesEntrega" class="nota-entrega" style="margin: 20px 0;">
+        <!-- El JS inserta aquí el botón de descarga o el aviso por correo -->
+    </div>
+
+    <div class="nav-buttons">
+        <button class="prev-step btn outline">Anterior</button>
+        <button id="enviarFormulario" class="btn primary">
+            Finalizar Solicitud
+        </button>
+    </div>
+</div>
+
 
                 <div class="nav-buttons">
                     <button class="prev-step btn outline">Anterior</button>
