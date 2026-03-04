@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>IM Servicios Contables</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <meta name="description" content="Servicios contables, administrativos y asesoría financiera con soluciones tecnológicas.">
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a class="brand" href="#">IM <small>Servicios Contables y Administrativos</small></a>
+            <button class="nav-toggle" id="navToggle">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#inicio" class="nav-link">Inicio</a></li>
+                <li><a href="#servicios" class="nav-link">Servicios</a></li>
+                <li><a href="#sobre" class="nav-link">Sobre Nosotros</a></li>
+                <li><a href="#catalogo" class="nav-link">Catálogo</a></li>
+                <li><a href="#contacto" class="cta nav-link" id="cotizarBtn">Cotízate</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header id="inicio" class="hero">
+        <div class="hero-left">
+            <h1>IM Servicios contables<br><span> </span></h1>
+            <p>Conoce las principales funcionalidades, alcance y beneficios para tu empresa al tenernos en tu equipo; Automatiza, analiza, ahorra, eficientiza y toma decisiones estratégicas con IM Servicios Contables.</p>
+            <div class="hero-ctas">
+                <a class="btn primary" href="#contacto">Conoce más</a>
+            </div>
+        </div>
+        <div class="hero-right">
+            <img src="images/hero.jpg" alt="reunión financiera" class="hero-img"/>
+        </div>
+    </header>
+
+    <section id="sobre" class="panel about">
+        <div class="container sobre-container">
+            <div class="sobre-intro">
+                <div class="sobre-icon">
+                    <img src="images/icono-sobre.svg" alt="Icono Sobre Nosotros">
+                </div>
+                <h2>Quiénes somos</h2>
+                <p class="lead">Empresa realizada para apoyar a las finanzas de todo cliente adaptable a su necesidad de llevar sus datos, visualisar de la manera mas efectiva y sencilla apoyando a el crecicimento eficiente.</p>
+            </div>
+            <div class="sobre-values">
+                <div class="value-card">
+                    <h3>Misión</h3>
+                    <p>Brindar soluciones contables y administrativas confiables, personalizadas y alineadas con las necesidades de cada cliente, impulsando la eficiencia y el crecimiento sostenible de su negocio.</p>
+                </div>
+                <div class="value-card">
+                    <h3>Visión</h3>
+                    <p>Ser la firma contable líder en innovación, servicio y compromiso, reconocida por su excelencia y la generación de valor a nuestros clientes y colaboradores.</p>
+                </div>
+                <div class="value-card">
+                    <h3>Valores</h3>
+                    <p>Los valores que nos rigen definen la calidad en nuestros servicios, esto apoya la solida relación entre nuestros clientes y colaboradores.Precisión, integridad,innovación, servicio y compromiso, generocidad, comprención.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="catalogo panel" style="padding-top: 0;">
+        <div class="container">
+             <a href="catalogo-adicional.html" class="btn outline lg">
+                Explorar opciones adicionales (Catálogo)
+            </a>
+            <h2 class="text-center">Plantillas Adicionales</h2>
+            <div class="plantillas-grid">
+                <div class="plantilla-card">
+                    <img src="../imágenes/plantilla1.jpg" alt="Plantilla 1" />
+                    <h3>Control de Ingresos</h3>
+                    <p>Registra y analiza tus ingresos fácilmente.</p>
+                    <a href="#" id="openSelectorBtn_Ingresos" class="btn primary lg">Solicitar Plantilla</a>
+                </div>
+                <div class="plantilla-card">
+                    <img src="../imágenes/plantilla2.jpg" alt="Plantilla 2" />
+                    <h3>Gestión de Gastos</h3>
+                    <p>Controla tus egresos con una plantilla detallada.</p>
+                    <a href="#" id="openSelectorBtn_Gastos" class="btn primary lg">Solicitar Plantilla</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="panel download-cta">
+        <div class="container download-container">
+            <h2 class="text-center">Herramientas contables que eficientizan su tiempo y muestran resultados reales.</h2>
+            <div class="download-content">
+                <div class="download-img-wrap">
+                    <img src="img/plantilla-preview.png" alt="Vista previa de la plantilla de flujo de caja" class="plantilla-img">
+                </div>
+                <div class="download-text-wrap">
+                    <p>Si eres emprendedor, vendedor o tienes un pequeño negocio, ¡sabemos que el tiempo es oro! Hemos creado formatos simples y claros para que, sin ser un experto, puedas llevar el control de tus ingresos, gastos y movimientos diarios.</p>
+                    <p>Toma decisiones más inteligentes y enfócate en lo que realmente importa: **¡vender y crecer!**</p>
+                    <h3 class="cta-title">Descargue nuestra **Plantilla GRATUITA** de Control de Flujo de Caja y tome el control hoy mismo.</h3>
+                    <a href="#" id="openModalBtn" class="btn primary lg cta-btn">Descargar Ahora (GRATIS)</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel tools-chart">
+        <div class="container tools-container">
+            <div class="text-center">
+                <h2>Precisión, confianza y cumplimiento sin estrés. La clave para que su negocio no deje de crecer.</h2>
+            </div>
+            <div class="chart-image-wrap">
+                <img src="img/chart-image.png" alt="Herramientas contables con gráficos de resultados" class="chart-image">
+            </div>
+            <div class="text-center">
+                <p class="lead">Herramientas contables que eficientizan su tiempo y muestran resultados reales.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="faq" class="panel">
+        <div class="container">
+            <h2>Preguntas frecuentes</h2>
+            <div class="faq-grid">
+                <div class="faq-col">
+                    <div class="faq-item">
+                        <h4>¿Qué necesito para iniciar?</h4>
+                        <p>Es muy bueno si ya cuentas con tu contraseña SAT o eFirma. Si no cuentas con tu contraseña no te preocupes, nosotros te brindamos toda la asesoría necesaria para obtenerla.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>¿Puedo cancelar?</h4>
+                        <p>Puedes cancelar en cualquier momento. No es necesario un compromiso a largo plazo.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>¿IM Servicios Contables, es seguro?</h4>
+                        <p>Tu información se encuentra encriptada dentro de la plataforma. Nos tomamos la seguridad de tus datos con mucha seriedad.</p>
+                    </div>
+                </div>
+                <div class="faq-col">
+                    <div class="faq-item">
+                        <h4>¿Cómo es la comunicación con el contador?</h4>
+                        <p>De acuerdo a tu plan, podrás tener acceso a la asesoría de un contador experto por cualquiera de los siguientes canales: WhatsApp, teléfono, correo o chat en plataforma.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>¿Me pueden ayudar si tengo atrasos con el SAT?</h4>
+                        <p>Sí. Haremos un diagnóstico fiscal inicial para asegurarnos de que todo esta en orden con el SAT y si detectamos atrasos haremos un plan a tu medida para regularizar.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="servicios" class="panel services">
+        <div class="container">
+            <h2>Servicios</h2>
+            <p class="subtitle">Descripción general...</p>
+            <div class="carousel-wrap">
+                <button class="carousel-btn left" id="carouselPrev">◀</button>
+                <div class="carousel" id="servicesCarousel">
+                    <article class="card"><div class="card-icon">📄🧮</div><h3>Contabilidad para pequeños negocios y personas con antividades empresariales</h3><p>Gestión contable completa, precisa y digitalizada.</p></article>
+                    <article class="card"><div class="card-icon">👥</div><h3>Nómina y RRHH</h3><p>Cubrimos administración de nóminas, prenóminas, y brindamos soporte esencial para reclutamiento y contratos.</p></article>
+                    <article class="card"><div class="card-icon">🧾🏛️</div><h3>Impuestos</h3><p>Eliminamos la complejidad fiscal y te entregamos la información precisa y actualizada que necesitas con reportes entendibles y cero preocupaciones fiscales..</p></article>
+                    <article class="card"><div class="card-icon">🧾</div><h3>Facturación Electrónica</h3><p>Facturación Electrónica (CFDI) precisa y controlada. Emitimos en el portal SAT o en su sistema. Garantizamos el cumplimiento fiscal oportuno.</p></article>
+                    <article class="card"><div class="card-icon">💰📈</div><h3>Asesorías Especializadas</h3><p>Gestión fiscal (SAT), control de finanzas y orientación experta para ahorro e inversión. (pregunte para otro tipo de asesoria personal)</p></article>
+                    <article class="card"><div class="card-icon">📊</div><h3>Dashboards / Graficados Interactivos</h3><p>Creación de paneles visuales dinámicos adaptados a su medida.</p></article>
+                    <article class="card"><div class="card-icon">👥🎯</div><h3>KPI's</h3><p>Diseño de plantillas e indicadores clave en desempeño que apoyen la medición de el cumplimiento de sus objetivos.</p></article>
+                </div>
+                <button class="carousel-btn right" id="carouselNext">▶</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="catalogo" class="panel catalog">
+        <div class="container">
+            <h2>Catálogo</h2>
+            <p class="subtitle">Explora nuestras soluciones...</p>
+            <div class="catalog-cta">
+                <p>Accede a nuestro catálogo completo.</p>
+                <a href="catalogo.html" class="btn primary lg">Conoce nuestro catálogo</a>
+                <div class="text-center" style="margin-top: 30px; font-size: 0.8em; opacity: 0.7;">
+                <p>Consulta nuestros <a href="docs/terminos.pdf" target="_blank">Términos y Condiciones</a> y nuestro <a href="docs/privacidad.pdf" target="_blank">Aviso de Privacidad</a>.</p>
+                    </div>
+                <a href="#" id="openSelectorBtn" class="btn primary lg">Solicitar Plantilla</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="panel contact">
+        <div class="container contact-flex">
+            <div class="contact-form-wrapper">
+                <h2>¡Permítenos ser tu aliado!</h2>
+                <form id="contactForm" class="contact-form">
+                    <input name="name" placeholder="Nombre" required>
+                    <input type="email" name="email" placeholder="Correo Electrónico" required>
+                    <select name="service">
+                        <option value="contabilidad">Contabilidad</option>
+                        <option value="nomina">Asesorías de finanzas personales</option>
+                        <option value="impuestos">FACTURACION</option>
+                        <option value="innovacion">Innovación Tech y Asesoría financiera</option>
+                    </select>
+                    <textarea name="message" placeholder="Mensaje"></textarea>
+
+                    <div class="form-actions">
+                        <button class="btn primary" type="submit">Enviar</button>
+                        <button class="btn outline" type="button" id="resetForm">Limpiar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="contact-img">
+                <img src="images/contacto.jpg" alt="Imagen Contacto">
+            </div>
+        </div>
+    </section>
+
+<!-- ================= MODAL PLANTILLAS ================= -->
+<div id="modalPlantilla" class="modal">
+    <div class="modal-content">
+        <span class="close" id="cerrarModal">&times;</span>
+
+        <div id="formPlantilla">
+
+            <!-- ===== PASO 1 ===== -->
+            <div class="form-step active" data-step="1">
+                <h2>Paso 1: Datos de contacto</h2>
+                <p>Necesitamos esta información para enviarte la plantilla.</p>
+
+                <label>Nombre Completo <span class="required">*</span></label>
+                <input type="text" id="nombre-plantilla" required>
+
+                <label>Correo Electrónico <span class="required">*</span></label>
+                <input type="email" id="correo-plantilla" required>
+
+                <div class="nav-buttons">
+                    <button class="next-step btn primary">Siguiente</button>
+                </div>
+            </div>
+
+            <!-- ===== PASO 2 ===== -->
+            <div class="form-step" data-step="2">
+                <h2>Paso 2: Tipo de cliente</h2>
+
+                <label>Selecciona tu tipo de persona <span class="required">*</span></label>
+                <select id="tipoPersona" required>
+                    <option value="">Seleccione...</option>
+                    <option value="Fisica">Persona Física</option>
+                    <option value="Moral">Persona Moral</option>
+                </select>
+
+                <div class="nav-buttons">
+                    <button class="prev-step btn outline">Anterior</button>
+                    <button class="next-step btn primary">Continuar</button>
+                </div>
+            </div>
+
+            <!-- ===== PASO 3 ===== -->
+            <div class="form-step" data-step="3">
+                <h2>Paso 3: Plantillas disponibles</h2>
+                <p>Selecciona la plantilla que deseas solicitar.</p>
+
+                <select id="plantilla-select" required>
+                    <option value="">Selecciona una plantilla</option>
+                    <option value="Flujo de Caja">Flujo de Caja</option>
+                    <option value="Control de Ingresos">Control de Ingresos</option>
+                    <option value="Gestión de Gastos">Gestión de Gastos</option>
+                </select>
+
+                <div class="nav-buttons">
+                    <button class="prev-step btn outline">Anterior</button>
+                    <button class="next-step btn primary">Continuar</button>
+                </div>
+            </div>
+
+            <!-- ===== PASO 4 ===== -->
+            <div class="form-step" data-step="4">
+                <h2>Paso 4: Confirmación y entrega</h2>
+
+                <div class="confirmation-summary">
+                    <p><strong>Plantilla:</strong> <span id="plantillaConfirm"></span></p>
+                    <p><strong>Tipo de Cliente:</strong> <span id="tipoClienteConfirm"></span></p>
+                    <hr>
+                    <p><strong>Nombre:</strong> <span id="nombreConfirm"></span></p>
+                    <p><strong>Correo:</strong> <span id="correoConfirm"></span></p>
+                </div>
+
+                <label>¿Cómo prefieres recibir tu plantilla? <span class="required">*</span></label>
+                <select id="modoEntrega" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="correo">Recibir por correo</option>
+                    <option value="descargar">Descarga directa</option>
+                </select>
+
+                <label>Comentarios (Opcional)</label>
+                <textarea id="comentarios" placeholder="Ej: Me urge esta plantilla"></textarea>
+
+                <p style="font-size:0.75em;text-align:center;">
+                    Al continuar aceptas nuestro
+                    <a href="docs/privacidad.pdf" target="_blank">Aviso de Privacidad</a>
+                </p>
+
+                <div class="nav-buttons">
+                    <button class="prev-step btn outline">Anterior</button>
+                    <button class="next-step btn primary">Revisar</button>
+                </div>
+            </div>
+
+            <!-- ===== PASO 5 ===== -->
+            <div class="form-step" data-step="5">
+                <h2>Paso 5: Finalizar solicitud</h2>
+
+                <div class="confirmation-summary">
+                    <p><strong>Plantilla:</strong> <span id="plantillaConfirm"></span></p>
+                    <p><strong>Tipo de Cliente:</strong> <span id="tipoClienteConfirm"></span></p>
+                    <p><strong>Método de Entrega:</strong> <span id="entregaConfirm"></span></p>
+                    <hr>
+                    <p><strong>Nombre:</strong> <span id="nombreConfirm"></span></p>
+                    <p><strong>Correo:</strong> <span id="correoConfirm"></span></p>
+                </div>
+
+                <div id="accionesEntrega" class="nota-entrega"></div>
+
+                <div class="nav-buttons">
+                    <button class="prev-step btn outline">Anterior</button>
+                    <button id="enviarFormulario" class="btn primary">
+                        Finalizar Solicitud
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+    <footer class="footer">
+        <div style="display: flex; justify-content: center; gap: 40px; align-items: center; flex-wrap: wrap;background-color: ##e8e2de;">
+                
+            <a href="im.contable29@gmail.com" style="text-decoration: none; color: #4c4c3b; display: flex; align-items: center; gap: 10px;">
+                <i data-lucide="mail"></i> Correo directo a IM
+            </a>
+
+            <a href="https://www.facebook.com/share/18oyHU5iuT/?mibextid=wwXIfr" target="_blank" style="text-decoration: none; color: #4c4c3b; display: flex; align-items: center; gap: 10px;">
+                <i data-lucide="facebook"></i> Facebook
+            </a>
+
+            <a href="https://instagram.com/imservicioscontables/profilecard/?igsh=MXNiYTZpYjVjbXlmdQ==" target="_blank" style="text-decoration: none; color: #4c4c3b; display: flex; align-items: center; gap: 10px;">
+                <i data-lucide="instagram"></i> Instagram
+            </a>
+            
+           <p> © 2025 IM Servicios Contables. Todos los derechos reservados.</p>
+             
+            <a href="docs/terminos.pdf" target="_blank" style="color: #4c4c3b; margin-right: 15px; text-decoration: underline;">Conoce nuestros términos y condiciones aquí</a>
+            <a href="docs/privacidad.pdf" target="_blank" style="color: #4c4c3b; text-decoration: underline;">Descubre nuestro aviso de privacidad</a>
+        </div>
+    </footer>
+
+    <script>
+        // Si Lucide está cargado, lo creamos.
+        if (typeof lucide !== 'undefined' && lucide.createIcons) {
+            lucide.createIcons();
+        }
+    </script>
+    
+    <script>
+        // --- NAV: Mostrar/ocultar menú en dispositivos móviles ---
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+        navToggle?.addEventListener('click', ()=>{
+            navLinks.style.display = navLinks.style.display==='flex'?'none':'flex';
+        });
+
+        // --- CARRUSEL: Movimiento hacia izquierda/derecha ---
+        const carousel = document.getElementById('servicesCarousel');
+        const prevBtn = document.getElementById('carouselPrev');
+        const nextBtn = document.getElementById('carouselNext');
+
+        if (carousel && prevBtn && nextBtn) {
+            function moveCarousel(direction) {
+                // Se corrigió la ruta de la tarjeta para la estructura actual.
+                const cardWidth = carousel.querySelector('.card').offsetWidth + 18;
+                carousel.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+            }
+
+            function updateButtons() {
+                const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+                // Pequeño margen para la detección de scroll
+                const tolerance = 5; 
+                prevBtn.style.opacity = carousel.scrollLeft > tolerance ? 1 : 0.3;
+                nextBtn.style.opacity = carousel.scrollLeft < maxScrollLeft - tolerance ? 1 : 0.3;
+            }
+
+            prevBtn.addEventListener('click', () => moveCarousel(-1));
+            nextBtn.addEventListener('click', () => moveCarousel(1));
+            carousel.addEventListener('scroll', updateButtons);
+            // Ejecutar al cargar para inicializar el estado del botón "Anterior"
+            window.addEventListener('load', updateButtons); 
+        }
+
+        // --- FORMULARIO CONTACTO: Envío de datos (demo) ---
+        const formContacto=document.getElementById('contactForm');
+        formContacto?.addEventListener('submit',(e)=>{
+            e.preventDefault();
+            alert('Gracias. Tu solicitud de contacto ha sido recibida.');
+            formContacto.reset();
+        });
+        
+        // =========================================================
+        // --- CONTROL DEL MODAL MULTI-PASOS (PLANTILLA) ---
+        // =========================================================
+        const modal = document.getElementById('modalPlantilla');
+        
+        // --- ABRIR MODAL (Se incluyen todos los IDs de la página y el catálogo integrado) ---
+        const abrirBtns = document.querySelectorAll('#openModalBtn, #openSelectorBtn, #openSelectorBtn_Ingresos, #openSelectorBtn_Gastos');
+
+        abrirBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Reiniciar el modal al abrir
+                currentStep = 1;
+                formSteps.forEach(step => step.classList.remove('active'));
+                formSteps[0].classList.add('active'); 
+                document.getElementById('contactForm').reset(); // Reinicia el formulario para evitar errores
+                
+                modal.style.display = 'block';
+            });
+        });
+
+        const cerrarBtn = document.getElementById('cerrarModal');
+        const nextBtns = document.querySelectorAll('.next-step');
+        const prevBtns = document.querySelectorAll('.prev-step');
+        const formSteps = document.querySelectorAll('.form-step');
+        let currentStep = 1;
+
+        // Variables de campos
+        const nombreInput = document.getElementById('nombre-plantilla');
+        const correoInput = document.getElementById('correo-plantilla');
+        const tipoPersonaSelect = document.getElementById('tipoPersona');
+        const plantillaSelect = document.getElementById('plantilla-select');
+        const requiereApoyoRadios = document.getElementsByName('requiereApoyo');
+        const opcionApoyoSelect = document.getElementById('opcionApoyo');
+        const modoEntregaSelect = document.getElementById('modoEntrega');
+        const opcionApoyoDiv = document.getElementById('opcionApoyoDiv');
+
+
+        // Cerrar Modal al hacer clic en 'X' o fuera
+        cerrarBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Lógica de Mostrar/Ocultar Apoyo (PASO 3)
+        requiereApoyoRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                opcionApoyoDiv.style.display = radio.value === 'Si' ? 'block' : 'none';
+                // Asegurar que el select sea requerido si se selecciona "Sí"
+                opcionApoyoSelect.required = radio.value === 'Si'; 
+            });
+        });
+
+        // Navegación (Siguiente)
+        nextBtns.forEach(button => {
+            button.addEventListener('click', () => {
+                const currentStepElement = formSteps[currentStep - 1];
+                // Se buscan todos los elementos que tienen 'required' y que NO están ocultos (como la opción de apoyo)
+                const inputs = currentStepElement.querySelectorAll('input[required], select[required]:not([style*="display: none"]), textarea[required]');
+                let allValid = true;
+                
+                // Validación de campos del paso actual
+                inputs.forEach(input => {
+                    // La condición de offsetParent !== null es para ignorar elementos dentro de divs ocultos
+                    if (!input.value.trim() && input.offsetParent !== null) { 
+                        allValid = false;
+                        input.style.border = '1px solid red'; // Indicador visual de error
+                    } else {
+                        input.style.border = ''; // Quitar indicador de error
+                    }
+                });
+                
+                // Validación especial para el apoyo, si está seleccionado 'Sí'
+                if (currentStep === 3) {
+                    const requiereApoyoSi = Array.from(requiereApoyoRadios).find(r => r.checked && r.value === 'Si');
+                    if (requiereApoyoSi && !opcionApoyoSelect.value.trim()) {
+                        allValid = false;
+                        opcionApoyoSelect.style.border = '1px solid red';
+                    } else {
+                        opcionApoyoSelect.style.border = '';
+                    }
+                }
+
+                if (allValid) {
+                    if (currentStep < formSteps.length) {
+                        currentStepElement.classList.remove('active');
+                        currentStep++;
+                        formSteps[currentStep - 1].classList.add('active');
+                        if (currentStep === formSteps.length) {
+                            updateConfirmation();
+                        }
+                    }
+                } else {
+                    alert('⚠️ Por favor, rellena todos los campos marcados como obligatorios.');
+                }
+            });
+        });
+
+        // Navegación (Anterior)
+        prevBtns.forEach(button => {
+            button.addEventListener('click', () => {
+                if (currentStep > 1) {
+                    formSteps[currentStep - 1].classList.remove('active');
+                    currentStep--;
+                    formSteps[currentStep - 1].classList.add('active');
+                }
+            });
+        });
+
+        // Función para actualizar la pantalla de confirmación (Paso 5)
+        function updateConfirmation() {
+            // Lectura de datos
+            const nombre = nombreInput.value;
+            const correo = correoInput.value;
+            const tipoCliente = tipoPersonaSelect.options[tipoPersonaSelect.selectedIndex].text;
+            const plantilla = plantillaSelect.options[plantillaSelect.selectedIndex].text;
+            
+            const requiereApoyo = Array.from(requiereApoyoRadios).find(r => r.checked)?.value || 'No';
+            let apoyo = 'No requiere';
+            if (requiereApoyo === 'Si' && opcionApoyoSelect.selectedIndex > -1) {
+                apoyo = opcionApoyoSelect.options[opcionApoyoSelect.selectedIndex].text;
+            }
+
+            const entrega = modoEntregaSelect.value;
+            const entregaTexto = modoEntregaSelect.options[modoEntregaSelect.selectedIndex].text;
+
+            // Actualizar resumen
+            document.getElementById('nombreConfirm').textContent = nombre;
+            document.getElementById('correoConfirm').textContent = correo;
+            document.getElementById('tipoClienteConfirm').textContent = tipoCliente;
+            document.getElementById('plantillaConfirm').textContent = plantilla;
+            document.getElementById('apoyoConfirm').textContent = apoyo;
+            document.getElementById('entregaConfirm').textContent = entregaTexto;
+            
+            // Acciones de Entrega
+            const accionesDiv = document.getElementById('accionesEntrega');
+            accionesDiv.innerHTML = '';
+            
+            // Simulación de descarga directa
+            if (entrega === 'descargar') {
+                accionesDiv.innerHTML = '<a href="/plantillas/ejemplo.xlsx" download="Plantilla_IM_Servicios.xlsx" class="btn primary lg">🔗 DESCARGAR PLANTILLA AHORA</a><p class="nota">El link de descarga solo es temporal. ¡Guárdalo!</p>';
+                document.getElementById('enviarFormulario').style.display = 'none';
+            } else {
+                accionesDiv.innerHTML = '<p class="nota">Recibirás la plantilla en el correo <strong>' + correo + '</strong> en unos minutos.</p>';
+                document.getElementById('enviarFormulario').style.display = 'block';
+            }
+        }
+
+        // Finalizar formulario (Simulación de envío final)
+        document.getElementById('enviarFormulario')?.addEventListener('click', () => {
+            alert('✅ ¡Gracias! Tu plantilla ha sido solicitada y será enviada por correo.');
+            modal.style.display = 'none';
+            // Aquí iría el código real para enviar todos los datos al servidor.
+        });
+    </script>
+</body>
+</html>
