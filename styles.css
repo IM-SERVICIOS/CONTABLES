@@ -548,7 +548,8 @@ body{
 @media (max-width: 900px) {
     /* 1. Evitamos que el menú flote y lo integramos a la lista vertical */
     .mega-menu {
-        position: static !important; /* Rompe el 'absolute' para que no flote */
+        display: none !important; /* Rompe el 'absolute' para que no flote */
+        position: absolute !important;
         width: 100% !important;
         transform: none !important;
         display: none; /* Se oculta por defecto */
@@ -856,6 +857,7 @@ body{
         display: block;
     }
 }
+
 
 
 
