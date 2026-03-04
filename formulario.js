@@ -315,24 +315,31 @@ document.addEventListener('DOMContentLoaded', () => {
             resetModal();
         });
     }
-    // ====================================================================
-    // NUEVA LÓGICA: CONTROL DEL MEGA MENÚ DESPLEGABLE
-    // ====================================================================
+// ====================================================================
+// CONTROL DEL MEGA MENÚ DESPLEGABLE (CORREGIDO)
+// ====================================================================
+document.addEventListener('DOMContentLoaded', () => {
     const megaMenuBtn = document.getElementById('megaMenuBtn');
     
     if (megaMenuBtn) {
-        const dropdownParent = megaMenuBtn.parentElement;
+        // Buscamos al ancestro li que tiene la clase dropdown
+        const dropdownParent = megaMenuBtn.closest('.nav-item.dropdown');
 
         megaMenuBtn.addEventListener('click', (e) => {
+            // Evitamos que el enlace intente saltar a otra sección
             e.preventDefault();
             e.stopPropagation();
+            
             // Alterna la clase 'open' para mostrar/ocultar el menú
-            dropdownParent.classList.toggle('open');
+            if (dropdownParent) {
+                dropdownParent.classList.toggle('open');
+                console.log("Menú interactuado. Estado:", dropdownParent.classList.contains('open'));
+            }
         });
 
-        // Cerrar el menú si se hace clic fuera de él
+        // Cerrar el menú si se hace clic fuera de él (Mejorado)
         document.addEventListener('click', (e) => {
-            if (!dropdownParent.contains(e.target)) {
+            if (dropdownParent && !dropdownParent.contains(e.target)) {
                 dropdownParent.classList.remove('open');
             }
         });
@@ -358,6 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
     box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
     border: 1px solid #ddd !important;
 }
+
 
 
 
