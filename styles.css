@@ -559,10 +559,20 @@ body{
         background-color: #fcfcfc !important; /* Color sutil para diferenciarlo */
     }
 
-    /* 2. Mostrar cuando el JS activa la clase .open */
+/* 2. Mostrar cuando el JS activa la clase .open */
+.nav-item.open .mega-menu {
+    display: flex !important;    /* Lo vuelve visible y usa columnas en PC */
+    visibility: visible !important; 
+    opacity: 1 !important;
+    pointer-events: auto !important; /* Permite hacer clic en los enlaces internos */
+}
+
+/* Ajuste para que en móviles sea vertical */
+@media (max-width: 900px) {
     .nav-item.open .mega-menu {
-        display: block !important;
+        display: block !important; /* En celular las columnas se apilan una arriba de otra */
     }
+}
 
     /* 3. Ocultar divisores y ajustar links para el dedo */
     .mega-divider {
@@ -798,6 +808,7 @@ body{
 
     .mega-divider { display: none; }
 }
+
 
 
 
