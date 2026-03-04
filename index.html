@@ -20,20 +20,20 @@
                 <li><a href="#servicios" class="nav-link">Servicios</a></li>
                 <li><a href="#sobre" class="nav-link">Sobre Nosotros</a></li>
                 <li class="nav-item dropdown">
-        <a href="javascript:void(0)" class="nav-link dropbtn" id="megaMenuBtn">
-            Catálogo <span class="arrow">▾</span>
-        </a>
-        <div class="mega-menu">
-            <div class="mega-column">
-                <div class="mega-header">
-                    <span class="icon">💼</span> <h3>PRODUCTOS</h3>
+                    <a href="javascript:void(0)" class="nav-link dropbtn" id="megaMenuBtn">
+                    Catálogo <span class="arrow">▾</span>
+                </a>
+                <div class="mega-menu">
+                    <div class="mega-column">
+                        <div class="mega-header">
+                            <span class="icon">💼</span> <h3>PRODUCTOS</h3>
+                    </div>
+                    <a href="javascript:void(0)" id="openSelectorBtn_Gratis">Plantillas Gratis</a>
+                    <a href="javascript:void(0)" id="openSelectorBtn_Premium">Plantillas Premium</a>
                 </div>
-                <a href="javascript:void(0)" id="openSelectorBtn_Gratis">Plantillas Gratis</a>
-                <a href="javascript:void(0)" id="openSelectorBtn_Premium">Plantillas Premium</a>
-            </div>
-            <div class="mega-divider"></div>
-            <div class="mega-column">
-                <div class="mega-header">
+                <div class="mega-divider"></div>
+                <div class="mega-column">
+                    <div class="mega-header">
                     <span class="icon">🌐</span> <h3>COMUNIDAD</h3>
                 </div>
                 <a href="#">Blog Contable</a>
@@ -184,7 +184,7 @@
                     <article class="card"><div class="card-icon">🧾</div><h3>Facturación Electrónica</h3><p>Facturación Electrónica (CFDI) precisa y controlada. Emitimos en el portal SAT o en su sistema. Garantizamos el cumplimiento fiscal oportuno.</p></article>
                     <article class="card"><div class="card-icon">💰📈</div><h3>Asesorías Especializadas</h3><p>Gestión fiscal (SAT), control de finanzas y orientación experta para ahorro e inversión. (pregunte para otro tipo de asesoria personal)</p></article>
                     <article class="card"><div class="card-icon">📊</div><h3>Dashboards / Graficados Interactivos</h3><p>Creación de paneles visuales dinámicos adaptados a su medida.</p></article>
-                    <article class="card"><div class="card-icon">👥🎯</div><h3>KPI's</h3><p>Diseño de plantillas e indicadores clave en desempeño que apoyen la medición de el cumplimiento de sus objetivos.</p></article>
+                    <article class="card"><div class="card-icon">👥🎯</div><h3>Plantillas</h3><p>Diseño de plantillas e indicadores clave en desempeño que apoyen la medición de el cumplimiento de sus objetivos.</p></article>
                 </div>
                 <button class="carousel-btn right" id="carouselNext">▶</button>
             </div>
@@ -381,208 +381,12 @@
         }
     </script>
     
+<script src="https://unpkg.com/lucide@latest"></script>
     <script>
-        // --- NAV: Mostrar/ocultar menú en dispositivos móviles ---
-        const navToggle = document.getElementById('navToggle');
-        const navLinks = document.getElementById('navLinks');
-        navToggle?.addEventListener('click', ()=>{
-            navLinks.style.display = navLinks.style.display==='flex'?'none':'flex';
-        });
-
-        // --- CARRUSEL: Movimiento hacia izquierda/derecha ---
-        const carousel = document.getElementById('servicesCarousel');
-        const prevBtn = document.getElementById('carouselPrev');
-        const nextBtn = document.getElementById('carouselNext');
-
-        if (carousel && prevBtn && nextBtn) {
-            function moveCarousel(direction) {
-                // Se corrigió la ruta de la tarjeta para la estructura actual.
-                const cardWidth = carousel.querySelector('.card').offsetWidth + 18;
-                carousel.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
-            }
-
-            function updateButtons() {
-                const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
-                // Pequeño margen para la detección de scroll
-                const tolerance = 5; 
-                prevBtn.style.opacity = carousel.scrollLeft > tolerance ? 1 : 0.3;
-                nextBtn.style.opacity = carousel.scrollLeft < maxScrollLeft - tolerance ? 1 : 0.3;
-            }
-
-            prevBtn.addEventListener('click', () => moveCarousel(-1));
-            nextBtn.addEventListener('click', () => moveCarousel(1));
-            carousel.addEventListener('scroll', updateButtons);
-            // Ejecutar al cargar para inicializar el estado del botón "Anterior"
-            window.addEventListener('load', updateButtons); 
-        }
-
-        // --- FORMULARIO CONTACTO: Envío de datos (demo) ---
-        const formContacto=document.getElementById('contactForm');
-        formContacto?.addEventListener('submit',(e)=>{
-            e.preventDefault();
-            alert('Gracias. Tu solicitud de contacto ha sido recibida.');
-            formContacto.reset();
-        });
-        
-        // =========================================================
-        // --- CONTROL DEL MODAL MULTI-PASOS (PLANTILLA) ---
-        // =========================================================
-        const modal = document.getElementById('modalPlantilla');
-        
-        // --- ABRIR MODAL (Se incluyen todos los IDs de la página y el catálogo integrado) ---
-        const abrirBtns = document.querySelectorAll('#openModalBtn, #openSelectorBtn, #openSelectorBtn_Ingresos, #openSelectorBtn_Gastos');
-
-        abrirBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                // Reiniciar el modal al abrir
-                currentStep = 1;
-                formSteps.forEach(step => step.classList.remove('active'));
-                formSteps[0].classList.add('active'); 
-                document.getElementById('contactForm').reset(); // Reinicia el formulario para evitar errores
-                
-                modal.style.display = 'block';
-            });
-        });
-
-        const cerrarBtn = document.getElementById('cerrarModal');
-        const nextBtns = document.querySelectorAll('.next-step');
-        const prevBtns = document.querySelectorAll('.prev-step');
-        const formSteps = document.querySelectorAll('.form-step');
-        let currentStep = 1;
-
-        // Variables de campos
-        const nombreInput = document.getElementById('nombre-plantilla');
-        const correoInput = document.getElementById('correo-plantilla');
-        const tipoPersonaSelect = document.getElementById('tipoPersona');
-        const plantillaSelect = document.getElementById('plantilla-select');
-        const requiereApoyoRadios = document.getElementsByName('requiereApoyo');
-        const opcionApoyoSelect = document.getElementById('opcionApoyo');
-        const modoEntregaSelect = document.getElementById('modoEntrega');
-        const opcionApoyoDiv = document.getElementById('opcionApoyoDiv');
-
-
-        // Cerrar Modal al hacer clic en 'X' o fuera
-        cerrarBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-
-        window.addEventListener('click', (event) => {
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        });
-        
-        // Lógica de Mostrar/Ocultar Apoyo (PASO 3)
-        requiereApoyoRadios.forEach(radio => {
-            radio.addEventListener('change', () => {
-                opcionApoyoDiv.style.display = radio.value === 'Si' ? 'block' : 'none';
-                // Asegurar que el select sea requerido si se selecciona "Sí"
-                opcionApoyoSelect.required = radio.value === 'Si'; 
-            });
-        });
-
-        // Navegación (Siguiente)
-        nextBtns.forEach(button => {
-            button.addEventListener('click', () => {
-                const currentStepElement = formSteps[currentStep - 1];
-                // Se buscan todos los elementos que tienen 'required' y que NO están ocultos (como la opción de apoyo)
-                const inputs = currentStepElement.querySelectorAll('input[required], select[required]:not([style*="display: none"]), textarea[required]');
-                let allValid = true;
-                
-                // Validación de campos del paso actual
-                inputs.forEach(input => {
-                    // La condición de offsetParent !== null es para ignorar elementos dentro de divs ocultos
-                    if (!input.value.trim() && input.offsetParent !== null) { 
-                        allValid = false;
-                        input.style.border = '1px solid red'; // Indicador visual de error
-                    } else {
-                        input.style.border = ''; // Quitar indicador de error
-                    }
-                });
-                
-                // Validación especial para el apoyo, si está seleccionado 'Sí'
-                if (currentStep === 3) {
-                    const requiereApoyoSi = Array.from(requiereApoyoRadios).find(r => r.checked && r.value === 'Si');
-                    if (requiereApoyoSi && !opcionApoyoSelect.value.trim()) {
-                        allValid = false;
-                        opcionApoyoSelect.style.border = '1px solid red';
-                    } else {
-                        opcionApoyoSelect.style.border = '';
-                    }
-                }
-
-                if (allValid) {
-                    if (currentStep < formSteps.length) {
-                        currentStepElement.classList.remove('active');
-                        currentStep++;
-                        formSteps[currentStep - 1].classList.add('active');
-                        if (currentStep === formSteps.length) {
-                            updateConfirmation();
-                        }
-                    }
-                } else {
-                    alert('⚠️ Por favor, rellena todos los campos marcados como obligatorios.');
-                }
-            });
-        });
-
-        // Navegación (Anterior)
-        prevBtns.forEach(button => {
-            button.addEventListener('click', () => {
-                if (currentStep > 1) {
-                    formSteps[currentStep - 1].classList.remove('active');
-                    currentStep--;
-                    formSteps[currentStep - 1].classList.add('active');
-                }
-            });
-        });
-
-        // Función para actualizar la pantalla de confirmación (Paso 5)
-        function updateConfirmation() {
-            // Lectura de datos
-            const nombre = nombreInput.value;
-            const correo = correoInput.value;
-            const tipoCliente = tipoPersonaSelect.options[tipoPersonaSelect.selectedIndex].text;
-            const plantilla = plantillaSelect.options[plantillaSelect.selectedIndex].text;
-            
-            const requiereApoyo = Array.from(requiereApoyoRadios).find(r => r.checked)?.value || 'No';
-            let apoyo = 'No requiere';
-            if (requiereApoyo === 'Si' && opcionApoyoSelect.selectedIndex > -1) {
-                apoyo = opcionApoyoSelect.options[opcionApoyoSelect.selectedIndex].text;
-            }
-
-            const entrega = modoEntregaSelect.value;
-            const entregaTexto = modoEntregaSelect.options[modoEntregaSelect.selectedIndex].text;
-
-            // Actualizar resumen
-            document.getElementById('nombreConfirm').textContent = nombre;
-            document.getElementById('correoConfirm').textContent = correo;
-            document.getElementById('tipoClienteConfirm').textContent = tipoCliente;
-            document.getElementById('plantillaConfirm').textContent = plantilla;
-            document.getElementById('apoyoConfirm').textContent = apoyo;
-            document.getElementById('entregaConfirm').textContent = entregaTexto;
-            
-            // Acciones de Entrega
-            const accionesDiv = document.getElementById('accionesEntrega');
-            accionesDiv.innerHTML = '';
-            
-            // Simulación de descarga directa
-            if (entrega === 'descargar') {
-                accionesDiv.innerHTML = '<a href="/plantillas/ejemplo.xlsx" download="Plantilla_IM_Servicios.xlsx" class="btn primary lg">🔗 DESCARGAR PLANTILLA AHORA</a><p class="nota">El link de descarga solo es temporal. ¡Guárdalo!</p>';
-                document.getElementById('enviarFormulario').style.display = 'none';
-            } else {
-                accionesDiv.innerHTML = '<p class="nota">Recibirás la plantilla en el correo <strong>' + correo + '</strong> en unos minutos.</p>';
-                document.getElementById('enviarFormulario').style.display = 'block';
-            }
-        }
-
-        // Finalizar formulario (Simulación de envío final)
-        document.getElementById('enviarFormulario')?.addEventListener('click', () => {
-            alert('✅ ¡Gracias! Tu plantilla ha sido solicitada y será enviada por correo.');
-            modal.style.display = 'none';
-            // Aquí iría el código real para enviar todos los datos al servidor.
-        });
+        if (typeof lucide !== 'undefined') lucide.createIcons();
     </script>
+
+    <script src="formulario.js"></script> 
+
 </body>
 </html>
