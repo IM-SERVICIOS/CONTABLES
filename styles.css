@@ -700,71 +700,76 @@ body{
 .mega-menu {
     display: none; /* Oculto por defecto */
     position: absolute;
-    top: 50px;
+    top: calc(100% + 15px); /* Se posiciona justo debajo del nav con un pequeño aire */
     left: 50%;
     transform: translateX(-50%);
     background: var(--panel); /* Usa tu color blanco de :root */
     border: 1px solid var(--accent-2);
     border-radius: var(--radius); /* Usa tus 14px de :root */
     padding: 25px;
-    width: 550px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 580px;
+    box-shadow: 0 15px 33px rgba(0,0,0,0.15);
     z-index: 1000;
     display: flex;
     justify-content: space-between;
+    gap: 20px;
 }
 
-/* Solo se muestra cuando JS añade la clase .open */
-.nav-item.open .mega-menu { display: flex; }
+/* 3. Activación (Esta es la línea que conecta con tu JS) */
+.nav-item.open .mega-menu { 
+    display: flex; 
+}
+/* 4. Estilos de contenido interno */
+.mega-column { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+}
 
-/* Estilo de columnas y cabeceras */
-.mega-column { flex: 1; display: flex; flex-direction: column; }
-
-.mega-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.mega-header { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    margin-bottom: 12px; 
+}
 
 .mega-header h3 {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 800;
-    color: var(--primary); /* Tu azul oscuro */
+    color: var(--primary); /* Tu azul oscuro #1f3b52 */
     margin: 0;
-    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .mega-column a {
-    color: var(--muted); /* Tu gris suave */
+    color: var(--muted);
     text-decoration: none;
-    font-size: 0.9rem;
-    padding: 5px 0 5px 28px;
-    transition: color 0.2s ease;
+    font-size: 0.95rem;
+    padding: 8px 0 8px 32px; /* Alineación bajo el texto del header */
+    transition: all 0.2s ease;
 }
 
-.mega-column a:hover { color: #00d1e0; } /* El cyan de tu referencia visual */
+.mega-column a:hover { 
+    color: #00d1e0; 
+    transform: translateX(5px); /* Efecto sutil de desplazamiento */
+}
 
 .mega-divider {
     width: 1px;
-    background: #00d1e0;
-    margin: 0 15px;
-    opacity: 0.3;
+    background: linear-gradient(to bottom, transparent, #00d1e0, transparent);
+    margin: 0 10px;
+    opacity: 0.4;
 }
 
-.spacer { margin-top: 15px; }
-.highlight { color: #007bff; }
-
-/* AJUSTE PARA MÓVILES (Responsive) */
-@media (max-width: 900px) {
+/* 5. Ajuste para que el menú no se corte en los bordes de la pantalla */
+@media (max-width: 1100px) {
     .mega-menu {
-        position: static; /* Se vuelve parte del flujo vertical del menú de hamburguesa */
-        width: 100%;
-        transform: none;
-        flex-direction: column;
-        box-shadow: none;
-        border: none;
-        background: transparent;
-        padding: 10px 20px;
+        width: 90vw;
+        max-width: 550px;
     }
-    .mega-divider { display: none; }
-    .nav-item.open .mega-menu { display: block; }
 }
+
 
 
 
