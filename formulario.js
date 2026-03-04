@@ -282,9 +282,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (enviarFormularioGratisBtn) {
-        enviarFormularioGratisBtn.addEventListener('click', () => {
-            if (selectedPlantillaType !== 'GRATIS' || !selectedPlantillaValue) return;
-            
+       enviarFormularioGratisBtn.addEventListener('click', () => {
+            if (!nombreInput.value || !correoInput.value || !tipoPersonaSelect.value) {
+            alert('⚠️ Por favor, completa todos los campos.');
+            return;
+            }
             const plantillaInfo = PLANTILLAS_DATA.find(p => p.code === selectedPlantillaValue);
             
             if (plantillaInfo && plantillaInfo.url) {
@@ -365,6 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
     box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
     border: 1px solid #ddd !important;
 }
+
 
 
 
