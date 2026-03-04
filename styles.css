@@ -141,7 +141,7 @@ body{
 
 /* Hover: efecto sutil de elevación */
 .value-card:hover {
-  transform: translateY(-4px); /* Levanta la tarjeta ligeramente */
+  transform: translateY(-4.5px); /* Levanta la tarjeta ligeramente */
   box-shadow: 0 12px 30px rgba(0,0,0,0.09); /* Sombra más pronunciada */
 }
 
@@ -542,7 +542,48 @@ body{
     height: auto;
   }
 }
+/* ============================================================
+   ESTO ES LO QUE AÑADES (CONTROL DEL MEGA MENÚ MÓVIL)
+   ============================================================ */
+@media (max-width: 900px) {
+    /* 1. Evitamos que el menú flote y lo integramos a la lista vertical */
+    .mega-menu {
+        position: static !important; /* Rompe el 'absolute' para que no flote */
+        width: 100% !important;
+        transform: none !important;
+        display: none; /* Se oculta por defecto */
+        flex-direction: column !important; /* Columnas una debajo de otra */
+        padding: 15px !important;
+        box-shadow: none !important;
+        border: none !important;
+        background-color: #fcfcfc !important; /* Color sutil para diferenciarlo */
+    }
 
+    /* 2. Mostrar cuando el JS activa la clase .open */
+    .nav-item.open .mega-menu {
+        display: block !important;
+    }
+
+    /* 3. Ocultar divisores y ajustar links para el dedo */
+    .mega-divider {
+        display: none !important;
+    }
+
+    .mega-column a {
+        padding: 12px 0 12px 30px !important;
+        font-size: 1rem !important;
+        border-bottom: 1px solid #eee; /* Separador sutil entre links */
+        display: block;
+    }
+
+    /* Ajuste para que el botón de Recursos no se vea apretado */
+    .nav-link.dropbtn {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+}
 /* ==================================== */
 /* ESTILOS DE LA VENTANA DE SELECCIÓN */
 /* ==================================== */
@@ -769,6 +810,7 @@ body{
         max-width: 550px;
     }
 }
+
 
 
 
