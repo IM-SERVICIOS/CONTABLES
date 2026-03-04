@@ -297,6 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     tipoPersona: tipoPersonaSelect.value,
                     plantillaSolicita: plantillaInfo.name,
                     esPago: 'NO',
+                    
                 });
 
                 // 2. Descarga directa
@@ -317,56 +318,35 @@ document.addEventListener('DOMContentLoaded', () => {
             resetModal();
         });
     }
+
 // ====================================================================
-// CONTROL DEL MEGA MENÚ DESPLEGABLE (CORREGIDO)
+// 7. CONTROL DEL MEGA MENÚ DESPLEGABLE
 // ====================================================================
-document.addEventListener('DOMContentLoaded', () => {
-    const megaMenuBtn = document.getElementById('megaMenuBtn');
-    
-    if (megaMenuBtn) {
-        // Buscamos al ancestro li que tiene la clase dropdown
-        const dropdownParent = megaMenuBtn.parentElement;
 
-        megaMenuBtn.addEventListener('click', (e) => {
-            // Evitamos que el enlace intente saltar a otra sección
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Alterna la clase 'open' para mostrar/ocultar el menú
-            if (dropdownParent) {
-                dropdownParent.classList.toggle('open');
-                console.log("Menú interactuado. Estado:", dropdownParent.classList.contains('open'));
-            }
-        });
+const megaMenuBtn = document.getElementById('megaMenuBtn');
 
-        // Cerrar el menú si se hace clic fuera de él (Mejorado)
-        document.addEventListener('click', (e) => {
-            if (dropdownParent && !dropdownParent.contains(e.target)) {
-                dropdownParent.classList.remove('open');
-            }
-        });
-    }
-});
+if (megaMenuBtn) {
 
-/* FUERZA LA APARICIÓN DEL MENÚ */
-.nav-item.dropdown.open .mega-menu {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    z-index: 99999 !important;
+    const dropdownParent = megaMenuBtn.closest('.dropdown');
+
+    megaMenuBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (dropdownParent) {
+            dropdownParent.classList.toggle('open');
+        }
+    });
+
+    // Cerrar si se hace clic fuera
+    document.addEventListener('click', function (e) {
+        if (dropdownParent && !dropdownParent.contains(e.target)) {
+            dropdownParent.classList.remove('open');
+        }
+    });
 }
+});  // ← ESTA ES LA ÚNICA QUE CIERRA TODO
 
-/* AJUSTE DE POSICIÓN PARA QUE NO SE ESCONDA */
-.mega-menu {
-    display: none; 
-    position: absolute !important;
-    top: 100% !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    background-color: #ffffff !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
-    border: 1px solid #ddd !important;
-}
 
 
 
