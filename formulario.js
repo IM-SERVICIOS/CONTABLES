@@ -339,6 +339,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+/* FUERZA LA APARICIÓN DEL MENÚ */
+.nav-item.dropdown.open .mega-menu {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 99999 !important;
+}
+
+/* AJUSTE DE POSICIÓN PARA QUE NO SE ESCONDA */
+.mega-menu {
+    display: none; 
+    position: absolute !important;
+    top: 100% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+    border: 1px solid #ddd !important;
+}
 
 
 
