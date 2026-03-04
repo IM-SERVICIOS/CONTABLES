@@ -315,7 +315,30 @@ document.addEventListener('DOMContentLoaded', () => {
             resetModal();
         });
     }
+    // ====================================================================
+    // NUEVA LÓGICA: CONTROL DEL MEGA MENÚ DESPLEGABLE
+    // ====================================================================
+    const megaMenuBtn = document.getElementById('megaMenuBtn');
+    
+    if (megaMenuBtn) {
+        const dropdownParent = megaMenuBtn.parentElement;
+
+        megaMenuBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            // Alterna la clase 'open' para mostrar/ocultar el menú
+            dropdownParent.classList.toggle('open');
+        });
+
+        // Cerrar el menú si se hace clic fuera de él
+        document.addEventListener('click', (e) => {
+            if (!dropdownParent.contains(e.target)) {
+                dropdownParent.classList.remove('open');
+            }
+        });
+    }
 });
+
 
 
 
