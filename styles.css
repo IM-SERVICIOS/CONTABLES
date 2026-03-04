@@ -809,6 +809,53 @@ body{
     .mega-divider { display: none; }
 }
 
+/* ============================================================
+   CORRECCIÓN DEFINITIVA PARA GITHUB PAGES
+   ============================================================ */
+
+/* 1. Forzamos que el contenedor li permita ver el menú */
+.nav-item.dropdown {
+    position: relative !important;
+}
+
+/* 2. Ajuste del menú para que flote correctamente sobre el contenido */
+.mega-menu {
+    display: none; /* Empieza oculto */
+    position: absolute !important;
+    top: 100% !important; 
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 99999 !important; /* Valor altísimo para que no lo tape el Hero o el Catálogo */
+    background-color: #ffffff !important; /* Fondo blanco sólido */
+    min-width: 500px;
+    border: 1px solid #e8e2de !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+}
+
+/* 3. REGLA DE ORO: La que activa el menú cuando el JS añade "open" */
+.nav-item.open .mega-menu {
+    display: flex !important; /* En PC se muestra como caja flexible */
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* 4. Ajuste específico para Celulares */
+@media (max-width: 900px) {
+    .nav-item.open .mega-menu {
+        display: block !important; /* En celular se muestra en lista vertical */
+        position: static !important;
+        width: 100% !important;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
+    /* Asegura que los links se vean bien en móvil */
+    .mega-column a {
+        padding: 15px !important;
+        border-bottom: 1px solid #eee;
+        display: block;
+    }
+}
 
 
 
