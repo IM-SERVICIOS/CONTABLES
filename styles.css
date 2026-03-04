@@ -739,9 +739,9 @@ body{
 .nav-item.dropdown { position: relative; }
 
 .mega-menu {
-    display: none; /* Oculto por defecto */
+    display: none; /* CAMBIO CRÍTICO: Debe ser none para que el JS lo abra */
     position: absolute;
-    top: calc(100% + 15px); /* Se posiciona justo debajo del nav con un pequeño aire */
+    top: calc(100% + 12px); /* Se posiciona justo debajo del nav con un pequeño aire */
     left: 50%;
     transform: translateX(-50%);
     background: var(--panel); /* Usa tu color blanco de :root */
@@ -751,65 +751,54 @@ body{
     width: 580px;
     box-shadow: 0 15px 33px rgba(0,0,0,0.15);
     z-index: 1000;
-    display: flex;
     justify-content: space-between;
     gap: 20px;
 }
 
 /* 3. Activación (Esta es la línea que conecta con tu JS) */
 .nav-item.open .mega-menu { 
-    display: flex; 
+    display: flex !important; 
 }
-/* 4. Estilos de contenido interno */
-.mega-column { 
-    flex: 1; 
-    display: flex; 
-    flex-direction: column; 
-}
-
-.mega-header { 
-    display: flex; 
-    align-items: center; 
-    gap: 10px; 
-    margin-bottom: 12px; 
-}
-
+/* 4. Estilos internos (Mantener) */
+.mega-column { flex: 1; display: flex; flex-direction: column; }
+.mega-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
 .mega-header h3 {
     font-size: 0.85rem;
     font-weight: 800;
-    color: var(--primary); /* Tu azul oscuro #1f3b52 */
+    color: var(--primary);
     margin: 0;
     text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
 .mega-column a {
     color: var(--muted);
     text-decoration: none;
     font-size: 0.95rem;
-    padding: 8px 0 8px 32px; /* Alineación bajo el texto del header */
+    padding: 8px 0 8px 32px;
     transition: all 0.2s ease;
 }
 
-.mega-column a:hover { 
-    color: #00d1e0; 
-    transform: translateX(5px); /* Efecto sutil de desplazamiento */
-}
+.mega-column a:hover { color: #00d1e0; transform: translateX(5px); }
 
-.mega-divider {
-    width: 1px;
-    background: linear-gradient(to bottom, transparent, #00d1e0, transparent);
-    margin: 0 10px;
-    opacity: 0.4;
-}
-
-/* 5. Ajuste para que el menú no se corte en los bordes de la pantalla */
-@media (max-width: 1100px) {
+/* 5. DISEÑO PARA MÓVILES (Líneas finales de tu archivo) */
+@media (max-width: 900px) {
     .mega-menu {
-        width: 90vw;
-        max-width: 550px;
+        position: static !important;
+        width: 100% !important;
+        transform: none !important;
+        display: none; /* Se mantiene oculto en móvil también */
+        flex-direction: column !important;
+        padding: 15px !important;
+        box-shadow: none !important;
     }
+
+    .nav-item.open .mega-menu {
+        display: block !important; /* En móvil usamos block para que las columnas bajen */
+    }
+
+    .mega-divider { display: none; }
 }
+
 
 
 
