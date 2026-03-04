@@ -325,7 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (megaMenuBtn) {
         // Buscamos al ancestro li que tiene la clase dropdown
-        const dropdownParent = megaMenuBtn.closest('.nav-item.dropdown');
+        const dropdownParent = megaMenuBtn.parentElement;
 
         megaMenuBtn.addEventListener('click', (e) => {
             // Evitamos que el enlace intente saltar a otra sección
@@ -367,6 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
     box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
     border: 1px solid #ddd !important;
 }
+
 
 
 
