@@ -747,21 +747,21 @@ body{
 /* MEGA MENÚ - Integración Segura */
 
 /* Posicionamiento del contenedor */
-.nav-item.dropdown { position: relative; }
+position: relative !important; }
 
 .mega-menu {
     display: none; /* CAMBIO CRÍTICO: Debe ser none para que el JS lo abra */
-    position: absolute;
-    top: calc(100% + 12px); /* Se posiciona justo debajo del nav con un pequeño aire */
+    position: absolute !important;
+    top: 100% !important; /* Se posiciona justo debajo del nav con un pequeño aire */
     left: 50%;
     transform: translateX(-50%);
     background: var(--panel); /* Usa tu color blanco de :root */
     border: 1px solid var(--accent-2);
     border-radius: var(--radius); /* Usa tus 14px de :root */
     padding: 25px;
-    width: 580px;
-    box-shadow: 0 15px 33px rgba(0,0,0,0.15);
-    z-index: 1000;
+    width: 650px;
+    box-shadow: 0 15px 34px rgba(0,0,0,0.2);
+    z-index: 999999 !importan; /* Por encima de todo */
     justify-content: space-between;
     gap: 20px;
 }
@@ -857,6 +857,7 @@ body{
         display: block;
     }
 }
+
 
 
 
