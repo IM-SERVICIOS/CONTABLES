@@ -1113,6 +1113,62 @@ box-shadow:0 10px 30px rgba(0,0,0,0.12);
     }
 }
 
+.faq-section {
+    padding: 60px 20px;
+    background-color: #ffffff;
+}
+
+.faq-accordion {
+    max-width: 800px;
+    margin: 40px auto 0;
+}
+
+.faq-item {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+}
+
+.faq-question {
+    width: 100%;
+    padding: 20px;
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    text-align: left;
+    transition: color 0.3s;
+}
+
+.faq-question:hover {
+    color: var(--primary); /* Usa el color azul de tu marca */
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: #f9f9f9;
+}
+
+.faq-answer p {
+    padding: 0 20px 20px;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Clase que activará el JS */
+.faq-item.active .faq-answer {
+    max-height: 200px; /* Ajusta según el largo del texto */
+}
+
+.faq-item.active .faq-question span {
+    transform: rotate(45deg); /* Convierte el + en x */
+}
 
 
 
