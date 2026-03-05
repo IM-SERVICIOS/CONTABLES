@@ -21,7 +21,12 @@ body{
   color:var(--text);
   -webkit-font-smoothing:antialiased;
 }
-.container{max-width:1100px;margin:0 auto;padding:28px}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:0 20px;
+}
 
 /* NAV */
 .nav{background:var(--panel);box-shadow:0 6px 18px rgba(20,20,50,0.06);position:sticky;top:0;z-index:60}
@@ -1050,6 +1055,18 @@ background:#735b39;
 
 
 
+.card{
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,0.08);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+box-shadow:0 10px 30px rgba(0,0,0,0.12);
+}
 
 
 
