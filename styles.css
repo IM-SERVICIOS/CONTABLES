@@ -881,8 +881,10 @@ html {
     background: linear-gradient(135deg, #1f2c3e, #2f4b6e);
 }
 
-.hero-academia {
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+.hero-academia h1{
+    font-size: 44px;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 .hero-interno h1 {
@@ -971,6 +973,7 @@ html {
 .hero-academia p {
     color: #e6eef5;
 }
+
 
 
 
