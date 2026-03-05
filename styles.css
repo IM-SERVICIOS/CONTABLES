@@ -912,12 +912,13 @@ html {
     margin: auto;
 }
 
-/* GRID DE TARJETAS */
-.grid-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    margin-top: 50px;
+/* GRID DE TARJETAS DE PRODUCTOS */
+
+.grid-cards{
+display:grid;
+grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+gap:30px;
+margin-top:30px;
 }
 /* LINK MANUAL DE USO */
 
@@ -1046,6 +1047,7 @@ color:white;
 .btn-premium:hover{
 background:#735b39;
 }
+
 
 
 
