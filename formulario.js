@@ -345,7 +345,21 @@ if (megaMenuBtn) {
         }
     });
 }
+    document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', () => {
+        const faqItem = button.parentElement;
+        
+        // Cierra otros abiertos (opcional)
+        document.querySelectorAll('.faq-item').forEach(item => {
+            if (item !== faqItem) item.classList.remove('active');
+        });
+
+        // Abre/Cierra el actual
+        faqItem.classList.toggle('active');
+    });
+});
 });  // ← ESTA ES LA ÚNICA QUE CIERRA TODO
+
 
 
 
