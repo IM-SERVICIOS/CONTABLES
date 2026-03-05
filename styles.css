@@ -958,6 +958,19 @@ html {
     background: #1f2c3e;
 }
 
+/* HERO ACADEMIA TEXTO CLARO */
+.hero-academia {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #ffffff;
+}
+
+.hero-academia h1 {
+    color: #ffffff;
+}
+
+.hero-academia p {
+    color: #e6eef5;
+}
 
 
 
