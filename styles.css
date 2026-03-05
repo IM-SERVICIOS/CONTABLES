@@ -753,8 +753,9 @@ position: relative !important; }
     display: none; /* CAMBIO CRÍTICO: Debe ser none para que el JS lo abra */
     position: absolute !important;
     top: 100% !important; /* Se posiciona justo debajo del nav con un pequeño aire */
-    left: 50%;
-    transform: translateX(-50%);
+    left: auto !important;
+    right: -150px !important; /* Mueve el menú hacia la izquierda desde el borde derecho */
+    transform: none !important;
     background: var(--panel); /* Usa tu color blanco de :root */
     border: 1px solid var(--accent-2);
     border-radius: var(--radius); /* Usa tus 14px de :root */
@@ -857,6 +858,7 @@ position: relative !important; }
         display: block;
     }
 }
+
 
 
 
