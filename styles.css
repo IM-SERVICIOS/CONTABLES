@@ -747,7 +747,9 @@ body{
 /* MEGA MENÚ - Integración Segura */
 
 /* Posicionamiento del contenedor */
-position: relative !important; }
+.nav-item {
+    position: relative !important;
+}
 
 .mega-menu {
     display: none; /* CAMBIO CRÍTICO: Debe ser none para que el JS lo abra */
@@ -955,6 +957,7 @@ html {
 .card .btn:hover {
     background: #1f2c3e;
 }
+
 
 
 
