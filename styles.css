@@ -85,11 +85,11 @@ padding:0 20px;
 .brand {
     display: flex;
     align-items: center; /* Alinea verticalmente el icono con el texto */
-    gap: 12px;           /* Controla la separación entre el icono y el texto */
+    gap: 13px;           /* Controla la separación entre el icono y el texto */
 }
 
 .sobre-icon-img {
-    width: 35px;         /* Ajusta el tamaño a tu preferencia */
+    width: 40px;         /* Ajusta el tamaño a tu preferencia */
     height: auto;
 }
 
@@ -1173,6 +1173,7 @@ box-shadow:0 10px 30px rgba(0,0,0,0.12);
 .faq-item.active .faq-question span {
     transform: rotate(45deg); /* Convierte el + en x */
 }
+
 
 
 
