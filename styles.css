@@ -1302,6 +1302,7 @@ max-width:500px;
 height:320px;
 position:relative;
 overflow:hidden;
+display:flex;
 }
 
 .catalog-preview img{
@@ -1319,6 +1320,7 @@ background:white;
 .catalog-preview img.active{
 opacity:1;
 }
+
 
 
 
