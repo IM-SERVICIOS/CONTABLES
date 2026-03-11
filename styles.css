@@ -903,7 +903,7 @@ html {
 
 /* SECCIONES */
 .seccion {
-    padding: 70px 20px;
+    padding: 60px 18px;
 }
 
 .seccion.bg-light {
@@ -1281,6 +1281,7 @@ box-shadow:0 10px 30px rgba(0,0,0,0.12);
     width: 100%;
     display: block;
 }
+
 
 
 
