@@ -991,8 +991,8 @@ text-decoration:underline;
 
 .hero-academia p {
     color: #e6eef5;
-    margin-top: 20px;    /* Espacio con lo de arriba */
-    margin-bottom: 24px; /* Espacio con lo de abajo */
+    margin-top: 17px;    /* Espacio con lo de arriba */
+    margin-bottom: 35px; /* Espacio con lo de abajo */
     line-height: 1.6;    /* Mejora la lectura entre líneas */
 }
 
@@ -1173,6 +1173,7 @@ box-shadow:0 10px 30px rgba(0,0,0,0.12);
 .faq-item.active .faq-question span {
     transform: rotate(45deg); /* Convierte el + en x */
 }
+
 
 
 
