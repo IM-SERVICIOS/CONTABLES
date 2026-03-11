@@ -1229,6 +1229,35 @@ box-shadow:0 10px 30px rgba(0,0,0,0.12);
     animation-play-state: paused;
 }
 
+/* Ajuste para las imágenes dentro de las cards del blog */
+.blog-image {
+    width: 100%;
+    height: 180px; /* Altura fija para que todas las cards se vean iguales */
+    overflow: hidden;
+    border-radius: calc(var(--radius) - 4px);
+    margin-bottom: 15px;
+}
+
+.blog-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajusta la imagen sin deformarla */
+    transition: transform 0.5s ease;
+}
+
+/* Efecto zoom al pasar el mouse por la card */
+.blog-card:hover .blog-image img {
+    transform: scale(1.1);
+}
+
+.blog-card {
+    /* Aseguramos que el contenido se alinee arriba */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: auto;
+    min-height: 450px; /* Ajusta según necesites */
+}
 
 
 
