@@ -1258,29 +1258,31 @@ box-shadow:0 10px 30px rgba(0,0,0,0.12);
     height: auto;
     min-height: 450px; /* Ajusta según necesites */
 }
-
 .hero-flex {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 30px;
+    align-items: center; /* Centrado vertical */
+    /* No necesitamos justify-content: space-between si usamos margin-left: auto */
 }
 
 .hero-content {
-    flex: 1; /* El texto se expande para llenar el resto */
+    /* El texto mantiene su tamaño natural o puedes darle un flex: 1 */
+    max-width: 600px; 
 }
 
 .academia-image {
-    /* AJUSTA ESTE VALOR PARA CAMBIAR EL TAMAÑO */
-    flex: 0 0 400px; 
+    /* ESTO EMPUJA LA IMAGEN TODO A LA DERECHA */
+    margin-left: auto; 
     
-    max-width: 100%; /* Evita que se desborde en pantallas pequeñas */
+    /* Tu medida personalizada */
+    flex: 0 0 350px; 
 }
 
 .academia-image img {
-    width: 100%; /* La imagen se adapta al tamaño del contenedor de arriba */
-    height: auto;
+    width: 100%;
+    display: block;
 }
+
+
 
 
 
