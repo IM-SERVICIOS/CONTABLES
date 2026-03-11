@@ -887,7 +887,7 @@ html {
 }
 
 .hero-academia h1{
-    font-size: 44px;
+    font-size: 60px;
     font-weight: 700;
     letter-spacing: 1px;
 }
@@ -1169,6 +1169,7 @@ box-shadow:0 10px 30px rgba(0,0,0,0.12);
 .faq-item.active .faq-question span {
     transform: rotate(45deg); /* Convierte el + en x */
 }
+
 
 
 
