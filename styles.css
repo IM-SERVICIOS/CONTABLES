@@ -82,16 +82,17 @@ padding:0 20px;
   text-align: center; /* Asegura el centrado de todo el texto */
 }
 
-/* Este reemplaza a .sobre-intro .sobre-icon */
-.brand .sobre-icon-img {
-    width: 32px;            /* Tamaño ideal para un logo en el nav */
-    height: auto;           /* Mantiene la proporción original */
-    object-fit: contain;    /* Evita que se estire */
-    display: inline-block;  /* Permite que conviva con el texto */
-    vertical-align: middle; /* Lo alinea con la base de las letras */
+.brand {
+    display: flex;
+    align-items: center; /* Alinea verticalmente el icono con el texto */
+    gap: 12px;           /* Controla la separación entre el icono y el texto */
 }
 
-/* Puedes borrar .sobre-intro img si ya no usas ese contenedor antiguo */
+.sobre-icon-img {
+    width: 35px;         /* Ajusta el tamaño a tu preferencia */
+    height: auto;
+}
+
 
 .sobre-intro h2 {
   font-size: 3rem;
@@ -1098,10 +1099,10 @@ box-shadow:0 10px 30px rgba(0,0,0,0.12);
 }
 
 .academia-image img {
-    max-width: 310px; /* Ajusta este número a tu gusto */
+    max-width: 300px; /* Ajusta este número a tu gusto */
     height: auto;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 }
 
 
@@ -1172,6 +1173,7 @@ box-shadow:0 10px 30px rgba(0,0,0,0.12);
 .faq-item.active .faq-question span {
     transform: rotate(45deg); /* Convierte el + en x */
 }
+
 
 
 
