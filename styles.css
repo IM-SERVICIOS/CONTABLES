@@ -1100,7 +1100,7 @@ box-shadow:0 10px 30px rgba(0,0,0,0.12);
 }
 
 .academia-image img {
-    max-width: 100%;
+    max-width: 70%;
     height: auto;
     border-radius: 15px; /* Bordes redondeados para suavizar el diseño */
     box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* Sombra para dar profundidad */
@@ -1173,6 +1173,7 @@ box-shadow:0 10px 30px rgba(0,0,0,0.12);
 .faq-item.active .faq-question span {
     transform: rotate(45deg); /* Convierte el + en x */
 }
+
 
 
 
