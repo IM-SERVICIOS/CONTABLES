@@ -1259,6 +1259,29 @@ box-shadow:0 10px 30px rgba(0,0,0,0.12);
     min-height: 450px; /* Ajusta según necesites */
 }
 
+.hero-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.hero-content {
+    flex: 1; /* El texto se expande para llenar el resto */
+}
+
+.academia-image {
+    /* AJUSTA ESTE VALOR PARA CAMBIAR EL TAMAÑO */
+    flex: 0 0 400px; 
+    
+    max-width: 100%; /* Evita que se desborde en pantallas pequeñas */
+}
+
+.academia-image img {
+    width: 100%; /* La imagen se adapta al tamaño del contenedor de arriba */
+    height: auto;
+}
+
 
 
 
