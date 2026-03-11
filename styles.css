@@ -1283,6 +1283,42 @@ box-shadow:0 10px 30px rgba(0,0,0,0.12);
 }
 
 
+.catalog-layout{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:60px;
+flex-wrap:wrap;
+}
+
+.catalog-info{
+flex:1;
+min-width:300px;
+}
+
+.catalog-preview{
+flex:1;
+max-width:500px;
+height:320px;
+position:relative;
+overflow:hidden;
+}
+
+.catalog-preview img{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+opacity:0;
+transition:opacity .6s ease;
+border-radius:10px;
+box-shadow:0 15px 30px rgba(0,0,0,0.15);
+}
+
+.catalog-preview img.active{
+opacity:1;
+}
+
 
 
 
