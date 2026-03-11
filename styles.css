@@ -84,9 +84,9 @@ padding:0 20px;
 
 .sobre-intro .sobre-icon {
   /* Estilo para el contenedor del ícono */
-  width: 79px;
-  height: 75px;
-  margin: 0 auto 16px auto; /* Centra el ícono */
+  width: 19px;
+  height: 15px;
+  margin: 0 auto 10px auto; /* Centra el ícono */
 }
 
 .sobre-intro img {
@@ -1173,6 +1173,7 @@ box-shadow:0 10px 30px rgba(0,0,0,0.12);
 .faq-item.active .faq-question span {
     transform: rotate(45deg); /* Convierte el + en x */
 }
+
 
 
 
