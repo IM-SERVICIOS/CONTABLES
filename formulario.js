@@ -358,7 +358,32 @@ if (megaMenuBtn) {
         faqItem.classList.toggle('active');
     });
 });
+    <script>
+
+const previews = document.querySelectorAll(".catalog-preview .preview");
+
+let index = 0;
+
+function cambiarPreview(){
+
+previews.forEach(img => img.classList.remove("active"));
+
+index++;
+
+if(index >= previews.length){
+index = 0;
+}
+
+previews[index].classList.add("active");
+
+}
+
+setInterval(cambiarPreview,3000);
+
+</script>
+
 });  // ← ESTA ES LA ÚNICA QUE CIERRA TODO
+
 
 
 
