@@ -1378,7 +1378,7 @@ opacity:1;
   line-height: 1.7;
 }
 
-.team-nav{
+.team-mini-nav{
   display: flex;
   justify-content: center;
   gap: 14px;
@@ -1386,7 +1386,7 @@ opacity:1;
   margin-bottom: 50px;
 }
 
-.team-nav a{
+.team-mini-nav a{
   text-decoration: none;
   color: #1a1a2e;
   border: 1px solid #ddd;
@@ -1397,7 +1397,7 @@ opacity:1;
   background: white;
 }
 
-.team-nav a:hover{
+.team-mini-nav a:hover{
   background: #1a1a2e;
   color: white;
   border-color: #1a1a2e;
