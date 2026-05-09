@@ -1452,7 +1452,35 @@ opacity:1;
 }
 
 
+/* Reducir altura y padding del nav */
+.nav {
+  height: 60px; /* antes 72px */
+}
 
+/* Logo más compacto */
+.brand {
+  font-size: 1rem;
+  gap: .4rem;
+}
+.brand small {
+  font-size: .65rem;
+}
+.sobre-icon-img {
+  width: 22px;
+  height: 22px;
+}
+
+/* Links más juntos y pequeños */
+.nav-links {
+  gap: 0;
+}
+.nav-link {
+  font-size: .78rem;
+  padding: .38rem .6rem;
+}
+.nav-link.cta {
+  padding: .38rem .85rem;
+}
 
 
 
