@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nuestro Equipo · IM Servicios Contables</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --navy:      #0d1b2a;
+      --navy-2:    #132235;
+      --teal:      #1d7a6b;
+      --teal-lt:   #2aaf96;
+      --gold:      #c9a84c;
+      --gold-lt:   #e6c97a;
+      --cream:     #f5f2ec;
+      --mist:      #e8e4dd;
+      --text-main: #1a1a2e;
+      --text-soft: #5a5a72;
+      --white:     #ffffff;
+      --radius:    16px;
+      --shadow:    0 8px 40px rgba(13,27,42,.13);
+      --nav-h:     72px;
+    }
+
+    /* ─── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ─── NAV (exact structure from index) ──────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: var(--navy);
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      box-shadow: 0 2px 24px rgba(0,0,0,.35);
+    }
+    .nav-inner {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      letter-spacing: .02em;
+      white-space: nowrap;
+    }
+    .brand small {
+      font-weight: 300;
+      font-size: .72rem;
+      letter-spacing: .06em;
+      color: rgba(255,255,255,.55);
+    }
+    .sobre-icon-img { width: 28px; height: 28px; filter: brightness(0) invert(1); }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: .15rem;
+      flex-wrap: nowrap;
+    }
+    .nav-link {
+      color: rgba(255,255,255,.82);
+      font-size: .85rem;
+      font-weight: 400;
+      padding: .45rem .85rem;
+      border-radius: 8px;
+      transition: background .2s, color .2s;
+      cursor: pointer;
+    }
+    .nav-link:hover { background: rgba(255,255,255,.09); color: var(--white); }
+    .nav-link.cta {
+      background: var(--teal);
+      color: var(--white);
+      font-weight: 600;
+      padding: .45rem 1.1rem;
+    }
+    .nav-link.cta:hover { background: var(--teal-lt); }
+
+    /* Dropdown */
+    .nav-item { position: relative; }
+    .arrow { font-size: .7rem; margin-left: .2rem; }
+    .mega-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + .5rem);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--navy-2);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+      padding: 1.5rem;
+      display: none;
+      flex-direction: row;
+      gap: 0;
+      min-width: 620px;
+      z-index: 1000;
+    }
+    .nav-item.dropdown:hover .mega-menu { display: flex; }
+    .mega-column {
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+      flex: 1;
+      padding: 0 1.2rem;
+    }
+    .mega-column:first-child { padding-left: 0; }
+    .mega-column:last-child { padding-right: 0; }
+    .mega-divider {
+      width: 1px;
+      background: rgba(255,255,255,.1);
+      align-self: stretch;
+      margin: 0 .4rem;
+    }
+    .mega-header {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      margin-bottom: .3rem;
+    }
+    .mega-header h3 {
+      font-size: .65rem;
+      letter-spacing: .12em;
+      font-weight: 600;
+      color: rgba(255,255,255,.4);
+      text-transform: uppercase;
+    }
+    .mega-header.spacer { margin-top: 1rem; }
+    .mega-header .highlight { color: var(--gold-lt) !important; }
+    .mega-column a {
+      font-size: .82rem;
+      color: rgba(255,255,255,.72);
+      padding: .3rem .5rem;
+      border-radius: 6px;
+      transition: background .18s, color .18s;
+    }
+    .mega-column a:hover { background: rgba(255,255,255,.07); color: var(--white); }
+
+    /* ─── HERO BAND ──────────────────────────────────────────── */
+    .hero {
+      background: var(--navy);
+      padding: 3.5rem 2rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: .8rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-lt);
+    }
+    .hero p {
+      max-width: 560px;
+      color: rgba(255,255,255,.6);
+      font-size: .95rem;
+      line-height: 1.7;
+      margin-bottom: 1.6rem;
+    }
+    .hero .btn {
+      display: inline-block;
+      background: var(--teal);
+      color: var(--white);
+      font-size: .85rem;
+      font-weight: 600;
+      padding: .6rem 1.6rem;
+      border-radius: 50px;
+      transition: background .2s;
+    }
+    .hero .btn:hover { background: var(--teal-lt); }
+
+    /* ─── MINI NAV ───────────────────────────────────────────── */
+    .team-mini-nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      padding: 1.4rem 2rem;
+      background: var(--mist);
+      border-bottom: 1px solid #ddd8cf;
+      position: sticky;
+      top: var(--nav-h);
+      z-index: 90;
+    }
+    .team-mini-nav a {
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      padding: .5rem 1.3rem;
+      border-radius: 50px;
+      border: 1.5px solid transparent;
+      transition: all .22s;
+    }
+    .team-mini-nav a:hover,
+    .team-mini-nav a.active {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy);
+    }
+
+    /* ─── SECTION WRAPPER ────────────────────────────────────── */
+    .section-team {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 7rem;
+    }
+
+    /* ─── COLLABORATOR CARD ──────────────────────────────────── */
+    .collab-card {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+    .collab-card.reverse { grid-template-columns: 1fr 340px; }
+    .collab-card.reverse .collab-visual { order: 2; }
+    .collab-card.reverse .collab-content { order: 1; }
+
+    /* Visual column */
+    .collab-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.4rem;
+    }
+    .photo-frame {
+      position: relative;
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 12px 48px rgba(13,27,42,.22);
+      border: 4px solid var(--mist);
+      flex-shrink: 0;
+    }
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--teal) 100%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      font-weight: 300;
+      color: rgba(255,255,255,.6);
+      letter-spacing: .04em;
+    }
+    .badge-role {
+      display: inline-block;
+      background: var(--navy);
+      color: var(--gold-lt);
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .35rem 1.1rem;
+      border-radius: 50px;
+      text-align: center;
+    }
+    .contact-chips {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .5rem;
+      width: 100%;
+    }
+    .chip {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .78rem;
+      color: var(--text-soft);
+      background: var(--white);
+      border: 1px solid var(--mist);
+      border-radius: 50px;
+      padding: .3rem 1rem;
+      width: 100%;
+      justify-content: center;
+      transition: border-color .2s, color .2s;
+    }
+    .chip:hover { border-color: var(--teal); color: var(--teal); }
+    .chip-icon { font-size: 1rem; }
+
+    /* Content column */
+    .collab-content { display: flex; flex-direction: column; gap: 1.6rem; }
+
+    .collab-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--navy);
+    }
+    .collab-title {
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-top: -.8rem;
+    }
+    .collab-bio {
+      font-size: .95rem;
+      line-height: 1.8;
+      color: var(--text-soft);
+      font-style: italic;
+      border-left: 3px solid var(--gold);
+      padding-left: 1.1rem;
+    }
+
+    /* Contributions */
+    .contributions-title {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      border-bottom: 1px solid var(--mist);
+      padding-bottom: .5rem;
+    }
+    .contrib-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .9rem;
+    }
+    .contrib-item {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: .35rem;
+      box-shadow: 0 2px 12px rgba(13,27,42,.06);
+      border: 1px solid var(--mist);
+      transition: box-shadow .2s, border-color .2s, transform .2s;
+    }
+    .contrib-item:hover {
+      box-shadow: var(--shadow);
+      border-color: #c8c2b8;
+      transform: translateY(-2px);
+    }
+    .contrib-item .ci-icon { font-size: 1.4rem; }
+    .contrib-item .ci-label {
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: .02em;
+    }
+    .contrib-item .ci-desc {
+      font-size: .76rem;
+      color: var(--text-soft);
+      line-height: 1.5;
+    }
+
+    /* Skills tags */
+    .skills-wrap { display: flex; flex-wrap: wrap; gap: .45rem; }
+    .skill-tag {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 500;
+      padding: .28rem .85rem;
+      border-radius: 50px;
+      background: var(--mist);
+      color: var(--text-main);
+      border: 1px solid #ddd8cf;
+      letter-spacing: .02em;
+    }
+
+    /* Divider between profiles */
+    .profile-divider {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    .profile-divider::before,
+    .profile-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--mist);
+    }
+    .profile-divider span {
+      font-size: .7rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #b8b2aa;
+      white-space: nowrap;
+    }
+
+    /* ─── FOOTER STRIP ───────────────────────────────────────── */
+    .foot {
+      background: var(--navy);
+      color: rgba(255,255,255,.45);
+      text-align: center;
+      padding: 1.4rem 2rem;
+      font-size: .78rem;
+      letter-spacing: .04em;
+    }
+    .foot a { color: var(--gold-lt); }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 860px) {
+      .collab-card,
+      .collab-card.reverse {
+        grid-template-columns: 1fr;
+      }
+      .collab-card.reverse .collab-visual { order: 0; }
+      .collab-card.reverse .collab-content { order: 0; }
+      .collab-visual { align-items: center; }
+      .contrib-grid { grid-template-columns: 1fr; }
+      .nav-links { gap: 0; }
+      .mega-menu { min-width: 95vw; left: -5vw; transform: none; flex-direction: column; }
+    }
+    @media (max-width: 580px) {
+      .nav-links li:not(:last-child):not(.nav-item) { display: none; }
+      .section-team { padding: 3rem 1rem 4rem; gap: 4rem; }
+      .photo-frame { width: 180px; height: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════ NAV (exact) ═══════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <img src="images/icono-sobre.svg" alt="logo" class="sobre-icon-img">
+      IM <small>Servicios Contables y Administrativos</small>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#inicio" class="nav-link">Inicio</a></li>
+      <li><a href="index.html#servicios" class="nav-link">Servicios</a></li>
+      <li><a href="index.html#sobre" class="nav-link">Sobre Nosotros</a></li>
+      <li class="nav-item dropdown">
+        <a href="javascript:void(0)" class="nav-link" id="megaMenuBtn">
+          Catálogo <span class="arrow">▾</span>
+        </a>
+        <div class="mega-menu">
+          <div class="mega-column">
+            <div class="mega-header">
+              <span class="icon">💼</span><h3>PRODUCTOS Y SERVICIOS</h3>
+            </div>
+            <a href="productos.html#gratis">Plantillas Gratis</a>
+            <a href="productos.html#premium">Plantillas Premium</a>
+            <a href="index.html#contacto">Asesoría Directa</a>
+            <a href="productos.html#servicios-fiscales">Declaraciones de Impuestos</a>
+            <a href="index.html#servicios">Facturación en SAT</a>
+          </div>
+          <div class="mega-divider"></div>
+          <div class="mega-column">
+            <div class="mega-header">
+              <span class="icon">🌐</span><h3>COMUNIDAD</h3>
+            </div>
+            <a href="comunidad.html#blog">Blog Contable</a>
+            <a href="comunidad.html#youtube">Canal de YouTube</a>
+            <a href="index.html#contacto">Contacto</a>
+            <a href="#">Preguntas Frecuentes</a>
+            <div class="mega-header spacer">
+              <span class="icon">🎓</span>
+              <h3 class="highlight">ACADEMIA IM</h3>
+            </div>
+            <a href="academia.html">Inicio Academia</a>
+            <a href="academia.html#manuales">Manuales de Uso</a>
+            <a href="academia.html#blog-academia">Blog Académico</a>
+            <a href="academia.html#preguntasfrecuentes-academia">Preguntas Frecuentes</a>
+          </div>
+        </div>
+      </li>
+      <li><a href="index.html#contacto" class="cta nav-link" id="cotizarBtn">Cotízate</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<header id="inicio" class="hero">
+  <div class="hero-left">
+    <h1>IM Servicios contables<br><span> </span></h1>
+    <p>Conoce las principales funcionalidades, alcance y beneficios para tu empresa al tenernos en tu equipo; Automatiza, analiza, ahorra, eficientiza y toma decisiones estratégicas con IM Servicios Contables.</p>
+    <div class="hero-ctas">
+      <a class="btn primary" href="index.html#contacto">Conoce más</a>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════ MINI NAV ═══════════════════ -->
+<div class="team-mini-nav" id="miniNav">
+  <a href="portafolios.html#nathaly" id="link-nathaly">Encargada de Logística · Atención y Marketing</a>
+  <a href="portafolios.html#iris" id="link-iris">Desarrolladora de Finanzas Digitales</a>
+</div>
+
+<!-- ═══════════════════ PROFILES ═══════════════════ -->
+<main class="section-team">
+
+  <!-- ── NATHALY ─────────────────────────────────── -->
+  <section id="nathaly">
+    <div class="collab-card">
+
+      <!-- Visual -->
+      <div class="collab-visual">
+        <div class="photo-frame">
+          <!-- Reemplaza el src con la ruta real de la foto de Nathaly -->
+          <div class="photo-placeholder">NS</div>
+        </div>
+        <span class="badge-role">Logística · Atención · Marketing</span>
+        <div class="contact-chips">
+          <a class="chip" href="tel:8124243507">
+            <span class="chip-icon">📱</span> 81 2424 3507
+          </a>
+          <a class="chip" href="mailto:Dsanchezbujanos@gmail.com">
+            <span class="chip-icon">✉️</span> Dsanchezbujanos@gmail.com
+          </a>
+          <span class="chip">
+            <span class="chip-icon">📍</span> Monterrey, Nuevo León
+          </span>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="collab-content">
+        <div>
+          <h2 class="collab-name">Nathaly Sánchez</h2>
+          <p class="collab-title">Encargada de Logística · Atención al Cliente · Marketing</p>
+        </div>
+
+        <p class="collab-bio">
+          Técnica en Contabilidad Privada y estudiante de Logística, Comercio y Aduanas, Nathaly es el punto de contacto y coordinación que mantiene las operaciones de IM en orden. Su perfil multidisciplinario, orientado al cliente y a la mejora continua, hace que cada proceso fluya sin fricciones.
+        </p>
+
+        <div>
+          <p class="contributions-title">Aportaciones en IM Servicios Contables</p>
+          <div class="contrib-grid">
+            <div class="contrib-item">
+              <span class="ci-icon">🤝</span>
+              <span class="ci-label">Atención Digital al Cliente</span>
+              <span class="ci-desc">Gestión de consultas y seguimiento personalizado a clientes vía WhatsApp, correo y canales digitales de IM.</span>
+            </div>
+            <div class="contrib-item">
+              <span class="ci-icon">📦</span>
+              <span class="ci-label">Coordinación Operativa</span>
+              <span class="ci-desc">Organización de entregas de plantillas, seguimiento de pedidos y control de flujos internos de trabajo.</span>
+            </div>
+            <div class="contrib-item">
+              <span class="ci-icon">📣</span>
+              <span class="ci-label">Soporte de Marketing</span>
+              <span class="ci-desc">Apoyo en difusión de contenido, programación de publicaciones y seguimiento de métricas de comunicación.</span>
+            </div>
+            <div class="contrib-item">
+              <span class="ci-icon">🗂️</span>
+              <span class="ci-label">Administración Interna</span>
+              <span class="ci-desc">Gestión de caja chica, registros administrativos y reportes de actividad para la operación del proyecto.</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="contributions-title">Aportaciones en IM Academy</p>
+          <div class="contrib-grid">
+            <div class="contrib-item">
+              <span class="ci-icon">📋</span>
+              <span class="ci-label">Onboarding de Alumnos</span>
+              <span class="ci-desc">Recepción, orientación y seguimiento a nuevos usuarios de la Academia IM, asegurando una experiencia de ingreso fluida.</span>
+            </div>
+            <div class="contrib-item">
+              <span class="ci-icon">💬</span>
+              <span class="ci-label">Soporte Estudiantil</span>
+              <span class="ci-desc">Resolución de dudas administrativas, coordinación de accesos y acompañamiento continuo a la comunidad de alumnos.</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="contributions-title">Aptitudes clave</p>
+          <div class="skills-wrap">
+            <span class="skill-tag">Multitasking</span>
+            <span class="skill-tag">Organización</span>
+            <span class="skill-tag">Autodidacta</span>
+            <span class="skill-tag">Adaptabilidad</span>
+            <span class="skill-tag">Pensamiento crítico</span>
+            <span class="skill-tag">Atención al cliente</span>
+            <span class="skill-tag">Excel</span>
+            <span class="skill-tag">Facturación SAT</span>
+            <span class="skill-tag">COMPAQ</span>
+            <span class="skill-tag">Formación continua</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Divider -->
+  <div class="profile-divider">
+    <span>Nuestro Equipo</span>
+  </div>
+
+  <!-- ── IRIS ────────────────────────────────────── -->
+  <section id="iris">
+    <div class="collab-card reverse">
+
+      <!-- Visual -->
+      <div class="collab-visual">
+        <div class="photo-frame">
+          <!-- Reemplaza el src con la ruta real de la foto de Iris -->
+          <div class="photo-placeholder" style="background: linear-gradient(135deg, #1d3b5c 0%, #1d7a6b 100%);">IM</div>
+        </div>
+        <span class="badge-role">Finanzas Digitales · Tech · Automatización</span>
+        <div class="contact-chips">
+          <span class="chip">
+            <span class="chip-icon">🌐</span> im-servicios.github.io/CONTABLES
+          </span>
+          <span class="chip">
+            <span class="chip-icon">📍</span> Monterrey, Nuevo León
+          </span>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="collab-content">
+        <div>
+          <h2 class="collab-name">Iris Martínez</h2>
+          <p class="collab-title">Desarrolladora de Finanzas Digitales · Automatización · BI</p>
+        </div>
+
+        <p class="collab-bio">
+          Especialista en traducir la contabilidad al lenguaje de la tecnología: diseña soluciones que convierten datos financieros complejos en dashboards claros, plantillas inteligentes y flujos automatizados que ahorran tiempo real a sus clientes.
+        </p>
+
+        <div>
+          <p class="contributions-title">Aportaciones en IM Servicios Contables</p>
+          <div class="contrib-grid">
+            <div class="contrib-item">
+              <span class="ci-icon">📊</span>
+              <span class="ci-label">Dashboards Financieros</span>
+              <span class="ci-desc">Diseño y desarrollo de paneles interactivos en Excel, Power BI y web para visualización de KPIs contables y fiscales.</span>
+            </div>
+            <div class="contrib-item">
+              <span class="ci-icon">⚙️</span>
+              <span class="ci-label">Automatización con VBA & Python</span>
+              <span class="ci-desc">Automatización de procesos repetitivos: conciliaciones, reportes y extracción de datos del SAT para clientes IM.</span>
+            </div>
+            <div class="contrib-item">
+              <span class="ci-icon">🗂️</span>
+              <span class="ci-label">Catálogo de Plantillas</span>
+              <span class="ci-desc">Creación del catálogo de plantillas gratuitas y premium disponibles en el sitio, diseñadas para emprendedores y negocios.</span>
+            </div>
+            <div class="contrib-item">
+              <span class="ci-icon">🤖</span>
+              <span class="ci-label">IA Aplicada a Finanzas</span>
+              <span class="ci-desc">Implementación de soluciones con inteligencia artificial para análisis predictivo y apoyo en decisiones fiscales.</span>
+            </div>
+            <div class="contrib-item">
+              <span class="ci-icon">💻</span>
+              <span class="ci-label">Desarrollo Web del Proyecto</span>
+              <span class="ci-desc">Diseño y programación del sitio web IM Servicios Contables, incluyendo secciones de catálogo, academia y comunidad.</span>
+            </div>
+            <div class="contrib-item">
+              <span class="ci-icon">🔗</span>
+              <span class="ci-label">Integración de Sistemas</span>
+              <span class="ci-desc">Conexión de herramientas digitales (formularios, hojas de cálculo, portales) en flujos unificados de trabajo.</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="contributions-title">Aportaciones en IM Academy</p>
+          <div class="contrib-grid">
+            <div class="contrib-item">
+              <span class="ci-icon">📚</span>
+              <span class="ci-label">Manuales y Contenido Técnico</span>
+              <span class="ci-desc">Elaboración de manuales de uso, tutoriales y recursos didácticos para los alumnos de la Academia IM.</span>
+            </div>
+            <div class="contrib-item">
+              <span class="ci-icon">🎬</span>
+              <span class="ci-label">Producción de Contenido Digital</span>
+              <span class="ci-desc">Apoyo en la producción de videos educativos y material visual para el canal de YouTube e IM Academy.</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="contributions-title">Stack tecnológico</p>
+          <div class="skills-wrap">
+            <span class="skill-tag">Excel Avanzado</span>
+            <span class="skill-tag">VBA / Macros</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Power BI</span>
+            <span class="skill-tag">HTML / CSS / JS</span>
+            <span class="skill-tag">Inteligencia Artificial</span>
+            <span class="skill-tag">SAT / CFDI</span>
+            <span class="skill-tag">Dashboards</span>
+            <span class="skill-tag">GitHub</span>
+            <span class="skill-tag">Automatización</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer class="foot">
+  © 2025 IM Servicios Contables y Administrativos ·
+  <a href="index.html">Inicio</a> ·
+  <a href="index.html#contacto">Contacto</a>
+</footer>
+
+<script>
+  // Highlight mini-nav link based on which section is in view
+  const sections = ['nathaly','iris'];
+  const links = { nathaly: document.getElementById('link-nathaly'), iris: document.getElementById('link-iris') };
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sections.forEach(id => links[id].classList.remove('active'));
+        if (links[e.target.id]) links[e.target.id].classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -40% 0px' });
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) obs.observe(el);
+  });
+
+  // Mobile mega menu toggle
+  const megaBtn = document.getElementById('megaMenuBtn');
+  if (megaBtn) {
+    megaBtn.addEventListener('click', () => {
+      const menu = megaBtn.closest('.nav-item').querySelector('.mega-menu');
+      if (menu) menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    });
+  }
+</script>
+
+</body>
+</html>
