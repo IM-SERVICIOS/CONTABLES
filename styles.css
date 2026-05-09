@@ -1452,44 +1452,26 @@ opacity:1;
 }
 
 
-/* Reducir altura y padding del nav */
-.nav {
-  height: 60px; /* antes 72px */
-}
-
-/* Logo más compacto */
-.brand {
-  font-size: 1rem;
-  gap: .4rem;
-}
-.brand small {
-  font-size: .65rem;
-}
-.sobre-icon-img {
-  width: 22px;
-  height: 22px;
-}
-
-/* Links más juntos y pequeños */
-.nav-links {
-  gap: 0;
-}
 .nav-link {
-  font-size: .78rem;
-  padding: .38rem .6rem;
+  font-size: .84rem;     /* antes .78rem, subimos solo el texto */
+  padding: .38rem .6rem; /* padding se queda igual de compacto */
+  font-weight: 500;      /* antes 400, un poco más de grosor ayuda a la legibilidad */
 }
+
 .nav-link.cta {
+  font-size: .84rem;
   padding: .38rem .85rem;
+  font-weight: 600;
 }
 
+.brand {
+  font-size: 1.05rem;    /* antes 1rem */
+  font-weight: 700;      /* más definido */
+}
 
-
-
-
-
-
-
-
+.brand small {
+  font-size: .68rem;     /* antes .65rem */
+}
 
 
 
